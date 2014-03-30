@@ -5,7 +5,7 @@ import com.jayway.jsonpath.JsonPath;
 /**
  * Created by shi on 3/30/14.
  */
-public class Json2JsonJayWay implements Json2Json {
+public class Json2JsonJayWay implements IJson2Json {
     @Override
     public String transform(String json) throws Json2JsonException {
         return null;
