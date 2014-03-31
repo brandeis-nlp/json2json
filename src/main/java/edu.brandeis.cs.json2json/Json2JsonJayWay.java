@@ -7,7 +7,9 @@ import com.jayway.jsonpath.JsonPath;
  */
 public class Json2JsonJayWay implements IJson2Json {
     @Override
-    public String transform(String json) throws Json2JsonException {
+    public String transform(String template, String... json) throws Json2JsonException {
+
+
         return null;
     }
 

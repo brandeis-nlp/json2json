@@ -25,7 +25,15 @@ public class Json2Json {
         return ret;
     }
 
-    public static String transform (String json) throws Json2JsonException {
-        return null;
+    public static String transform (String json, String template) throws Json2JsonException {
+        String ret = null;
+        try {
+            IJson2Json json2json = cache.take();
+            ret = json2json.transform(json, template);
+            cache.put(json2json);
+        } catch (InterruptedException e) {
+            throw new Json2JsonException(e);
+        }
+        return ret;
     }
 }
