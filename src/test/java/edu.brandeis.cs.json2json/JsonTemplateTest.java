@@ -77,7 +77,7 @@ public class JsonTemplateTest {
             System.out.println(path);
             System.out.println(content);
             System.out.println(jsonTemplate.indexOf(path));
-            target =  StringProxy.replaceAll(target, path, content);
+            target =  StringProxy.replace(target, path, content);
         }
         System.out.println(target);
     }

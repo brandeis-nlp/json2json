@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * Created by shi on 3/31/14.
  */
-public class JsonTemplate {
+public class JsonTemplate implements  IJsonTemplate{
     public static final String JsonPathRegex = "\\$\\.[^\\s\"\']+";
     public static final String JsonPathTemplateRegex = "&\\d*" + JsonPathRegex;
     public static final Pattern TemplatePathPattern = Pattern.compile(JsonPathTemplateRegex);
@@ -22,6 +22,17 @@ public class JsonTemplate {
             paths.add(m.group());
         }
         return paths.toArray(new String[paths.size()]);
+    }
+
+    @Override
+    public String transform(String template, String... jsons) throws Json2JsonException {
+        Map<String, Object> map = JsonTemplate.findJsonPathContent(template, jsons);
+        String target = template;
+        for(String path: map.keySet()) {
+            String content = map.get(path).toString();
+            target =  StringProxy.replace(target, path, content);
+        }
+        return  target;
     }
 
     public static class TemplatePath {

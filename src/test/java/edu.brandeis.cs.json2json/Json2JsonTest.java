@@ -10,7 +10,7 @@ import sun.misc.IOUtils;
 import java.io.File;
 
 public class Json2JsonTest {
-    IJson2Json j2j = null;
+    Json2JsonJayWay j2j = null;
     String json = null;
     long begin, end;
 

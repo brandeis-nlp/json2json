@@ -5,8 +5,15 @@ package edu.brandeis.cs.json2json;
  */
 public class StringProxy {
 
+//
+//    public static String split(String s, String sep) {
+//        int index
+//        return s.split(sep);
+//    }
 
-    public static String replaceAll(String s, String f, String r) {
+
+
+    public static String replace(String s, String f, String r) {
         String t = s;
         int start = s.indexOf(f);
         int end = 0;
