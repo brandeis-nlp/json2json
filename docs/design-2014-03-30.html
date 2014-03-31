@@ -219,9 +219,9 @@
     <nav class="nav-bar">
         <a href="#design">design</a>
         | 
-        <a href="#">program</a>
+        <a href="#program">program</a>
         |
-        <a href="#">deploy</a></nav>
+        <a href="#deploy">deploy</a></nav>
 
 
 
@@ -229,9 +229,12 @@
 <!--TODO: title -->    
     <h1>Json2Json:  Template Based Json Transform</h1>
     <p class="author">
- Version <var>0.01</var>, <ruby>史 春奇 <rt> Chunqi Shi</rt></ruby>,  Mar. 2014</p>
+ Version <var>0.01</var>,
+        <!--<ruby>史 春奇 <rt> Chunqi Shi</rt></ruby>,  -->
+        Mar. 2014</p>
 
 
+<!----------------------------------------------------------------------->
 <a name="design" />
 <h2>Json Path based Template</h2>
 
@@ -355,76 +358,77 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     </tr></tbody></table>
     
 <h3>What is String Filter?</h3>
+    The string filter has 7 basic functions to make it flexible.
+    We want to implement these filter function by Java String functions.
 
     <table  class="v"><tbody><tr>
         <th>Function</th><th>Definition</th><th>Example</th><th>Description</th> </tr><tr>
-        <td>concatenate</td><td></td><td></td><td>.</td> </tr><tr>
-        <td>split</td><td></td><td></td><td>.</td> </tr><tr>
-        <td>join</td><td></td><td></td><td>.</td> </tr><tr>
-        <td>index</td><td></td><td></td><td>.</td> </tr><tr>
-        <td>substring</td><td></td><td></td><td>.</td> </tr><tr>
-        <td> regex-match</td><td></td><td></td><td>.</td> </tr><tr>
-        <td> regex-replace</td><td></td><td></td><td>.</td> </tr><tr>
-
+        <td>concatenate</td><td> %+ </td><td>%+("hello","world") == "helloworld"</td><td>.</td> </tr><tr>
+        <td>split</td><td> %| </td><td>%|("hello.world",".") == ["hello", "world"]</td><td>.</td> </tr><tr>
+        <td>join</td><td> %* </td><td>%|(["hello", "world"],".") == "hello.world"</td><td>.</td> </tr><tr>
+        <td>index</td><td>%?</td><td>%?(["hello.world", "hello"],".") == 0 </td><td>.</td> </tr><tr>
+        <td>substring</td><td>%_</td><td>%?(["hello.world", 0, 5) == "hello"</td><td>.</td> </tr><tr>
+        <td> regex-match</td><td>%%</td><td>%%(["hello.world", "[a-z]*") ==  ["hello", "world"]</td><td>.</td> </tr><tr>
+        <td> regex-replace</td><td>%/</td><td>%/(["hello.world", ".", " ") ==  "hello world"</td><td>.</td> </tr><tr>
     </tr></tbody></table>
 
-<a name="designs" />
-<h2>Project  <a href="#_top_" style="text-decoration: none;">^</a></h2>
+<h3>How to Iterate Array</h3>
+    The array object in Json data is very popular. How to process the arrays, especially in the String Filter functions
+    becomes a problem. We want to enable the closure type of array process, which can be implemented by Groovy
+    Engine function.
 
-    <h3 class="reset">Installation</h3>
-    <a href="http://grails.org" target="_blank">Grails</a> becomes a framework for fast prototyping.
-    It is based on groovy. Both of them are easy to install by  <a target="_blank" href="http://gvmtool.net/">GVM tool</a>.
+    <table  class="v"><tbody><tr>
+        <th>Function</th><th>Definition</th><th>Example</th><th>Description</th> </tr><tr>
+        <td>Iteration Closure</td> <td><em>array</em><b>%-->{ </b>  <b> }</b> </td> <td></td><td></td></tr><tr>
+
+        <td>Iteration Element Variable</td> <td><em>array</em>%-->{ <b>%i</b> } </td> <td></td><td></td></tr><tr>
+
+        <td>Return Target Variable</td> <td><em>array</em>%-->{ <b>%r</b> } </td> <td></td><td></td>
+    </tr></tbody></table>
+
+
+<!----------------------------------------------------------------------->
+<a name="program" />
+<h2>Project  <a href="#_top_" style="text-decoration: none;">^</a></h2>
+    We want to realize the java project by taking advantage of
+    JsonPath Implementation, Java String Functions, and Groovy script engine.
 
     <ol>
-        <li><p>Installation</p>
-            Open your favourite bash terminal and enter the following:
-            <samp class="sample">$ curl -s get.gvmtool.net | bash </samp>
-            It runs <a href="http://en.wikipedia.org/wiki/CURL" target="_blank">curl</a> to download a bash script.
-            You could open a new terminal or source the bash script to get access to gvm command.
+        <li><p>JsonPath Implementation --> We tested 3 open source implementation (Jayway, Nebhale, Camel, Gatling).
+            Our conclusion is that Camel is a wrapper of Jayway. Nebhale and Gatling are not stable for several cases.
+            Thus, <b>Jayway</b> is the choice.
         </li>
-        <li><p>GVM Usage</p>
-
-            <samp class="sample">$ gvm help<font style="color:blue">&crarr;</font>
-                $ gvm version<font style="color:blue">&crarr;</font>
-                $
-                $ gvm install groovy<font style="color:blue">&crarr;</font>
-                $ gvm install grails<font style="color:blue">&crarr;</font>
-                $
-                $ gvm list groovy<font style="color:blue">&crarr;</font>
-                $ gvm list grails<font style="color:blue">&crarr;</font>
-                $
-                $ groovy --version<font style="color:blue">&crarr;</font>
-                $ grails --version<font style="color:blue">&crarr;</font>
-                $
-                $ gvm uninstall groovy 2.1.0<font style="color:blue">&crarr;</font>
-                $ gvm uninstall grails 1.3.9<font style="color:blue">&crarr;</font>
-            </samp>
+        <li>
+            <p>Template Replacement --> We filter all the JsonPath  into <b>Hash Map</b>, run JsonPath result,
+            and hold key-value pairs <em>(JsonPath, Result)</em>. This will prevent repeating of the JsonPath.
         </li>
-        <li><p>Creation</p>
-            <a href="http://grails.org/doc/latest/guide/commandLine.html#4.5 Ant and Maven" target="_blank">Grails project</a>
-            tutorial provides steps to create Maven grails project.
+        <li><p>Java String Function --> We replace the string filter mark using Java string function results.
+            <ul><li>Realize a <b>ProxyJavaClass</b> to fulfil the definition through <em>static function</em> based on Java String Functions.
+            </li><li>Replace the % keywords by <b>ProxyJavaClass.</b><em>funtion()</em>.
+            </li></ul></li>
+        <li><p>Array Iteration --> We want to using groovy  </li>
+    </ol>
 
-            <samp class="sample">$ grails create-app lappsflow
-                $ cd lappsflow<font style="color:blue">&crarr;</font>
-                $ grails create-pom org.lappsgrid<font style="color:blue">&crarr;</font>
-                $ mvn grails:help<font style="color:blue">&crarr;</font>
-
-                $ grails install-plugin activiti<font style="color:blue">&crarr;</font>
-            </samp>
-
-        </li>
-        <li><p>Default UI</p>
-            <samp class="sample">$ mvn grails:run-app <font style="color:blue">&crarr;</font>
-            </samp>
-            You can open <a href="http://localhost:8080/lappsflow" target="_blank">http://localhost:8080/lappsflow</a>.
-        </li>
+    <h3 class="reset">Implementation</h3>
+    <ol>
         <li><p>Github Hold</p>
 
         </li>
 
     </ol>
 
-
+<!----------------------------------------------------------------------->
+<a name="deploy" />
+<h2>Deployment  <a href="#_top_" style="text-decoration: none;">^</a></h2>
+<code class="code prettyprint">
+    &lt;dependencies&gt;
+    &lt;dependency&gt;
+    &lt;groupId&gt;org.lappsgrid&lt;/groupId&gt;
+    &lt;artifactId&gt;edu.brandeis.cs.json2json&lt;/artifactId&gt;
+    &lt;version&gt;0.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependencies&gt;
+</code>
 
 <!--
 <table class="g">

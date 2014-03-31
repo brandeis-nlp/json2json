@@ -25,11 +25,11 @@ public class Json2Json {
         return ret;
     }
 
-    public static String transform (String json, String template) throws Json2JsonException {
+    public static String transform (String template, String ...jsons) throws Json2JsonException {
         String ret = null;
         try {
             IJson2Json json2json = cache.take();
-            ret = json2json.transform(json, template);
+            ret = json2json.transform(template, jsons);
             cache.put(json2json);
         } catch (InterruptedException e) {
             throw new Json2JsonException(e);
