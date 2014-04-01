@@ -2,13 +2,10 @@ package edu.brandeis.cs.json2json;
 
 
 import junit.framework.Assert;
-import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import scala.util.parsing.json.JSON;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -60,17 +57,17 @@ public class JsonTemplateTest {
     @Test
     public void testRegex() throws Exception{
         for(String path: paths) {
-            boolean isMatch = Pattern.matches(JsonTemplate.JsonPathRegex, path);
+            boolean isMatch = Pattern.matches(Template.JsonPathRegex, path);
             Assert.assertTrue(isMatch);
         }
 
-        String [] finds = JsonTemplate.findJsonPath(jsonTemplate);
+        String [] finds = Template.findJsonPath(jsonTemplate);
         System.out.println(Arrays.toString(finds));
         for(int i = 0; i < finds.length; i++){
             Assert.assertEquals(tempatePaths[i], finds[i]);
         }
 
-        Map<String, Object> map = JsonTemplate.findJsonPathContent(jsonTemplate, json);
+        Map<String, Object> map = Template.findJsonPathContent(jsonTemplate, json);
         String target = jsonTemplate;
         for(String path: map.keySet()) {
             String content = map.get(path).toString();

@@ -4,13 +4,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Json2Json {
     static int InitialSize = 8;
-    static final LinkedBlockingQueue<IJsonPath> cacheJsonPath = new LinkedBlockingQueue<IJsonPath>(InitialSize);
+    static final LinkedBlockingQueue<IPath> cacheJsonPath = new LinkedBlockingQueue<IPath>(InitialSize);
 
-    static final LinkedBlockingQueue<IJsonTemplate> cacheJsonTemplate = new LinkedBlockingQueue<IJsonTemplate>(InitialSize);
+    static final LinkedBlockingQueue<ITemplate> cacheJsonTemplate = new LinkedBlockingQueue<ITemplate>(InitialSize);
     static {
         for (int i = 0; i < InitialSize; i ++)
             try {
-                cacheJsonPath.put(new Json2JsonJayWay());
+                cacheJsonPath.put(new Json2JayWay());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -18,7 +18,7 @@ public class Json2Json {
     public static String path(String json, String path) throws Json2JsonException {
         String ret = null;
         try {
-            IJsonPath json2json = cacheJsonPath.take();
+            IPath json2json = cacheJsonPath.take();
             ret = json2json.path(json, path);
             cacheJsonPath.put(json2json);
         } catch (InterruptedException e) {
@@ -30,7 +30,7 @@ public class Json2Json {
     public static String transform (String template, String ...jsons) throws Json2JsonException {
         String ret = null;
         try {
-            IJsonTemplate json2json = cacheJsonTemplate.take();
+            ITemplate json2json = cacheJsonTemplate.take();
             ret = json2json.transform(template, jsons);
             cacheJsonTemplate.put(json2json);
         } catch (InterruptedException e) {

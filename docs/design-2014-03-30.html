@@ -365,25 +365,25 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
         <th>Function</th><th>Definition</th><th>Example</th><th>Description</th> </tr><tr>
         <td>concatenate</td><td> %+ </td><td>%+("hello","world") == "helloworld"</td><td>.</td> </tr><tr>
         <td>split</td><td> %| </td><td>%|("hello.world",".") == ["hello", "world"]</td><td>.</td> </tr><tr>
-        <td>join</td><td> %* </td><td>%|(["hello", "world"],".") == "hello.world"</td><td>.</td> </tr><tr>
+        <td>join</td><td> %* </td><td>%*(["hello", "world"],".") == "hello.world"</td><td>.</td> </tr><tr>
         <td>index</td><td>%?</td><td>%?(["hello.world", "hello"],".") == 0 </td><td>.</td> </tr><tr>
-        <td>substring</td><td>%_</td><td>%?(["hello.world", 0, 5) == "hello"</td><td>.</td> </tr><tr>
+        <td>substring</td><td>%_</td><td>%_(["hello.world", 0, 5) == "hello"</td><td>.</td> </tr><tr>
         <td> regex-match</td><td>%%</td><td>%%(["hello.world", "[a-z]*") ==  ["hello", "world"]</td><td>.</td> </tr><tr>
         <td> regex-replace</td><td>%/</td><td>%/(["hello.world", ".", " ") ==  "hello world"</td><td>.</td> </tr><tr>
     </tr></tbody></table>
 
-<h3>How to Iterate Array</h3>
+<h3>How to Iterate Array?</h3>
     The array object in Json data is very popular. How to process the arrays, especially in the String Filter functions
     becomes a problem. We want to enable the closure type of array process, which can be implemented by Groovy
     Engine function.
 
     <table  class="v"><tbody><tr>
         <th>Function</th><th>Definition</th><th>Example</th><th>Description</th> </tr><tr>
-        <td>Iteration Closure</td> <td><em>array</em><b>%-->{ </b>  <b> }</b> </td> <td></td><td></td></tr><tr>
+        <td>Iteration Closure</td> <td>%<em>array</em><b>-->{ </b>  <b> }</b> </td> <td></td><td></td></tr><tr>
 
-        <td>Iteration Element Variable</td> <td><em>array</em>%-->{ <b>%i</b> } </td> <td></td><td></td></tr><tr>
+        <td>Iteration Element Variable</td> <td>%<em>array</em>-->{ <b>%i</b> } </td> <td></td><td></td></tr><tr>
 
-        <td>Return Target Variable</td> <td><em>array</em>%-->{ <b>%r</b> } </td> <td></td><td></td>
+        <td>Return Target Variable</td> <td>%<em>array</em>-->{ <b>%r</b> } </td> <td></td><td></td>
     </tr></tbody></table>
 
 
