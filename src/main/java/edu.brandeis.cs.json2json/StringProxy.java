@@ -1,17 +1,65 @@
 package edu.brandeis.cs.json2json;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonMethod;
+import org.json.JSONArray;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by shi on 3/31/14.
  */
 public class StringProxy {
 
 //
-//    public static String split(String s, String sep) {
-//        int index
-//        return s.split(sep);
-//    }
+    public static String split(String s, String sep) {
+        String [] arr = s.split(sep);
+//        System.out.println(Arrays.toString(arr));
+        return new JSONArray(arr).toString();
+    }
+
+    public static String concat(String s, String t) {
+        return s + t;
+    }
+
+    public static String join(String sarr, String sep) {
+        JSONArray jarr =  new JSONArray(sarr);
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < jarr.length(); i ++) {
+            sb.append(sep);
+            sb.append(jarr.get(i));
+        }
+        return sb.substring(sep.length());
+    }
 
 
+    public static int index(String s, String t) {
+        return s.indexOf(t);
+    }
+
+    public static int index(String s, String t, int start) {
+        return s.indexOf(t, start);
+    }
+
+    public static String subString(String s, int start, int end) {
+        return s.substring(start, end);
+    }
+
+    public static String regex_match(String s, String regex) {
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(s);
+        ArrayList<String> arr = new ArrayList<String>();
+        while(m.find()) {
+            arr.add(m.group());
+        }
+        System.out.println(arr);
+        return new JSONArray(arr).toString();
+    }
 
     public static String replace(String s, String f, String r) {
         String t = s;
