@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.lappsgrid</groupId>
     <artifactId>edu.brandeis.cs.json2json</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>n</version>
 
     <packaging>jar</packaging>
 
@@ -18,7 +17,8 @@
         <url>https://github.com/chunqishi/edu.brandeis.cs.json2json</url>
         <connection>scm:git:git://github.com/chunqishi/edu.brandeis.cs.json2json.git</connection>
         <developerConnection>scm:git:git@github.com:chunqishi/edu.brandeis.cs.json2json.git</developerConnection>
-    </scm>
+      <tag>y</tag>
+  </scm>
     <developers>
         <developer>
             <email>shicq@cs.brandeis.edu</email>
