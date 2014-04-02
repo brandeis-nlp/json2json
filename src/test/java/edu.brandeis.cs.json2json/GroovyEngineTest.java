@@ -6,11 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-public class JsonTemplateTest {
+public class GroovyEngineTest {
 
     String [] paths = new String []{
         "$.store.book[*].author",
@@ -42,9 +38,11 @@ public class JsonTemplateTest {
             "}";
 
     String[] tempatePaths = new String []{
-            "&$.@context.homepage.*",
+            "&$.@context.homepage.*[0]",
             "&$.homepage"
     };
+
+
 
     @Before
     public void setup() throws Exception{
@@ -55,28 +53,40 @@ public class JsonTemplateTest {
     public void tear() {}
 
     @Test
-    public void testRegex() throws Exception{
-        for(String path: paths) {
-            boolean isMatch = Pattern.matches(Template.JsonPathRegex, path);
-            Assert.assertTrue(isMatch);
-        }
+    public void test(){
+        System.out.println();
+        String filter = "%+(\"hello\",\"world\") ";
+        String t = GroovyEngine.runFilter(filter);
+        Assert.assertEquals("helloworld",t);
 
-        String [] finds = Template.findJsonPath(jsonTemplate);
-        System.out.println(Arrays.toString(finds));
-        for(int i = 0; i < finds.length; i++){
-            Assert.assertEquals(tempatePaths[i], finds[i]);
-        }
 
-        Map<String, Object> map = Template.findJsonPathContent(jsonTemplate, json);
-        String target = jsonTemplate;
-        for(String path: map.keySet()) {
-            String content = map.get(path).toString();
-            System.out.println(path);
-            System.out.println(content);
-            System.out.println(jsonTemplate.indexOf(path));
-            target =  StringProxy.replace(target, path, content);
-        }
-        System.out.println(target);
+
+        filter = "%|(\"http://manu.sporny.org/\",\"\\\\.\")";
+        t = GroovyEngine.runFilter(filter);
+        Assert.assertEquals("[\"http://manu\",\"sporny\",\"org/\"]",t);
+
+        filter = "%|(\"hello.world\", \"\\\\.\") ";
+        t = GroovyEngine.runFilter(filter);
+        Assert.assertEquals("[\"hello\",\"world\"]",t);
+
+        filter = "%*(\"[\\\"hello\\\",\\\"world\\\"]\", \".\")";
+        t = GroovyEngine.runFilter(filter);
+        Assert.assertEquals("hello.world",t);
+
+        filter = "%%(\"hello.world\",\"[a-z]+\")";
+        t = GroovyEngine.runFilter(filter);
+        Assert.assertEquals("[\"hello\",\"world\"]",t);
+
+        filter = "%%(%*(%|(\"hello.world\", \"\\\\.\"), \"x\"),\"[a-z]+\")";
+        t = GroovyEngine.runFilter(filter);
+        Assert.assertEquals("[\"helloxworld\"]",t);
+
+
+
+        String iterate = "%|(%-([\"hello\", \".world\"]){ %r += %e;},\"\\\\.\")";
+        t = GroovyEngine.runFilter(iterate);
+        Assert.assertEquals("[\"hello\",\"world\"]",t);
+
     }
     
 }

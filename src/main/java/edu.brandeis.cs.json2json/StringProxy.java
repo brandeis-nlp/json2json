@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,7 +17,18 @@ import java.util.regex.Pattern;
  */
 public class StringProxy {
 
-//
+    public static HashMap<String,String> Proxy = new HashMap<String, String>();
+    static {
+        Proxy.put("%+","concat");
+        Proxy.put("%|","split");
+        Proxy.put("%*","join");
+        Proxy.put("%?","index");
+        Proxy.put("%_","substring");
+        Proxy.put("%%","regex_match");
+        Proxy.put("%/","regex_replace");
+        Proxy.put("%#","replace");
+    }
+
     public static String split(String s, String sep) {
         String [] arr = s.split(sep);
 //        System.out.println(Arrays.toString(arr));
@@ -46,8 +58,16 @@ public class StringProxy {
         return s.indexOf(t, start);
     }
 
-    public static String subString(String s, int start, int end) {
+    public static String substring(String s, int start, int end) {
         return s.substring(start, end);
+    }
+
+
+
+    public static boolean regex_contains(String s, String regex) {
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(s);
+        return m.find();
     }
 
     public static String regex_match(String s, String regex) {
@@ -57,8 +77,14 @@ public class StringProxy {
         while(m.find()) {
             arr.add(m.group());
         }
-        System.out.println(arr);
+//        System.out.println(arr);
         return new JSONArray(arr).toString();
+    }
+
+
+
+    public static String regex_replace(String s, String regex, String rep) {
+        return s.replaceAll(regex, rep);
     }
 
     public static String replace(String s, String f, String r) {
