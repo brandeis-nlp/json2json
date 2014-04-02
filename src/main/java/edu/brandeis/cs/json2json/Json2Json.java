@@ -11,6 +11,7 @@ public class Json2Json {
         for (int i = 0; i < InitialSize; i ++)
             try {
                 cacheJsonPath.put(new Json2JayWay());
+                cacheJsonTemplate.put(new Template());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

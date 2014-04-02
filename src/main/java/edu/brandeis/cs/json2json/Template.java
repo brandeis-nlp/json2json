@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * Created by shi on 3/31/14.
  */
 public class Template implements ITemplate {
-    public static final String JsonFilterRegex = "%[\\+\\|\\*\\?_%/-]\\(\\.+";
+    public static final String JsonFilterRegex = "%[\\+\\|\\*\\?_%/-]\\(.+";
     public static final String JsonPathRegex = "\\$\\.[^\\s\"\'\\\\,]+";
     public static final String JsonPathTemplateRegex = "&\\d*" + JsonPathRegex;
     public static final Pattern TemplatePathPattern = Pattern.compile(JsonPathTemplateRegex);
@@ -44,6 +44,10 @@ public class Template implements ITemplate {
                 iterateJson((JSONObject)val,  map);
             } else if (val instanceof  String) {
                 String s = ((String) val).trim();
+                System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                System.out.println("s = " + s);
+                System.out.println("JsonPathTemplateRegex: " + StringProxy.regex_contains(s, JsonPathTemplateRegex));
+                System.out.println("JsonFilterRegex: " + StringProxy.regex_contains(s, JsonFilterRegex));
                 if(StringProxy.regex_contains(s, JsonPathTemplateRegex) || StringProxy.regex_contains(s, JsonFilterRegex)) {
                     map.put((String)val, s.substring(0,2));
                 }
@@ -54,7 +58,7 @@ public class Template implements ITemplate {
 
 
     public  static HashMap<String,String> iterateJson (String json) {
-//        System.out.println(json);
+        System.out.println("json: " + json);
         JSONObject jObject = new JSONObject(json.trim());
         return iterateJson(jObject, new HashMap<String,String>());
     }
@@ -64,21 +68,21 @@ public class Template implements ITemplate {
     public String transform(String template, String... jsons) throws Json2JsonException {
         String target = template;
         HashMap<String, String> map = iterateJson(target);
-//        System.out.println("<--------------------------");
-//        System.out.println("map:" + map);
+        System.out.println("<--------------------------");
+        System.out.println("map:" + map);
         for(String key: map.keySet()){
             String val = transform_path(key, jsons);
-//            System.out.println("key:[" + key + "]");
-//            System.out.println("val:[" + val + "]");
+            System.out.println("key:[" + key + "]");
+            System.out.println("val:[" + val + "]");
             val = GroovyEngine.runFilter(val);
-//            System.out.println("filter:" + val);
+            System.out.println("filter:" + val);
             if (!val.startsWith("[") && !val.startsWith("{")) {
                 val = JSONObject.quote(val);
             }
             target = StringProxy.replace(target, JSONObject.quote(key), val);
         }
-//        System.out.println("target:" + target);
-//        System.out.println("-------------------------->");
+        System.out.println("target:" + target);
+        System.out.println("-------------------------->");
         return target;
     }
 

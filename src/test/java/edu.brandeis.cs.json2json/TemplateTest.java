@@ -61,6 +61,18 @@ public class TemplateTest {
             "\"homepage\": \"http://manu-sporny-org/\"\n" +
             "}";
 
+    String jsonTemplate2 = "{\n" +
+            "\"@context\": { \"homepage\": \"&$.@context.homepage.* \" },\n" +
+            "\"homepage\": \"%*(%|(&$.homepage,\\\"\\\\\\\\.\\\"), \\\"-\\\")\",\n" +
+            "\"name\": \"%|(%-([\\\"hello\\\", \\\".world\\\"]){ %r += %e;},\\\"\\\\\\\\.\\\")\"\n" +
+            "}";
+
+    String jsonTrans2 = "{\n" +
+            "\"@context\": { \"homepage\": [\"@id\",\"http:\\/\\/schema.org\\/url\"] },\n" +
+            "\"homepage\": \"http://manu-sporny-org/\",\n" +
+            "\"name\": [\"hello\",\"world\"]\n" +
+            "}";
+
 
     @Before
     public void setup() throws Exception{
@@ -72,8 +84,9 @@ public class TemplateTest {
 
     @Test
     public void test() throws Exception{
+        String target = null;
         Template template = new Template();
-        String target = template.transform(jsonTemplate, json);
+        target = template.transform(jsonTemplate, json);
 //        System.out.println(target);
         Assert.assertEquals(jsonTrans, target);
 
@@ -81,6 +94,10 @@ public class TemplateTest {
         target = template.transform(jsonTemplate1, json);
 //        System.out.println(target);
         Assert.assertEquals(jsonTrans1, target);
+
+        target = Json2Json.transform(jsonTemplate2, json);
+        System.out.println(target);
+        Assert.assertEquals(jsonTrans2, target);
     }
 
 //    @Test
