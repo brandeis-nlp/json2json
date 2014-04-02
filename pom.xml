@@ -4,8 +4,10 @@
 
     <groupId>org.lappsgrid</groupId>
     <artifactId>edu.brandeis.cs.json2json</artifactId>
-    <version>n</version>
+    <version>0.1-SNAPSHOT</version>
 
+    <name>Json2Json: Template Based Json Transform</name>
+    <description></description>
     <packaging>jar</packaging>
 
 
