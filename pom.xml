@@ -26,6 +26,10 @@
             <id>anc-releases</id>
             <url>http://www.anc.org:8080/nexus/content/repositories/releases/</url>
         </repository>
+        <snapshotRepository>
+            <id>anc-snapshots</id>
+            <url>http://www.anc.org:8080/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <developers>
@@ -204,32 +208,32 @@
     </build>
 
     <profiles>
-        <profile>
-            <id>releases</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6</version>
-                        <executions>
-                            <execution>
-                                <id>default-deploy</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>deploy</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <serverId>anc-releases</serverId>
-                            <nexusUrl>http://www.anc.org:8080/nexus/</nexusUrl>
-                            <skipStaging>true</skipStaging>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+        <!--<profile>-->
+            <!--<id>releases</id>-->
+            <!--<build>-->
+                <!--<plugins>-->
+                    <!--<plugin>-->
+                        <!--<groupId>org.sonatype.plugins</groupId>-->
+                        <!--<artifactId>nexus-staging-maven-plugin</artifactId>-->
+                        <!--<version>1.6</version>-->
+                        <!--<executions>-->
+                            <!--<execution>-->
+                                <!--<id>default-deploy</id>-->
+                                <!--<phase>deploy</phase>-->
+                                <!--<goals>-->
+                                    <!--<goal>deploy</goal>-->
+                                <!--</goals>-->
+                            <!--</execution>-->
+                        <!--</executions>-->
+                        <!--<configuration>-->
+                            <!--<serverId>anc-releases</serverId>-->
+                            <!--<nexusUrl>http://www.anc.org:8080/nexus/</nexusUrl>-->
+                            <!--<skipStaging>true</skipStaging>-->
+                        <!--</configuration>-->
+                    <!--</plugin>-->
+                <!--</plugins>-->
+            <!--</build>-->
+        <!--</profile>-->
 
         <profile>
             <id>deploy</id>
