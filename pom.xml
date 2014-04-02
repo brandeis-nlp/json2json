@@ -17,9 +17,9 @@
     </issueManagement>
     <scm>
         <url>https://github.com/chunqishi/edu.brandeis.cs.json2json</url>
-        <connection>scm:git:git://github.com/chunqishi/edu.brandeis.cs.json2json.git</connection>
-        <developerConnection>scm:git:git@github.com:chunqishi/edu.brandeis.cs.json2json.git</developerConnection>
-      <tag>v0.1</tag>
+        <connection>scm:git:https://github.com/chunqishi/edu.brandeis.cs.json2json.git</connection>
+        <developerConnection>scm:git:https://github.com:chunqishi/edu.brandeis.cs.json2json.git</developerConnection>
+        <tag>v0.1</tag>
     </scm>
     <distributionManagement>
         <repository>
