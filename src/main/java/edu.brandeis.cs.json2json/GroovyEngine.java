@@ -112,7 +112,7 @@ public class GroovyEngine {
                     aisb.append(ai.each).append(", ").append(ai.index);
                     aisb.append(" -> ").append(ai.scon).append("};");
                     GroovyShell shell = new GroovyShell(binding);
-                    System.out.println(aisb.toString());
+//                    System.out.println(aisb.toString());
                     shell.evaluate(aisb.toString());
                     String ret = binding.getVariable(ai.ret).toString();
                     sb.append("\"").append(ret).append("\"");

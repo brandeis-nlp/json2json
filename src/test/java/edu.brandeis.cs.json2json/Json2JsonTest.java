@@ -30,7 +30,7 @@ public class Json2JsonTest {
         j2j = new Json2JayWay();
         for(int i = 0; i < 100; i++) {
             String target = j2j.path(json, "$.Items.Item[2].ItemLinks");
-            System.out.println(target);
+//            System.out.println(target);
         }
         end = System.currentTimeMillis();
         System.out.print(Json2JayWay.class.getSimpleName() + "\t");
