@@ -1,8 +1,5 @@
 package edu.brandeis.cs.json2json;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonMethod;
 import org.json.JSONArray;
 
 import java.io.IOException;

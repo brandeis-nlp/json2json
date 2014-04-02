@@ -379,11 +379,11 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
 
     <table  class="v"><tbody><tr>
         <th>Function</th><th>Definition</th><th>Example</th><th>Description</th> </tr><tr>
-        <td>Iteration Closure</td> <td><b>%-</b><em>(array)</em><b>{ </b>  <b> }</b> </td> <td></td><td></td></tr><tr>
+        <td>Iteration Closure</td> <td><b>%-</b><em>(array)</em><b>{ </b>  <b> }</b> </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td></td></tr><tr>
 
-        <td>Iteration Element Variable</td> <td>%-<em>(array)</em>{ <b>%i</b> } </td> <td></td><td></td></tr><tr>
+        <td>Iteration Element Variable</td> <td>%-<em>(array)</em>{ <b>%e</b>, <b>%i</b> } </td><td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td></td></tr><tr>
 
-        <td>Return Target Variable</td> <td>%-<em>(array)</em>{ <b>%r</b> } </td> <td></td><td></td>
+        <td>Return Target Variable</td> <td>%-<em>(array)</em>{ <b>%r</b> } </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td></td>
     </tr></tbody></table>
 
 
@@ -412,9 +412,34 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     <h3 class="reset">Implementation</h3>
     <ol>
         <li><p>Github Hold</p>
-
+            <a href="https://github.com/chunqishi/edu.brandeis.cs.json2json" target="_blank">https://github.com/chunqishi/edu.brandeis.cs.json2json</a>
         </li>
+        <li><p>Maven Dependency</p>
 
+            <code class="code prettyprint">
+            &lt;!-- ^^^^^^^^^^^^^^ JSON Path ^^^^^^^^^^^^^^^^^^^^^ --&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;com.jayway.jsonpath&lt;/groupId&gt;
+                &lt;artifactId&gt;json-path&lt;/artifactId&gt;
+                &lt;version&gt;0.9.1&lt;/version&gt;
+            &lt;/dependency&gt;
+            &lt;!-- =============================================  --&gt;
+            &lt;!-- ^^^^^^^^^^^^^^ JSON      ^^^^^^^^^^^^^^^^^^^^^ --&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.json&lt;/groupId&gt;
+                &lt;artifactId&gt;json&lt;/artifactId&gt;
+                &lt;version&gt;20140107&lt;/version&gt;
+            &lt;/dependency&gt;
+            &lt;!-- =============================================  --&gt;
+            &lt;!-- ^^^^^^^^^^^^^^ Groovy    ^^^^^^^^^^^^^^^^^^^^^ --&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.codehaus.groovy&lt;/groupId&gt;
+                &lt;artifactId&gt;groovy-console&lt;/artifactId&gt;
+                &lt;version&gt;2.0.1&lt;/version&gt;
+            &lt;/dependency&gt;
+            &lt;!-- =============================================  --&gt;
+            </code>
+        </li>
     </ol>
 
 <!----------------------------------------------------------------------->
@@ -429,89 +454,6 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     &lt;/dependency&gt;
     &lt;dependencies&gt;
 </code>
-
-<!--
-<table class="g">
-<thead>
-<th>name</th>
-<th>age</th>
-<th>sex</th>
-</thead>
-<tbody>
-<tr>
-<td> joan </td>
-<td> 24 </td>
-<td> f </td>
-</tr>
-<tr>
-<td> archie </td>
-<td> 29 </td>
-<td> m </td>
-</tr>
-<tr>
-<td> bella </td>
-<td> 45 </td>
-<td> f </td>
-</tr>
-</tbody>
-</table>
-
-
-<table class="h">
-<thead>
-<th>name</th>
-<th>age</th>
-<th>sex</th>
-</thead>
-<tbody>
-<tr>
-<td> joan </td>
-<td> 24 </td>
-<td> f </td>
-</tr>
-<tr>
-<td> archie </td>
-<td> 29 </td>
-<td> m </td>
-</tr>
-<tr>
-<td> bella </td>
-<td> 45 </td>
-<td> f </td>
-</tr>
-</tbody>
-</table>
-
-
-<table class="v">
-<thead>
-<th>name</th>
-<th>age</th>
-<th>sex</th>
-</thead>
-<tbody>
-<tr>
-<td> joan </td>
-<td> 24 </td>
-<td> f </td>
-</tr>
-<tr>
-<td> archie </td>
-<td> 29 </td>
-<td> m </td>
-</tr>
-<tr>
-<td> bella </td>
-<td> 45 </td>
-<td> f </td>
-</tr>
-</tbody>
-</table>
--->
-
-
-
-
 
 
 
