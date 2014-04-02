@@ -382,11 +382,11 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
 
     <table  class="v"><tbody><tr>
         <th>Function</th><th>Definition</th><th>Example</th><th>Description</th> </tr><tr>
-        <td>Iteration Closure</td> <td><b>%-</b><em>(array)</em><b>{ </b>  <b> }</b> </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td></td></tr><tr>
+        <td>Iteration Closure</td> <td><b>%-</b><em>(array)</em><b>{ </b>  <b> }</b> </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td>array: string type json array, e.g. ["hello","world"]</td></tr><tr>
 
-        <td>Iteration Element Variable</td> <td>%-<em>(array)</em>{ <b>%e</b>, <b>%i</b> } </td><td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td></td></tr><tr>
+        <td>Iteration Element Variable</td> <td>%-<em>(array)</em>{ <b>%e</b>, <b>%i</b> } </td><td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%e</b>: element; <b>%i</b>: index [0 .. n]; </td></tr><tr>
 
-        <td>Return Target Variable</td> <td>%-<em>(array)</em>{ <b>%r</b> } </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td></td>
+        <td>Return Target Variable</td> <td>%-<em>(array)</em>{ <b>%r</b> } </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%r</b>: return value.</td>
     </tr></tbody></table>
 
 
