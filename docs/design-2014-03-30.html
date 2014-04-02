@@ -413,6 +413,11 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     <ol>
         <li><p>Github Hold</p>
             <a href="https://github.com/chunqishi/edu.brandeis.cs.json2json" target="_blank">https://github.com/chunqishi/edu.brandeis.cs.json2json</a>
+
+            <samp class="sample">$
+                $ git clone https://github.com/chunqishi/edu.brandeis.cs.json2json.git <font style="color:blue">&crarr;</font>
+                $
+            </samp>
         </li>
         <li><p>Maven Dependency</p>
 
@@ -442,6 +447,42 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
         </li>
     </ol>
 
+    <h3>Examples</h3>
+
+    <code class="code prettyprint linenum">
+        String jsonTemplate = "{\n" +
+        "\"@context\": { \"homepage\": \"&$.@context.homepage.*\"  },\n" +
+        "\"homepage\": \"&$.homepage\"\n" +
+        "}";
+
+        String jsonTrans = "{\n" +
+        "\"@context\": { \"homepage\": [\"@id\",\"http:\\/\\/schema.org\\/url\"]  },\n" +
+        "\"homepage\": \"http://manu.sporny.org/\"\n" +
+        "}";
+
+        String jsonTemplate1 = "{\n" +
+        "\"@context\": { \"homepage\": \"&$.@context.homepage.* \" },\n" +
+        "\"homepage\": \"%*(%|(&$.homepage,\\\"\\\\\\\\.\\\"), \\\"-\\\")\"\n" +
+        "}";
+
+        String jsonTrans1 = "{\n" +
+        "\"@context\": { \"homepage\": [\"@id\",\"http:\\/\\/schema.org\\/url\"] },\n" +
+        "\"homepage\": \"http://manu-sporny-org/\"\n" +
+        "}";
+
+
+        @Test
+        public void test() throws Exception{
+        Template template = new Template();
+        String target = template.transform(jsonTemplate, json);
+        //        System.out.println(target);
+        Assert.assertEquals(jsonTrans, target);
+
+
+        target = template.transform(jsonTemplate1, json);
+        //        System.out.println(target);
+        Assert.assertEquals(jsonTrans1, target);
+        }</code>
 <!----------------------------------------------------------------------->
 <a name="deploy" />
 <h2>Deployment  <a href="#_top_" style="text-decoration: none;">^</a></h2>
@@ -463,7 +504,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
 <footer><hr/> 
 <p>
     Progress: 
-    <progress value="1" max="100"></progress></p>
+    <progress value="90" max="100"></progress></p>
 <p>
     Contacts: 
     <nonsense>shi</nonsense>cq@<nonsense>cs.</nonsense>brandeis.<nonsense></nonsense>edu,

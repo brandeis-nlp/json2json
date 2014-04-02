@@ -36,6 +36,11 @@ public class TemplateTest {
             "    \"homepage\": \"http://manu.sporny.org/\"\n" +
             "    }";
 
+    String[] tempatePaths = new String []{
+            "&$.@context.homepage.*",
+            "&$.homepage"
+    };
+
     String jsonTemplate = "{\n" +
             "\"@context\": { \"homepage\": \"&$.@context.homepage.*\"  },\n" +
             "\"homepage\": \"&$.homepage\"\n" +
@@ -56,10 +61,6 @@ public class TemplateTest {
             "\"homepage\": \"http://manu-sporny-org/\"\n" +
             "}";
 
-    String[] tempatePaths = new String []{
-            "&$.@context.homepage.*",
-            "&$.homepage"
-    };
 
     @Before
     public void setup() throws Exception{
