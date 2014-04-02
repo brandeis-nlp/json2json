@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.lappsgrid</groupId>
-    <artifactId>edu.brandeis.cs.json2json</artifactId>
+    <artifactId>json2json</artifactId>
     <version>0.1-SNAPSHOT</version>
 
     <name>Json2Json: Template Based Json Transform</name>
