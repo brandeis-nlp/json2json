@@ -56,7 +56,7 @@ public class StringProxyTest {
 
     @Test
     public void test(){
-        String t = StringProxy.split("hello.world", "\\.");
+        String t = StringProxy.split("hello.world", ".");
         Assert.assertEquals("[\"hello\",\"world\"]",t);
 
         t = StringProxy.join("[\"hello\",\"world\"]", ".");

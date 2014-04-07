@@ -61,11 +61,11 @@ public class GroovyEngineTest {
 
 
 
-        filter = "%|(\"http://manu.sporny.org/\",\"\\\\.\")";
+        filter = "%|(\"http://manu.sporny.org/\",\".\")";
         t = GroovyEngine.runFilter(filter);
         Assert.assertEquals("[\"http://manu\",\"sporny\",\"org/\"]",t);
 
-        filter = "%|(\"hello.world\", \"\\\\.\") ";
+        filter = "%|(\"hello.world\", \".\") ";
         t = GroovyEngine.runFilter(filter);
         Assert.assertEquals("[\"hello\",\"world\"]",t);
 
@@ -77,13 +77,13 @@ public class GroovyEngineTest {
         t = GroovyEngine.runFilter(filter);
         Assert.assertEquals("[\"hello\",\"world\"]",t);
 
-        filter = "%%(%*(%|(\"hello.world\", \"\\\\.\"), \"x\"),\"[a-z]+\")";
+        filter = "%%(%*(%|(\"hello.world\", \".\"), \"x\"),\"[a-z]+\")";
         t = GroovyEngine.runFilter(filter);
         Assert.assertEquals("[\"helloxworld\"]",t);
 
 
 
-        String iterate = "%|(%-([\"hello\", \".world\"]){ %r += %e;},\"\\\\.\")";
+        String iterate = "%|(%-([\"hello\", \".world\"]){ %r += %e;},\".\")";
         t = GroovyEngine.runFilter(iterate);
         Assert.assertEquals("[\"hello\",\"world\"]",t);
 

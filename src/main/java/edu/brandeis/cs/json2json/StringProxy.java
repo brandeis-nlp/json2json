@@ -14,6 +14,10 @@ import java.util.regex.Pattern;
  */
 public class StringProxy {
 
+    public static void main (String[]args) {
+        System.out.println(split("hello.world", "."));
+    }
+
     public static HashMap<String,String> Proxy = new HashMap<String, String>();
     static {
         Proxy.put("%+","concat");
@@ -22,11 +26,38 @@ public class StringProxy {
         Proxy.put("%?","index");
         Proxy.put("%_","substring");
         Proxy.put("%%","regex_match");
-        Proxy.put("%/","regex_replace");
-        Proxy.put("%#","replace");
+        Proxy.put("%%/","regex_replace");
+        Proxy.put("%%|","regex_split");
+        Proxy.put("%/","replace");
+
     }
 
+//    public static String split(String s, String sep) {
+//        String [] arr = s.split(Pattern.quote(sep));
+//        return new JSONArray(arr).toString();
+//    }
+
+
     public static String split(String s, String sep) {
+        String t = s;
+        int end = s.indexOf(sep);
+        int start = 0;
+        ArrayList<String> list = new ArrayList<String>();
+        while (end >= 0) {
+            if(end > start) {
+                list.add(s.substring(start, end));
+            }
+            start = end + sep.length();
+            end = s.indexOf(sep, start);
+        }
+        if (start < s.length()) {
+            list.add(s.substring(start));
+        }
+        String [] arr = list.toArray(new String[list.size()]);
+        return new JSONArray(arr).toString();
+    }
+
+    public static String regex_split(String s, String sep) {
         String [] arr = s.split(sep);
 //        System.out.println(Arrays.toString(arr));
         return new JSONArray(arr).toString();
@@ -83,6 +114,10 @@ public class StringProxy {
     public static String regex_replace(String s, String regex, String rep) {
         return s.replaceAll(regex, rep);
     }
+
+//    public static String replace(String s, String f, String rep) {
+//        return s.replaceAll(Pattern.quote(f), rep);
+//    }
 
     public static String replace(String s, String f, String r) {
         String t = s;

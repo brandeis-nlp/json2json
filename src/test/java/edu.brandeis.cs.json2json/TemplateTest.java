@@ -53,7 +53,7 @@ public class TemplateTest {
 
     String jsonTemplate1 = "{\n" +
             "\"@context\": { \"homepage\": \"&$.@context.homepage.* \" },\n" +
-            "\"homepage\": \"%*(%|(&$.homepage,\\\"\\\\\\\\.\\\"), \\\"-\\\")\"\n" +
+            "\"homepage\": \"%*(%|(&$.homepage,\\\".\\\"), \\\"-\\\")\"\n" +
             "}";
 
     String jsonTrans1 = "{\n" +
@@ -63,8 +63,8 @@ public class TemplateTest {
 
     String jsonTemplate2 = "{\n" +
             "\"@context\": { \"homepage\": \"&$.@context.homepage.* \" },\n" +
-            "\"homepage\": \"%*(%|(&$.homepage,\\\"\\\\\\\\.\\\"), \\\"-\\\")\",\n" +
-            "\"name\": \"%|(%-([\\\"hello\\\", \\\".world\\\"]){ %r += %e;},\\\"\\\\\\\\.\\\")\"\n" +
+            "\"homepage\": \"%*(%|(&$.homepage,\\\".\\\"), \\\"-\\\")\",\n" +
+            "\"name\": \"%|(%-([\\\"hello\\\", \\\".world\\\"]){ %r += %e;},\\\".\\\")\"\n" +
             "}";
 
     String jsonTrans2 = "{\n" +
