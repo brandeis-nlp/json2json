@@ -421,50 +421,50 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
         <!--{"%!!<em>mysplit</em>" : [ ["%str", "%sep"], {"<em>%!a</em>":[]}, [ {"%a" : {"%|":["%str", "%sep"]}}], "%a" ]}-->
     </td><td>This is rename filter <b>"%|"</b> as <em>mysplit</em>. We can call <em>mysplit</em> function by {"%mysplit":["hello.world", "."]}</td></tr><tr>
     <td style="color:green">Process</td><td style="color:green"><pre>{"<b>%!keyword</b>" : {
-    "%glob" : <em>$global</em>,
     "%def"  : {$initialization},
+    "%glob" : <em>$global</em>,
     "%proc" : [{$Process}, ...],
     "%ret"  : $return-object
     }
 }</pre></td><td style="color:green">%!symbol <br>%()<br> %$<br> %{}<br> %# </td>
         <td style="color:green"><pre>{"<b>%!symbol</b>" : {
-    "%()" : <em>$global</em>,
     "%$"  : {$initialization},
+    "%()" : <em>$global</em>,
     "%{}" : [{$Process}, ...],
     "%#"  : $return-object
     }
 }</pre></td><td></td></tr><tr>
     <td>If-Then-Else</td><td><pre>{"<b>%!if</b>" : {
-    "%expr" : <em>$expression</em>,
     "%def"  : {$initialization},
+    "%expr" : <em>$expression</em>,
     "%if"   : [$if-steps, ...] ,
     "%else" : [$else-steps, ...],
     "%ret"  : $return-object } }</pre></td>
-        <td>%!? <br> %()<br> %$<br> %if<br> %else<br> %#</td> <td><pre>{"%!?": {
-    "%()"   : { "==": [ "&$.name", "OpenNLP" ]},
+        <td>%!? <br> %<><br> %$<br> %if<br> %else<br> %#</td> <td><pre>{"%!?": {
     "%$"    : {   "%!id": "" },
+    "%<>"   : { "==": [ "&$.name", "OpenNLP" ]},
     "%if"   : { "%id": "http://www.opennlp.org"},
     "%else" : { "%id": "http://unknown.org" },
     "%#"    : "%id" } }       </pre></td><td>define number, string, map, and array</td></tr><tr>
     <td>For-Each</td><td><pre>{"<b>%!for</b>" :
-    "%iter"    : [$iterable, $index, $each],
     "%def"     : {$initialization},
-    "%foreach" : [{$each-process}, ...] ,
-    "%ret"     : $return-object }}</pre></td><td>%!*<br> %()<br> %$<br> %foreach<br> %#</td> <td><pre>{"%!*": {
-    "%()"      : [ ["hello", "world"], "%i", "%e"],
+    "%iter"    : [$iterable, $index, $each],
+    "%each"    : [{$each-process}, ...] ,
+    "%ret"     : $return-object }}</pre></td><td>%!*<br> %[]<br> %$<br> %each<br> %#</td> <td><pre>{"%!*": {
     "%$"       : {   "%!s": "" },
-    "%foreach" : {"%+": ["%s", "%e"]},
+    "%[]"      : [ ["hello", "world"], "%i", "%e"],
+    "%each" : {"%+": ["%s", "%e"]},
     "%#"       : "%s" } }       </pre></td><td>define number, string, map, and array</td></tr><tr>
 
     <td>While</td><td><pre>{"<b>%!while</b>" :
     "%def"     : {$initialization},
     "%expr"    :  <em>$expression</em>,
-    "%while" : [{$each-process}, ...] ,
-    "%ret"     : $return-object }}</pre></td><td>%!~<br> %()<br> %$<br> %while<br> %#</td> <td><pre>{"%!*": {
-    "%$"       : {   "%!s": "" },
-    "%()"      : {"<":[ {"%#": "%s"}, 200]},
-    "%while" : {"%+": ["%s", " next"]},
-    "%#"       : "%s" } }       </pre></td><td>define number, string, map, and array</td></tr><tr>
+    "%do" : [{$each-process}, ...] ,
+    "%ret"  : $return-object }}</pre></td><td>%!~<br> %<><br> %$<br> %do<br> %#</td> <td><pre>{"%!~": {
+    "%$"    : {   "%!s": "" },
+    "%<>"   : {"<":[ {"%#": "%s"}, 200]},
+    "%do"   : {"%+": ["%s", " next"]},
+    "%#"    : "%s" } }       </pre></td><td>define number, string, map, and array</td></tr><tr>
         <!--<td>Iteration Closure</td> <td><b>%-</b><em>(array)</em><b>{ </b>  <b> }</b> </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td>array: string type json array, e.g. ["hello","world"]</td></tr><tr>-->
 
     <!--<td>Iteration Element Variable</td> <td>%-<em>(array)</em>{ <b>%e</b>, <b>%i</b> } </td><td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%e</b>: element; <b>%i</b>: index [0 .. n]; </td></tr><tr>-->
