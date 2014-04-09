@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * Created by shi on 3/31/14.
  */
 public class Template implements ITemplate {
-    public static final String JsonFilterRegex = "%[\\+\\|\\*\\?_%/-]\\(.+";
+    public static final String JsonFilterRegex = "%[\\+\\|\\*\\?_%/-=][\\|/]?\\(.+";
     public static final String JsonPathRegex = "\\$\\.[^\\s\"\'\\\\,]+";
     public static final String JsonPathTemplateRegex = "&\\d*" + JsonPathRegex;
     public static final Pattern TemplatePathPattern = Pattern.compile(JsonPathTemplateRegex);

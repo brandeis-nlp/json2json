@@ -13,11 +13,6 @@ import java.util.regex.Pattern;
  * Created by shi on 3/31/14.
  */
 public class StringProxy {
-
-    public static void main (String[]args) {
-        System.out.println(split("hello.world", "."));
-    }
-
     public static HashMap<String,String> Proxy = new HashMap<String, String>();
     static {
         Proxy.put("%+","concat");
@@ -25,11 +20,11 @@ public class StringProxy {
         Proxy.put("%*","join");
         Proxy.put("%?","index");
         Proxy.put("%_","substring");
+        Proxy.put("%/","replace");
         Proxy.put("%%","regex_match");
         Proxy.put("%%/","regex_replace");
         Proxy.put("%%|","regex_split");
-        Proxy.put("%/","replace");
-
+        Proxy.put("%&","jsonpath");
     }
 
 //    public static String split(String s, String sep) {
@@ -59,7 +54,6 @@ public class StringProxy {
 
     public static String regex_split(String s, String sep) {
         String [] arr = s.split(sep);
-//        System.out.println(Arrays.toString(arr));
         return new JSONArray(arr).toString();
     }
 
@@ -109,7 +103,13 @@ public class StringProxy {
         return new JSONArray(arr).toString();
     }
 
-
+    public static String jsonpath(String json, String jsonpath) {
+        try {
+            return Json2Json.path(json, jsonpath);
+        } catch (Json2JsonException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static String regex_replace(String s, String regex, String rep) {
         return s.replaceAll(regex, rep);

@@ -59,6 +59,10 @@ public class StringProxyTest {
         String t = StringProxy.split("hello.world", ".");
         Assert.assertEquals("[\"hello\",\"world\"]",t);
 
+
+        t = StringProxy.regex_split("hello.world", ".l");
+        Assert.assertEquals("[\"h\",\"lo.wo\",\"d\"]",t);
+
         t = StringProxy.join("[\"hello\",\"world\"]", ".");
         Assert.assertEquals("hello.world",t);
 
@@ -67,6 +71,14 @@ public class StringProxyTest {
 
         t = StringProxy.regex_match("hello.world", "[a-z]+");
         Assert.assertEquals("[\"hello\",\"world\"]",t);
+
+
+        t = StringProxy.regex_replace("hello.world", ".l", "-");
+        Assert.assertEquals("h-lo.wo-d",t);
+
+        t = StringProxy.jsonpath("{\"hello\" : 1,  \"world\" : 2 }", "$.hello");
+        Assert.assertEquals("1",t);
+
     }
     
 }

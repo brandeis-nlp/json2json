@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<html>
+    <meta charset="utf-8" />
+    <head>
+<!--TODO: title -->    
+    <title>JOSN 2 JSON</title>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js" >  </script>     
+    <style>      
+        body, p, td, pre {
+            font-size: 14pt; }
+        
+        body {  
+            background-color:lightyellow; 
+            counter-reset: section subsection figure;}
+        
+        h1 {
+            text-align:center }
+        
+        h2 {
+            counter-increment: section; }    
+
+        h3 {
+            counter-increment: subsection; }
+        
+        h4 {
+            counter-increment: figure; }
+        
+        h2:before {
+            content:counter(section) ". "; }
+        
+        h3:before {
+            content:counter(section) "." counter(subsection) " "; }
+        
+        h4:before{
+            content:"Fig. " counter(section) "." counter(figure) " - ";}
+        
+        .reset {
+            counter-reset:subsection figure;}
+        
+        .nav-bar{
+            list-style-type:none;
+            margin:0;
+            padding:0; }
+        
+        img {
+            margin-left: 10pt;
+            border: thin solid gray; }
+        
+        .sample { 
+            background-color: black;
+            font-size: 12pt;
+            color:white;
+            padding: 4pt;
+            margin-left: 10pt;
+            margin-right: 30pt; 
+            display: block;
+            white-space: pre-line;}
+        
+        .code { 
+            padding: 4pt;
+            font-size: 12pt;
+            background-color: whitesmoke;
+            border: thin dotted gray;
+            margin-left: 10pt;
+            margin-right: 30pt; 
+            display: block; 
+            white-space: pre-line;}
+        
+        .author {
+            font-size: 16pt; 
+            text-align:center;}
+
+
+        /*  grid tables  */
+        table.g {
+            margin: 8px;
+            border-width: 1px;
+            border-color: gray;
+            border-collapse: collapse; }
+
+        table.g th {
+            border-width: 1px;
+            padding: 8px 8px 8px 8px;
+            border-style: solid;
+            border-color: gray;
+            background-color: lightyellow; }
+
+        table.g td {
+            text-align:center;
+            border-width: 1px;
+            padding: 8px 8px 8px 8px;
+            border-style:solid;
+            border-color: gray;
+            background-color: #ffffff; }
+
+        /*  vertical tables  */
+        table.v {
+            margin: 8px;
+            border-collapse: collapse; }
+
+        table.v thead {
+            border-right: 10px solid;
+            border-left: 10px solid;
+            background: #fc9;
+            border-color: #fc9;}
+
+        table.v th {
+            padding: 4px 20px 4px 20px;
+            border: 1px #fff solid; }
+
+        table.v tbody{
+            text-align:left;
+            border-right: 10px solid;
+            border-left: 10px solid;
+            border-color: #adf;
+            background: #adf;
+            vertical-align: top; }
+
+        table.v td {
+            padding:  4px 20px 4px 20px;
+            border: 1px #fff solid; }
+
+        /*  horizontal tables  */
+        table.h {
+            margin: 8px;
+            border-collapse:collapse; }
+
+        table.h th {
+            padding:  4px 40px 4px 40px;
+            border:1px solid #98bf21;
+            background-color:#A7C942;
+            color:#fff; }
+
+        table.h td {
+            text-align:center;
+            border:1px solid #98bf21;
+            padding: 4px 40px 4px 40px; }
+
+        table.h tr.alt td {
+            color:#000;
+            background-color:#EAF2D3; }
+        /**
+            http://learnlayout.com/inline-block.html
+            http://www.w3schools.com/cssref/css_colornames.asp
+        **/
+
+        div.link {
+            display: inline-block;
+            width: 80px;
+            height: 100px;
+            position: relative;
+            text-align:center;
+            vertical-align: middle; }
+
+        div.black {
+            border-color: Black ;
+            border-width: 2px; }
+
+        div.black span.h {
+            background-color: Black       ;
+            color: Snow ;  }
+
+        div.white {
+            border-color: Lavender  ;
+            border-width: 2px; }
+
+        div.white span.h {
+            background-color: Snow       ;
+            color: Black ; }
+
+        div.red {  border-color: HotPink }
+
+        div.red span.h {
+            background-color: HotPink;
+            color: LightCyan;         }
+
+        div.yellow { border-color: GoldenRod  }
+
+        div.yellow span.h {
+            background-color: GoldenRod    ;
+            color: Azure ;         }
+
+        div.blue { border-color: DodgerBlue }
+
+        div.blue span.h {
+            background-color: DodgerBlue     ;
+            color: Snow ;  }
+
+        div.green { border-color: ForestGreen }
+
+        div.green span.h {
+            background-color: MediumSeaGreen    ;
+            color: Ivory   ; }
+
+        div.box {
+            display: inline-block;
+            width: 200px;
+            height: 100px;
+            margin: 8px;
+                border-style:solid;
+            border-width: 1.5px;
+            position: relative;
+            text-align:center;
+            vertical-align: middle;  }
+
+        div.box span.h {
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align:left;
+            padding: 1px 2px 2px 1px;
+            position: absolute;
+            font-weight:bold;
+            line-height: 1em;  }
+
+        </style></head>
+<body>
+    <a name="_top_" />
+    <nav class="nav-bar">
+        <a href="#design">design</a>
+        | 
+        <a href="#program">program</a>
+        |
+        <a href="#deploy">deploy</a>
+        |
+        <a href="https://github.com/chunqishi/edu.brandeis.cs.json2json/issues" target="_blank">report bugs</a>
+    </nav>
+
+
+
+
+<!--TODO: title -->    
+    <h1>Json2Json:  Template Based Json Transform</h1>
+    <p class="author">
+ Version <var>0.02</var>,
+        <!--<ruby>史 春奇 <rt> Chunqi Shi</rt></ruby>,  -->
+        Apr. 2014</p>
+
+
+<!----------------------------------------------------------------------->
+<a name="design" />
+<h2>Json Path based Template</h2>
+
+Here we discuss about how Json data can be transformed into another Json data.
+    Here are several issues.
+<ol>
+    <li>How to read data from source Json?</li>
+    <li>How to fill data into target Json?</li>
+    <li>How to filer the data?</li>
+</ol>
+
+
+Since Json can be replacement of XML. One solution of XML to XML transformation is called XSL Transformations(XSLT).
+    However NO Json transformation is popular. But the key idea is mapping and filter data from source to target.
+    From this direction, we can get the source data, filter it, and put it into target position. To realize this,
+
+    <ol>
+        <li>Json Path is a nice solution for get the source data.</li>
+        <li>Json Template is a nice solution to tell the position of target data.</li>
+        <li>String based function (<em>concatenate</em>, <em>split</em>, <em>join</em>, <em>index</em>, <em>substring</em>,
+            <em>regex-match</em>, <em>regex-replace</em> ) can be filter tool.</li>
+    </ol>
+
+
+<h3>What is JsonPath?</h3>
+    JsonPath is totally a replacement of <a href="http://en.wikipedia.org/wiki/XPath_2.0" target="_blank"> XPath</a>.
+    The idea of XPath is <b>tree representation</b> of the formatted data.
+
+    <p>Here is a complete overview and a side by side comparison of the JSONPath syntax elements with its XPath counterparts.</p>
+    <table  class="v"><tbody><tr><td> <strong>XPath</strong> </td><td> <strong>JSONPath</strong> </td><td> <strong>Description</strong> </td></tr>
+    <tr><td> / </td><td> $ </td><td>the root object/element </td></tr>
+    <tr><td> . </td><td> @ </td><td>the current object/element </td></tr>
+    <tr><td> / </td><td> . or [] </td><td>child operator </td></tr>
+    <tr><td> .. </td><td> n/a </td><td>parent operator </td></tr>
+    <tr><td> // </td><td> .. </td><td>recursive descent. JSONPath borrows this syntax from E4X. </td></tr>
+    <tr><td> * </td><td> * </td><td>wildcard. All objects/elements regardless their names. </td></tr>
+    <tr><td> @ </td><td> n/a </td><td>attribute access. JSON structures don't have attributes. </td></tr>
+    <tr><td> [] </td><td> [] </td><td>subscript operator. XPath uses it to iterate over element collections and for <a href="http://www.w3.org/TR/xpath#predicates">predicates</a>. In Javascript and JSON it is the native array operator. </td></tr>
+    <tr><td> | </td><td> [,] </td><td>Union operator in XPath results in a combination of node sets. JSONPath allows alternate names or array indices as a set. </td></tr>
+    <tr><td> n/a </td><td> [start:end:step] </td><td>array slice operator borrowed from ES4. </td></tr>
+    <tr><td> [] </td><td> ?() </td><td>applies a filter (script) expression. </td></tr>
+    <tr><td> n/a </td><td> () </td><td>script expression, using the underlying script engine. </td></tr>
+    <tr><td> () </td><td> n/a </td><td>grouping in Xpath </td></tr></tbody></table>
+
+    <p>XPath has a lot more to offer (Location pathes in not abbreviated syntax, operators and functions) than listed here. Moreover there is a remarkable difference how the subscript operator works in Xpath and JSONPath.</p>
+
+<pre><code>
+    JSON_PATH:   ROOT ( CHILD | INDEX )*
+
+    ROOT:                   ROOT
+    CHILD:                  DOT_CHILD | ARRAY_CHILD
+    INDEX:                  ARRAY_OPEN ( INDEX_CHARACTER* | WILDCARD ) ARRAY_CLOSE
+    DOT_CHILD:              DOT SIMPLE_NAME
+    ARRAY_CHILD:            ARRAY_OPEN ( QUOTE COMPLEX_NAME QUOTE | DOUBLE_QUOTE COMPLEX_NAME DOUBLE_QUOTE ) ARRAY_CLOSE
+    SIMPLE_NAME:            SIMPLE_NAME_CHARACTER* | WILDCARD
+    COMPLEX_NAME:           COMPLEX_NAME_CHARACTER* | WILDCARD
+
+    COMPLEX_NAME_CHARACTER: LETTER | DIGIT | COMMA | HYPHEN | SPACE | UNDERSCORE
+    SIMPLE_NAME_CHARACTER:  LETTER | DIGIT | UNDERSCORE
+    INDEX_CHARACTER:        DIGIT | COMMA | SPACE
+    LETTER:                 [A-Za-z]
+    DIGIT:                  [0-9]
+
+    ARRAY_CLOSE:            ]
+    ARRAY_OPEN:             [
+    COMMA:                  ,
+    DOT:                    .
+    DOUBLE_QUOTE:           "
+    HYPHEN:                 -
+    QUOTE:                  '
+    ROOT:                   $
+    SPACE:                  ' '
+    UNDERSCORE:             _
+    WILDCARD:               *
+</code></pre>
+
+
+For an example, we have a Json data:
+<code class="code prettyprint linenums">{
+    "@context": {
+    "name": "http://schema.org/name",
+    "homepage": {
+    "@id": "http://schema.org/url",
+    "@type": "@id"
+    },
+    "image": {
+    "@id": "http://schema.org/image",
+    "@type": "@id"
+    }
+    },
+    "image": "http://manu.sporny.org/images/manu.png",
+    "name": "Manu Sporny",
+    "homepage": "http://manu.sporny.org/"
+}
+</code>
+
+<p></p>    and Json Path:
+<code class="code prettyprint linenums">$.@context.homepage.*</code>
+    <p></p>Then the results of the above Json Path will be:
+    <code class="code prettyprint linenums">[
+        "http://schema.org/url",
+        "@id"
+]
+    </code>
+<h3>What is Template?</h3>
+Template is Json data with key-value pairs.  The value could be JsonPath or normal properties.
+
+<code class="code  prettyprint linenums">
+{
+    "@context": { "&$.@context.homepage.*" },
+    "homepage": "&$.homepage"
+}
+</code>
+
+    <table  class="v"><tbody><tr>
+    <th>Definition</th><th>Example</th><th>Description</th> </tr><tr>
+    <td><b>&</b><em>path</em></td><td>"&$.homepage"</td><td>Reference of JsonPath of default source Json.</td> </tr><tr>
+    <td>&<b>integer</b><em>path</em></td><td>"&2$.homepage"</td><td>Reference of JsonPath of the <b>2nd</b> source Json.</td> </tr><tr>
+    <td>&<b>int1</b><em>path1</em><b>string</b>&<b>int2</b><em>path2</em></td><td>"&$.name&2', '$.name"</td><td>Concatenate content of 2 Json path with string </td> </tr><tr>
+
+    </tr></tbody></table>
+    
+<h3>What is String Filter?</h3>
+    The string filter has 7 basic functions to make it flexible.
+    We want to implement these filter function by Java String functions.
+
+    <table  class="v"><tbody><tr>
+        <th>Function</th><th>Definition</th><th>Example</th><th>Description</th> </tr><tr>
+        <td>concatenate</td><td> %+ </td><td>%+("hello","world") == "helloworld"</td><td>.</td> </tr><tr>
+        <td>split</td><td> %| </td><td>%|("hello.world",".") == ["hello", "world"]</td><td>.</td> </tr><tr>
+        <td>join</td><td> %* </td><td>%*(["hello", "world"],".") == "hello.world"</td><td>.</td> </tr><tr>
+        <td>index</td><td>%?</td><td>%?("hello.world", "hello"],".") == 0 </td><td>.</td> </tr><tr>
+        <td>substring</td><td>%_</td><td>%_("hello.world", 0, 5) == "hello"</td><td>.</td> </tr><tr>
+        <td>replace</td><td>%/</td><td>%/("hello.world", ".", " ") ==  "hello world"</td><td>.</td> </tr><tr>
+        <td>regex-match</td><td>%%</td><td>%%("hello.world", "[a-z]+") ==  ["hello", "world"]</td><td>.</td> </tr><tr>
+        <td>regex-split</td><td>%%|</td><td>%%|("hello.world", ".l") ==  ["h", "lo.wo", "d"]</td><td>.</td> </tr><tr>
+        <td>regex-replace</td><td>%%/</td><td>%%/("hello.world", ".l", "-") ==  "h-lo.wo-d"</td><td>.</td> </tr><tr>
+        <td>jsonpath</td><td>%&</td><td>%&("{\"hello\" : \"1\",  \"world\" : \"2\" }", "$.hello") ==  "1"</td><td>.</td> </tr><tr>
+    </tr></tbody></table>
+
+<h3>How to Iterate Array?</h3>
+    The array object in Json data is very popular. How to process the arrays, especially in the String Filter functions
+    becomes a problem. We want to enable the closure type of array process, which can be implemented by Groovy
+    Engine function.
+
+    <table  class="v"><tbody><tr>
+        <th>Function</th><th>Definition</th><th>Example</th><th>Description</th> </tr><tr>
+        <td>Iteration Closure</td> <td><b>%-</b><em>(array)</em><b>{ </b>  <b> }</b> </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td>array: string type json array, e.g. ["hello","world"]</td></tr><tr>
+
+        <td>Iteration Element Variable</td> <td>%-<em>(array)</em>{ <b>%e</b>, <b>%i</b> } </td><td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%e</b>: element; <b>%i</b>: index [0 .. n]; </td></tr><tr>
+
+        <td>Return Target Variable</td> <td>%-<em>(array)</em>{ <b>%r</b> } </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%r</b>: return value.</td>
+    </tr></tbody></table>
+
+
+<!----------------------------------------------------------------------->
+<a name="program" />
+<h2>Project  <a href="#_top_" style="text-decoration: none;">^</a></h2>
+    We want to realize the java project by taking advantage of
+    JsonPath Implementation, Java String Functions, and Groovy script engine.
+
+    <ol>
+        <li><p>JsonPath Implementation --> We tested 3 open source implementation (Jayway, Nebhale, Camel, Gatling).
+            Our conclusion is that Camel is a wrapper of Jayway. Nebhale and Gatling are not stable for several cases.
+            Thus, <b>Jayway</b> is the choice.
+        </li>
+        <li>
+            <p>Template Replacement --> We filter all the JsonPath  into <b>Hash Map</b>, run JsonPath result,
+            and hold key-value pairs <em>(JsonPath, Result)</em>. This will prevent repeating of the JsonPath.
+        </li>
+        <li><p>Java String Function --> We replace the string filter mark using Java string function results.
+            <ul><li>Realize a <b>ProxyJavaClass</b> to fulfil the definition through <em>static function</em> based on Java String Functions.
+            </li><li>Replace the % keywords by <b>ProxyJavaClass.</b><em>funtion()</em>.
+            </li></ul></li>
+        <li><p>Array Iteration --> We want to using groovy  </li>
+    </ol>
+
+    <h3 class="reset">Implementation</h3>
+    <ol>
+        <li><p>Github Hold</p>
+            <a href="https://github.com/chunqishi/edu.brandeis.cs.json2json" target="_blank">https://github.com/chunqishi/edu.brandeis.cs.json2json</a>
+
+            <samp class="sample">$
+                $ git clone https://github.com/chunqishi/edu.brandeis.cs.json2json.git <font style="color:blue">&crarr;</font>
+                $
+            </samp>
+        </li>
+        <li><p>Maven Dependency</p>
+
+            <code class="code prettyprint">
+            &lt;!-- ^^^^^^^^^^^^^^ JSON Path ^^^^^^^^^^^^^^^^^^^^^ --&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;com.jayway.jsonpath&lt;/groupId&gt;
+                &lt;artifactId&gt;json-path&lt;/artifactId&gt;
+                &lt;version&gt;0.9.1&lt;/version&gt;
+            &lt;/dependency&gt;
+            &lt;!-- =============================================  --&gt;
+            &lt;!-- ^^^^^^^^^^^^^^ JSON      ^^^^^^^^^^^^^^^^^^^^^ --&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.json&lt;/groupId&gt;
+                &lt;artifactId&gt;json&lt;/artifactId&gt;
+                &lt;version&gt;20140107&lt;/version&gt;
+            &lt;/dependency&gt;
+            &lt;!-- =============================================  --&gt;
+            &lt;!-- ^^^^^^^^^^^^^^ Groovy    ^^^^^^^^^^^^^^^^^^^^^ --&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.codehaus.groovy&lt;/groupId&gt;
+                &lt;artifactId&gt;groovy-console&lt;/artifactId&gt;
+                &lt;version&gt;2.0.1&lt;/version&gt;
+            &lt;/dependency&gt;
+            &lt;!-- =============================================  --&gt;
+            </code>
+        </li>
+    </ol>
+
+    <h3>Examples</h3>
+
+    <code class="code prettyprint linenum">
+        String jsonTemplate = "{\n" +
+        "\"@context\": { \"homepage\": \"&$.@context.homepage.*\"  },\n" +
+        "\"homepage\": \"&$.homepage\"\n" +
+        "}";
+
+        String jsonTrans = "{\n" +
+        "\"@context\": { \"homepage\": [\"@id\",\"http:\\/\\/schema.org\\/url\"]  },\n" +
+        "\"homepage\": \"http://manu.sporny.org/\"\n" +
+        "}";
+
+        String jsonTemplate1 = "{\n" +
+        "\"@context\": { \"homepage\": \"&$.@context.homepage.* \" },\n" +
+        "\"homepage\": \"%*(%|(&$.homepage,\\\".\\\"), \\\"-\\\")\"\n" +
+        "}";
+
+        String jsonTrans1 = "{\n" +
+        "\"@context\": { \"homepage\": [\"@id\",\"http:\\/\\/schema.org\\/url\"] },\n" +
+        "\"homepage\": \"http://manu-sporny-org/\"\n" +
+        "}";
+
+
+        @Test
+        public void test() throws Exception{
+        Template template = new Template();
+        String target = template.transform(jsonTemplate, json);
+        //        System.out.println(target);
+        Assert.assertEquals(jsonTrans, target);
+
+
+        target = template.transform(jsonTemplate1, json);
+        //        System.out.println(target);
+        Assert.assertEquals(jsonTrans1, target);
+        }</code>
+<!----------------------------------------------------------------------->
+<a name="deploy" />
+<h2>Deployment  <a href="#_top_" style="text-decoration: none;">^</a></h2>
+<code class="code prettyprint">
+    &lt;dependencies&gt;
+    &lt;dependency&gt;
+    &lt;groupId&gt;org.lappsgrid&lt;/groupId&gt;
+    &lt;artifactId&gt;json2json&lt;/artifactId&gt;
+    &lt;version&gt;0.1.5&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependencies&gt;
+</code>
+
+
+
+
+
+
+<footer><hr/> 
+<p>
+    Progress: 
+    <progress value="90" max="100"></progress></p>
+<p>
+    Contacts: 
+    <nonsense>shi</nonsense>cq@<nonsense>cs.</nonsense>brandeis.<nonsense></nonsense>edu,
+    <nonsense>mar</nonsense>c@<nonsense>cs.</nonsense>brandeis.<nonsense></nonsense>edu  </p></footer>
+    
+    </body></html>
