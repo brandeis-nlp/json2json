@@ -407,6 +407,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     <table  class="v"><tbody><tr>
     <th>Function</th><th>Definition</th><th>Symbol</th><th>Example</th><th>Description</th> </tr><tr>
     <td>Define Variable</td><td>{"<b>%!</b><em>name</em>" : <em>$json-object</em>}</td><td>%!</td> <td>{"%!<em>v</em>" : 1, "%!<em>v2</em>" : "hello", "%!<em>v3</em>" : {}, "%!<em>v4</em>" : [] }</td><td>define number, string, map, and array</td></tr><tr>
+    <td>Assignment Variable</td><td>{"<b>%</b><em>name</em>" : <em>$json-object</em>}</td><td>%</td> <td>{"%<em>v1</em>" : {"%<em>v2</em>" : "hello"} } == {"%<em>v1</em>" : "hello"} == "hello"</td><td>define number, string, map, and array</td></tr><tr>
     <td>Define Function</td><td><pre>{"<b>%!!</b><em>name</em>" : {
     "%para" : [$parameters],
     "%def"  : {$initialization},
@@ -420,16 +421,14 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
         "%#"  : "%a" } }</pre>
         <!--{"%!!<em>mysplit</em>" : [ ["%str", "%sep"], {"<em>%!a</em>":[]}, [ {"%a" : {"%|":["%str", "%sep"]}}], "%a" ]}-->
     </td><td>This is rename filter <b>"%|"</b> as <em>mysplit</em>. We can call <em>mysplit</em> function by {"%mysplit":["hello.world", "."]}</td></tr><tr>
-    <td style="color:green">Process</td><td style="color:green"><pre>{"<b>%!keyword</b>" : {
+    <td style="color:green">Process</td><td style="color:green"><pre>{"<b>%!proc</b>" : {
     "%def"  : {$initialization},
-    "%glob" : <em>$global</em>,
-    "%proc" : [{$Process}, ...],
+    "%steps" : [{$Process}, ...],
     "%ret"  : $return-object
     }
-}</pre></td><td style="color:green">%!symbol <br>%()<br> %$<br> %{}<br> %# </td>
-        <td style="color:green"><pre>{"<b>%!symbol</b>" : {
+}</pre></td><td style="color:green">%!+ <br> %$<br> %{}<br> %# </td>
+        <td style="color:green"><pre>{"<b>%!+</b>" : {
     "%$"  : {$initialization},
-    "%()" : <em>$global</em>,
     "%{}" : [{$Process}, ...],
     "%#"  : $return-object
     }
@@ -460,7 +459,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%def"     : {$initialization},
     "%expr"    :  <em>$expression</em>,
     "%do" : [{$each-process}, ...] ,
-    "%ret"  : $return-object }}</pre></td><td>%!~<br> %<><br> %$<br> %do<br> %#</td> <td><pre>{"%!~": {
+    "%ret"  : $return-object }}</pre></td><td>%!_<br> %<><br> %$<br> %do<br> %#</td> <td><pre>{"%!_": {
     "%$"    : {   "%!s": "" },
     "%<>"   : {"<":[ {"%#": "%s"}, 200]},
     "%do"   : {"%+": ["%s", " next"]},
@@ -487,6 +486,15 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
 
         <!--<td>Return Target Variable</td> <td>%-<em>(array)</em>{ <b>%r</b> } </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%r</b>: return value.</td>-->
     <!--</tr></tbody></table>-->
+<!----------------------------------------------------------------------->
+<a name="rule" />
+<h2>Rule  <a href="#_top_" style="text-decoration: none;">^</a></h2>
+<ul>
+<li><b>Read</b>: If an Json value start with <b>"&"</b>, Then this value should read from other Json object.</li>
+<li><b>Replace</b>: If an Json object has one key, and this key starts with <b>"%"</b>, Then this object should be executed and replaced with results.</li>
+<li><b>Define</b>: "<b>%</b><em>alphabeta</em>" is only allowed, When "<b>%!!</b><em>alphabeta</em>" exists, Or <em>alphabeta</em> is <em>keyword</em> in definitions ( see  the above tables) .</li>
+</ul>
+
 
 
 <!----------------------------------------------------------------------->
