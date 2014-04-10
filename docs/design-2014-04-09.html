@@ -370,7 +370,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
         <td>concatenate</td><td> %concat </td><td> %+ </td><td>{"%+" : ["hello","world"]} == "helloworld"</td><td>.</td> </tr><tr>
         <td>split</td><td> %split </td><td> %| </td><td>{"%|" : ["hello.world","."]} == ["hello", "world"]</td><td>.</td> </tr><tr>
         <td>join</td><td> %join </td><td> %* </td><td>{"%*" : [["hello", "world"],"."]} == "hello.world"</td><td>.</td> </tr><tr>
-        <td>index</td><td> %idx </td><td>%?</td><td>{"%?" : ["hello.world", "hello"],"."]} == 0 </td><td>.</td> </tr><tr>
+        <td>index</td><td> %idx </td><td>%?</td><td>{"%?" : ["hello.world", "hello"]} == 0 </td><td>.</td> </tr><tr>
         <td>substring</td><td> %sub </td><td>%_</td><td>{"%_" : ["hello.world", 0, 5]} == "hello"</td><td>.</td> </tr><tr>
         <td>length</td><td> %len </td><td>%#</td><td>{"%#" : "hello world"} == 11</td><td>.</td> </tr><tr>
         <td>replace</td><td> %rep </td><td>%/</td><td>{"%/" : ["hello.world", ".", " "]} ==  "hello world"</td><td>.</td> </tr><tr>
@@ -385,7 +385,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
         <th>Function</th><th>Definition</th><th>Symbol</th><th>Example</th><th>Description</th> </tr><tr>
         <td style="color:green"><em>function name</em></td><td style="color:green"> <em>keywords </em></td><td style="color:green"><em> symbol </em></td><td style="color:green"><em>{ "$symbol" : [$para1, $para2, ...]}</em> == <em>$result</em></td><td>.</td> </tr><tr>
         <td>add</td><td> %array-add </td><td> %]+ </td><td>{"%]+" : [ ["hello","world"], "!" ] } ==  ["hello","world", "!"]</td><td>.</td> </tr><tr>
-        <td>remove</td><td> %array-remove </td><td> %]/ </td><td>{"%]/" : [ ["hello","world"], 0] } == ["world"]</td><td>.</td> </tr><tr>
+        <td>remove</td><td> %array-remove </td><td> %]- </td><td>{"%]-" : [ ["hello","world"], 0] } == ["world"]</td><td>.</td> </tr><tr>
         <td>get</td><td> %array-get</td><td> %]$ </td><td>{"%]$" : [ ["hello", "world"], 0]} == "hello"</td><td>.</td> </tr><tr>
         <td>sublist</td><td> %array-sub</td><td> %]_ </td><td>{"%]_" : [ ["hello", "world"], 0, 0]} == ["hello"]</td><td>.</td> </tr><tr>
         <td>index</td><td> %array-idx </td><td>%]?</td><td>{"%]?" : [ ["hello", "world"],"hello"]} == 0 </td><td>.</td> </tr><tr>
@@ -398,7 +398,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
         <td style="color:green"><em>function name</em></td><td style="color:green"> <em>keywords </em></td><td style="color:green"><em> symbol </em></td><td style="color:green"><em>{ "$symbol" : [$para1, $para2, ...]}</em> == <em>$result</em></td><td>.</td> </tr><tr>
         <td>put</td><td> %map-put </td><td> %}+ </td><td>{"%}+" : [{}, {"hello":"world"}] } == {"hello":"world"}</td><td>.</td> </tr><tr>
         <td>get</td><td> %map-get </td><td> %}$ </td><td>{"%}$" : [{"hello":"world"},"hello"]} == "world"</td><td>.</td> </tr><tr>
-        <td>remove</td><td> %map-remove </td><td> %}/ </td><td>{"%}/" : [{"hello" : "world"}, "hello"]} == {}</td><td>.</td> </tr><tr>
+        <td>remove</td><td> %map-remove </td><td> %}- </td><td>{"%}-" : [{"hello" : "world"}, "hello"]} == {}</td><td>.</td> </tr><tr>
         <td>size</td><td> %map-size </td><td>%}#</td><td>{"%}#" : {"hello":"world"}} == 1 </td><td>.</td> </tr><tr>
         <td>keys</td><td> %map-keys </td><td>%}*</td><td>{"%}*" : {"hello":"world"}} == ["hello"]</td><td>.</td> </tr><tr>
     </tr></tbody></table>
@@ -445,7 +445,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%if"   : { "%id": "http://www.opennlp.org"},
     "%else" : { "%id": "http://unknown.org" },
     "%#"    : "%id" } }       </pre></td><td>define number, string, map, and array</td></tr><tr>
-    <td>For-Each</td><td><pre>{"<b>%!for</b>" :
+    <td>For-Each</td><td><pre>{"<b>%!for</b>" : {
     "%def"     : {$initialization},
     "%iter"    : [$iterable, $index, $each],
     "%each"    : [{$each-process}, ...] ,
@@ -455,7 +455,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%each" : {"%+": ["%s", "%e"]},
     "%#"       : "%s" } }       </pre></td><td>define number, string, map, and array</td></tr><tr>
 
-    <td>While</td><td><pre>{"<b>%!while</b>" :
+    <td>While</td><td><pre>{"<b>%!while</b>" : {
     "%def"     : {$initialization},
     "%expr"    :  <em>$expression</em>,
     "%do" : [{$each-process}, ...] ,

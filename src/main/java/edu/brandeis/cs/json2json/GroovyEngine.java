@@ -36,6 +36,24 @@ public class GroovyEngine {
         }
         return script;
     }
+
+    public static String invoke(Object obj, String methodName, Object... paras) {
+        Binding binding = new Binding();
+        long id = System.currentTimeMillis();
+        StringBuilder  sb = new StringBuilder("__v__" + id);
+        binding.setVariable("__v__" + id, obj);
+        sb.append(".").append(methodName).append("(");
+        for (int i = 0; i < paras.length; i++) {
+            binding.setVariable("__v__" + i + id, paras[i]);
+            sb.append("__v__" + i + id).append(",");
+        }
+        sb.setLength(sb.length() - 1);
+        sb.append(")");
+        GroovyShell shell = new GroovyShell(binding);
+//        System.out.println("script : " + sb.toString());
+        return shell.evaluate("return " + sb.toString()).toString();
+    }
+
     public static String runFilter(String script) {
         Binding binding = new Binding();
         binding.setVariable(StringProxyName, new StringProxy());

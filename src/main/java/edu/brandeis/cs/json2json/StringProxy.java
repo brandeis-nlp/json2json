@@ -18,8 +18,9 @@ public class StringProxy {
         Proxy.put("%+","concat");
         Proxy.put("%|","split");
         Proxy.put("%*","join");
-        Proxy.put("%?","index");
-        Proxy.put("%_","substring");
+        Proxy.put("%?","idx");
+        Proxy.put("%_","sub");
+        Proxy.put("%#","len");
         Proxy.put("%/","replace");
         Proxy.put("%%","regex_match");
         Proxy.put("%%/","regex_replace");
@@ -57,6 +58,10 @@ public class StringProxy {
         return new JSONArray(arr).toString();
     }
 
+    public static int length (String s) {
+        return s.length();
+    }
+
     public static String concat(String s, String t) {
         return s + t;
     }
@@ -83,8 +88,6 @@ public class StringProxy {
     public static String substring(String s, int start, int end) {
         return s.substring(start, end);
     }
-
-
 
     public static boolean regex_contains(String s, String regex) {
         Pattern p = Pattern.compile(regex);

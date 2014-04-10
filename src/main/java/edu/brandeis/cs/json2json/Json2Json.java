@@ -1,5 +1,6 @@
 package edu.brandeis.cs.json2json;
 
+import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Json2Json {
@@ -16,11 +17,27 @@ public class Json2Json {
                 e.printStackTrace();
             }
     }
+
+
+
     public static String path(String json, String path) throws Json2JsonException {
         String ret = null;
         try {
             IPath json2json = cacheJsonPath.take();
             ret = json2json.path(json, path);
+            cacheJsonPath.put(json2json);
+        } catch (InterruptedException e) {
+            throw new Json2JsonException(e);
+        }
+        return ret;
+    }
+
+
+    public static String path(String json, String path, Map<String, Object> cache) throws Json2JsonException {
+        String ret = null;
+        try {
+            IPath json2json = cacheJsonPath.take();
+            ret = json2json.path(json, path, cache);
             cacheJsonPath.put(json2json);
         } catch (InterruptedException e) {
             throw new Json2JsonException(e);

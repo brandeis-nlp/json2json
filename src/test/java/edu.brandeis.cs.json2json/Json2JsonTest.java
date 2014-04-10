@@ -36,6 +36,8 @@ public class Json2JsonTest {
         System.out.print(Json2JayWay.class.getSimpleName() + "\t");
         System.out.println(end - begin);
         System.out.println();
+
+        System.out.println(j2j.path(json, "$.@.xmlns"));
         ////////////////////////////////////////////////////////
 //        begin = System.currentTimeMillis();
 //        j2j = new Json2JsonNebhale();
