@@ -122,6 +122,21 @@ public class Template2Test {
             "2",
     };
 
+    String [] MapOperators = new String [] {
+            "{\"%}+\" : [{}, {\"hello\":\"world\"}] } ",
+            "{\"%}$\" : [{\"hello\":\"world\"},\"hello\"]} ",
+            "{\"%}-\" : [{\"hello\" : \"world\"}, \"hello\"]}",
+            "{\"%}#\" : {\"hello\":\"world\"}} ",
+            "{\"%}*\" : {\"hello\":\"world\"}}"
+    };
+
+    String [] MapOperatorResults = new String [] {
+            "{\"hello\":\"world\"}",
+            "world",
+            "{}",
+            "1",
+            "[\"hello\"]"
+    };
 
 
 
@@ -164,6 +179,20 @@ public class Template2Test {
         for (int i = 0; i < ArrayOperators.length; i++) {
             in = ArrayOperators[i];
             target = ArrayOperatorResults[i];
+//            System.out.println("<--------------------------");
+            out = template.transform(in, "{}");
+//            System.out.println("in : " + in);
+//            System.out.println("out : " + out);
+//            System.out.println("-------------------------->");
+            System.out.println();
+            Assert.assertEquals(target, out);
+        }
+
+
+
+        for (int i = 0; i < MapOperators.length; i++) {
+            in = MapOperators[i];
+            target = MapOperatorResults[i];
             System.out.println("<--------------------------");
             out = template.transform(in, "{}");
             System.out.println("in : " + in);

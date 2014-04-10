@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,15 +71,15 @@ public class Proxy2 {
         // Map Operators
         Definitions.put("%map-put", "%}+");
         Definitions.put("%map-get", "%}$");
-        Definitions.put("%map-remove", "%}/");
+        Definitions.put("%map-remove", "%}-");
         Definitions.put("%map-size", "%}#");
         Definitions.put("%map-keys", "%}*");
         // Map Operators
-        Symbols.put("%}+", "concat");
-        Symbols.put("%}$", "split");
-        Symbols.put("%}/", "join");
-        Symbols.put("%}#", "index");
-        Symbols.put("%}*", "substring");
+        Symbols.put("%}+", "map_put");
+        Symbols.put("%}$", "map_get");
+        Symbols.put("%}-", "map_remove");
+        Symbols.put("%}#", "map_size");
+        Symbols.put("%}*", "map_keys");
     }
 
     protected static Proxy2 SINGLE = new Proxy2();
@@ -294,4 +296,31 @@ public class Proxy2 {
     }
 
     /////////////////////////////////// Map Operations ///////////////////////////////////////////////////////////
+    public static JSONObject map_put (JSONObject obj, JSONObject m) {
+        Iterator<String> keys = m.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            Object val = m.get(key);
+            obj.put(key,val);
+        }
+        return obj;
+    }
+
+    public static Object map_get (JSONObject obj, String key) {
+        return obj.get(key);
+    }
+
+    public static JSONObject map_remove (JSONObject obj, String key) {
+        obj.remove(key);
+        return obj;
+    }
+
+    public static JSONArray map_keys(JSONObject obj) {
+        return new JSONArray(obj.keySet());
+    }
+
+    public static int map_size (JSONObject obj) {
+        return obj.length();
+    }
+
 }
