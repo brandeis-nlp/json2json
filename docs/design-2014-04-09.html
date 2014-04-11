@@ -558,41 +558,15 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     </ol>
 
     <h3>Examples</h3>
+In order to prove that this JSON to JSON transformation works, we use the XSLT examples in <a href="http://www.w3schools.com/xsl/xsl_examples.asp" target="_blank">W3School</a>.
+    All the XML input is firstly converted into JSON use online XML to JSON converter, e.g. <a href="http://www.utilities-online.info/xmltojson" target="_blank">Utilities Online</a>.
+    Then we try to implement the target format using self-designed Template.
 
-    <code class="code prettyprint linenum">
-        String jsonTemplate = "{\n" +
-        "\"@context\": { \"homepage\": \"&$.@context.homepage.*\"  },\n" +
-        "\"homepage\": \"&$.homepage\"\n" +
-        "}";
-
-        String jsonTrans = "{\n" +
-        "\"@context\": { \"homepage\": [\"@id\",\"http:\\/\\/schema.org\\/url\"]  },\n" +
-        "\"homepage\": \"http://manu.sporny.org/\"\n" +
-        "}";
-
-        String jsonTemplate1 = "{\n" +
-        "\"@context\": { \"homepage\": \"&$.@context.homepage.* \" },\n" +
-        "\"homepage\": \"%*(%|(&$.homepage,\\\".\\\"), \\\"-\\\")\"\n" +
-        "}";
-
-        String jsonTrans1 = "{\n" +
-        "\"@context\": { \"homepage\": [\"@id\",\"http:\\/\\/schema.org\\/url\"] },\n" +
-        "\"homepage\": \"http://manu-sporny-org/\"\n" +
-        "}";
+<pre class="prettyprint linenum">
 
 
-        @Test
-        public void test() throws Exception{
-        Template template = new Template();
-        String target = template.transform(jsonTemplate, json);
-        //        System.out.println(target);
-        Assert.assertEquals(jsonTrans, target);
 
-
-        target = template.transform(jsonTemplate1, json);
-        //        System.out.println(target);
-        Assert.assertEquals(jsonTrans1, target);
-        }</code>
+</pre>
 <!----------------------------------------------------------------------->
 <a name="deploy" />
 <h2>Deployment  <a href="#_top_" style="text-decoration: none;">^</a></h2>

@@ -2,75 +2,21 @@ package edu.brandeis.cs.json2json;
 
 
 import junit.framework.Assert;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+
 public class Template2Test {
 
-    String [] paths = new String []{
-        "$.store.book[*].author",
-        "$..author",
-        "$..book[(@.length-1)]",
-        "$..book[?(@.price<10)]"
-    };
-
-    String json = "    {\n" +
-            "    \"@context\": {\n" +
-            "    \"name\": \"http://schema.org/name\",\n" +
-            "    \"homepage\": {\n" +
-            "    \"@id\": \"http://schema.org/url\",\n" +
-            "    \"@type\": \"@id\"\n" +
-            "    },\n" +
-            "    \"image\": {\n" +
-            "    \"@id\": \"http://schema.org/image\",\n" +
-            "    \"@type\": \"@id\"\n" +
-            "    }\n" +
-            "    },\n" +
-            "    \"image\": \"http://manu.sporny.org/images/manu.png\",\n" +
-            "    \"name\": \"Manu Sporny\",\n" +
-            "    \"homepage\": \"http://manu.sporny.org/\"\n" +
-            "    }";
-
-    String[] tempatePaths = new String []{
-            "&$.@context.homepage.*",
-            "&$.homepage"
-    };
-
-    String jsonTemplate = "{\n" +
-            "\"@context\": { \"homepage\": \"&$.@context.homepage.*\"  },\n" +
-            "\"homepage\": \"&$.homepage\"\n" +
-            "}";
-
-    String jsonTrans = "{\n" +
-            "\"@context\": { \"homepage\": [\"@id\",\"http:\\/\\/schema.org\\/url\"]  },\n" +
-            "\"homepage\": \"http://manu.sporny.org/\"\n" +
-            "}";
-
-    String jsonTemplate1 = "{\n" +
-            "\"@context\": { \"homepage\": \"&$.@context.homepage.* \" },\n" +
-            "\"homepage\": \"%*(%|(&$.homepage,\\\".\\\"), \\\"-\\\")\"\n" +
-            "}";
-
-    String jsonTrans1 = "{\n" +
-            "\"@context\": { \"homepage\": [\"@id\",\"http:\\/\\/schema.org\\/url\"] },\n" +
-            "\"homepage\": \"http://manu-sporny-org/\"\n" +
-            "}";
-
-    String jsonTemplate2 = "{\n" +
-            "\"@context\": { \"homepage\": \"&$.@context.homepage.* \" },\n" +
-            "\"homepage\": \"%*(%|(&$.homepage,\\\".\\\"), \\\"-\\\")\",\n" +
-            "\"name\": \"%|(%-([\\\"hello\\\", \\\".world\\\"]){ %r += %e;},\\\".\\\")\"\n" +
-            "}";
-
-    String jsonTrans2 = "{\n" +
-            "\"@context\": { \"homepage\": [\"@id\",\"http:\\/\\/schema.org\\/url\"] },\n" +
-            "\"homepage\": \"http://manu-sporny-org/\",\n" +
-            "\"name\": [\"hello\",\"world\"]\n" +
-            "}";
-
+    public static final String readResources (String name) throws Exception{
+        File objFile = new File(Json2JsonTest.class.getResource("/" + name).toURI());
+        return FileUtils.readFileToString(objFile);
+    }
 
     String [] StringFilters = new String [] {
             "{\"%+\" : [\"hello\",\"world\"]}",
@@ -153,7 +99,7 @@ public class Template2Test {
 
 
 
-
+    int NumberOfResources = 2;
 
 
     @Before
@@ -169,6 +115,7 @@ public class Template2Test {
         String target = null;
         String in = null;
         String out = null;
+        String temp = null;
         Template2 template = new Template2();
 //        target = template.transform("{\"%v2\" : {\"%!v2\" : \"hello\"} } ", "{}");
 //        System.out.println(target);
@@ -228,6 +175,15 @@ public class Template2Test {
 //            System.out.println("-------------------------->");
 //            System.out.println();
             Assert.assertEquals(target, out);
+        }
+
+
+        for (int i = 0; i < NumberOfResources; i++) {
+            in = readResources(i + "in.json");
+            target = readResources(i + "out.json");
+            temp = readResources(i + "temp.json");
+            out = template.transform(temp, in);
+            Assert.assertEquals(new JSONObject(target).toString(), new JSONObject(out).toString());
         }
     }
 

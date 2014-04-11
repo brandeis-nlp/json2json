@@ -1,0 +1,30 @@
+{
+  "html": {
+    "-xmlns:bar": "http://www.bar.org",
+    "-xmlns:foo": "http://www.foo.org/",
+    "body": {
+      "h2": "My CD Collection",
+      "table": {
+        "-border": "1",
+        "tr": {"%!for": {
+               "%$"    : {"%!s":[
+          {
+            "-bgcolor": "#9acd32",
+            "th": [
+              "Title",
+              "Artist",
+              "Country",
+              "Company",
+              "Price",
+              "Year"
+            ]
+          }]},
+               "%[]"   : ["&$.catalog.foo:cd.*", "%i", "%e"],
+               "%each" : {"%s": {"%[+": ["%s", {"td": [ {"%&":["%e", "$.title"]} ,{"%&":["%e", "$.artist"]}, {"%&":["%e", "$.country"]}, {"%&":["%e", "$.company"]}, {"%&":["%e", "$.price"]}, {"%&":["%e", "$.bar:year"]}]}]}},
+               "%#"    : "%s"
+              }
+        }
+      }
+    }
+  }
+}
