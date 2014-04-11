@@ -95,7 +95,7 @@ public class TemplateTest {
 //        System.out.println(target);
         Assert.assertEquals(jsonTrans1, target);
 
-        target = Json2Json.transform(jsonTemplate2, json);
+        target = template.transform(jsonTemplate2, json);
         System.out.println(target);
         Assert.assertEquals(jsonTrans2, target);
     }
