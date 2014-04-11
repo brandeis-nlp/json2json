@@ -28,6 +28,7 @@ public class ProcessTest {
 
 
 
+
     static String [] EXPRS = {
             "{ \">\": [ 2, 1 ]}",
             "{ \"==\": [ 1, 1 ]}",
@@ -61,7 +62,8 @@ public class ProcessTest {
         Map<String,Object> map = Process.variables(new JSONObject(Variables[0]), null);
         System.out.println("Before variables : " + map);
         for(int i = 0; i < Steps.length; i ++ ) {
-            System.out.println("Step " + i + " " + Steps[i]);
+            System.out.println("Step : " + i + " " + Steps[i]);
+            System.out.println();
             Object obj = Template2.toJSON(Steps[i]);
             Process.steps(obj, map);
         }
@@ -69,14 +71,14 @@ public class ProcessTest {
         System.out.println("After variables : " + map);
 
 
-//        Process.if_then_else(new JSONObject(IF_THEN_ELSE[0]), map);
-//        System.out.println("If-Then-Else : " + map.get(Process.Map_Ret));
-
         for(String expr: EXPRS) {
             Process.expr(new JSONObject(expr), map);
             System.out.println("Expr : " + expr);
             System.out.println("Expr : " + map.get(Process.Map_Expr));
             System.out.println();
         }
+
+       Process.if_then_else(new JSONObject(IF_THEN_ELSE[0]).get("%!?"), map);
+       System.out.println("If-Then-Else : " + map.get(Process.Map_Ret));
     }
 }

@@ -73,7 +73,38 @@ public class Process {
 
     protected static Process SINGLE = new Process();
 
+
+    protected static boolean section(String name, Object obj,  Map<String, Object> map) throws Json2JsonException{
+         if (obj instanceof JSONObject) {
+//             System.out.println("Section " + name +" " + obj);
+             Object val = null;
+             if(((JSONObject) obj).has(name)){
+                 val = ((JSONObject) obj).get(name);
+             }
+             // update to new name.
+             if(Definitions.containsKey(name)) {
+                 name = Definitions.get(name);
+             }
+             if (val == null) {
+                 if(((JSONObject) obj).has(name)){
+                    val = ((JSONObject) obj).get(name);
+                 }
+             }
+             System.out.println("Section : " + name +" " +val);
+             System.out.println("Map : " + map);
+             System.out.println();
+             if (val != null) {
+                invoke(name, val, map);
+                return true;
+             }
+             return false;
+         } else {
+             throw new Json2JsonException("Wrong format : " + obj + " is not JSON object.");
+         }
+    }
+
     public static void invoke(String name, Object obj, Map<String, Object> map) {
+        System.out.println("invoke : " + name  + " ( " + obj +" )");
         // replace definition with symbol
         String symbol = Definitions.get(name);
         if (symbol != null) {
@@ -82,12 +113,16 @@ public class Process {
         // replace symbol with method name
         String methodName = Symbols.get(name);
         if (methodName != null) {
-            System.out.println("invoke : " + name +"(" + obj +")");
+//            System.out.println();
+//            System.out.println("invoke : " + name +"(" + obj +")");
+            System.out.println("map before : " + map);
             GroovyEngine.invoke(SINGLE, methodName, obj, map);
+            System.out.println("map after : " + map);
         }
     }
 
     public static void process (Object obj, Map<String, Object>  map) throws Json2JsonException {
+        System.out.println("process : " + obj);
         if(obj instanceof JSONObject){
             Iterator<String> keys = ((JSONObject) obj).keys();
             while(keys.hasNext()) {
@@ -102,17 +137,78 @@ public class Process {
         }
     }
 
-    public static void iterate(Object obj, Map<String, Object> map)throws Json2JsonException {
+    public static Iterable iterate(Object obj, Map<String, Object> map)throws Json2JsonException {
         ArrayList list = new ArrayList();
         if(obj instanceof JSONArray) {
-            for(int i = 0; i < ((JSONArray) obj).length(); i++)
-            list.add(Template2.replace(((JSONArray) obj).get(i), map, null, null));
+            Object arr = ((JSONArray) obj).get(0);
+            if (arr instanceof JSONArray) {
+                if (((JSONArray) obj).length() == 1) {
+                    map.put(Map_Index, Default_Each_Index);
+                    map.put(Map_Each, Default_Each);
+                } else if (((JSONArray) obj).length() == 3) {
+                    String var_each_idx = (String)((JSONArray) obj).get(1);
+                    String var_each=  (String)((JSONArray) obj).get(2);
+                    var_each_idx = var_each_idx.trim();
+                    var_each = var_each.trim();
+                    if (!var_each_idx.startsWith("%")) {
+                        throw new Json2JsonException("Wrong iteratable's index format : " + ((JSONArray) obj).get(1) + " is not %[a-z]* format.");
+                    }
+                    if (!var_each.startsWith("%")) {
+                        throw new Json2JsonException("Wrong iteratable's iterator format : " + ((JSONArray) obj).get(2) + " is not %[a-z]* format.");
+                    }
+                    map.put(Map_Index, var_each_idx.substring(1));
+                    map.put(Map_Each, var_each.substring(1));
+                } else {
+                    throw new Json2JsonException("Wrong iteratable format : " + obj +" is not [$iterable, $index, $each] or not [$iterable].");
+                }
+
+                for(int i = 0; i < ((JSONArray) obj).length(); i++)
+                list.add(Template2.replace(((JSONArray) obj).get(i), map, null, null));
+            } else {
+                throw new Json2JsonException("Wrong iteratable format : " + obj +" is not [[$i0, $i1, ...],\"%i\",\"%e\"] format.");
+            }
+        } else {
+            throw new Json2JsonException("Wrong iterator format : " + obj +" is not array.");
         }
         map.put(Map_Iterable, list);
+        return list;
     }
 
-    public static void if_then_else(JSONObject obj, Map<String, Object> map) throws Json2JsonException {
-        process(obj, map);
+    public static Object if_then_else(Object obj, Map<String, Object> map) throws Json2JsonException {
+//        Object section = null;
+//        String key = "%!if";
+//        if (((JSONObject) obj).has(key)) {
+//            section = ((JSONObject) obj).get(key);
+//        }
+//        if (section == null) {
+//            key = Definitions.get(key);
+//            if (((JSONObject) obj).has(key)) {
+//                section = ((JSONObject) obj).get(key);
+//            }
+//        }
+
+        if(obj instanceof JSONObject) {
+            boolean exist = false;
+            exist = section("%def", obj, map);
+            exist = section("%expr", obj, map);
+            if (!exist) {
+                throw new Json2JsonException("If-Then-Else process needs expression section : " + "e.g. \"%<>\"   : { \"==\": [ \"&$.name\", \"OpenNLP\" ]}");
+            }
+            exist = section("%if", obj, map);
+            if (!exist) {
+                throw new Json2JsonException("If-Then-Else process needs if section : " + "e.g.  \"%if\"   : {}");
+            }
+            exist = section("%else", obj, map);
+            exist = section("%ret", obj, map);
+        } else {
+            throw new Json2JsonException("Wrong if-then-else format : " + obj + " is not {\"%!if\" : {\n" +
+                    "    \"%def\"  : {$initialization},\n" +
+                    "    \"%expr\" : $expression,\n" +
+                    "    \"%if\"   : [$if-steps, ...] ,\n" +
+                    "    \"%else\" : [$else-steps, ...],\n" +
+                    "    \"%ret\"  : $return-object } }");
+        }
+        return map.get(Map_Ret);
     }
 
     public static boolean expr(Object obj, Map<String, Object>map) throws Json2JsonException {
@@ -167,8 +263,38 @@ public class Process {
         }
     }
 
-    public static void for_each(JSONObject obj, Map<String, Object> map) throws Json2JsonException{
-        process(obj, map);
+    public static Object for_each(JSONObject obj, Map<String, Object> map) throws Json2JsonException{
+//        Object section = null;
+//        String key = "%!for";
+//        if (((JSONObject) obj).has(key)) {
+//            section = ((JSONObject) obj).get(key);
+//        }
+//        if (section == null) {
+//            key = Definitions.get(key);
+//            if (((JSONObject) obj).has(key)) {
+//                section = ((JSONObject) obj).get(key);
+//            }
+//        }
+        if(obj instanceof JSONObject) {
+            boolean exist = false;
+            exist = section("%def", obj, map);
+            exist = section("%iter", obj, map);
+            if (!exist) {
+                throw new Json2JsonException("For-Each process needs iteratable section : " + "e.g. \"%[]\" : [ [\"hello\", \"world\"], \"%i\", \"%e\"]");
+            }
+            exist = section("%each", obj, map);
+            if (!exist) {
+                throw new Json2JsonException("For-Each process needs each section : " + "e.g. \"%each\" : {\"%+\": [\"%s\", \"%e\"]},");
+            }
+            exist = section("%ret", obj, map);
+        } else {
+            throw new Json2JsonException("Wrong if-then-else format : " + obj + " is not {\"%!for\" : {\n" +
+                    "    \"%def\"     : {$initialization},\n" +
+                    "    \"%iter\"    : [$iterable, $index, $each],\n" +
+                    "    \"%each\"    : [{$each-process}, ...] ,\n" +
+                    "    \"%ret\"     : $return-object }}");
+        }
+        return map.get(Map_Ret);
     }
 
     public static final String Map_Iterable = "___iterable___";
@@ -200,14 +326,45 @@ public class Process {
         }
     }
 
-    public static void while_do(Object obj, Map<String, Object> map)  throws Json2JsonException{
-        process(obj, map);
+    public static Object while_do(Object obj, Map<String, Object> map)  throws Json2JsonException{
+//        Object section = null;
+//        String key = "%!while";
+//        if (((JSONObject) obj).has(key)) {
+//            section = ((JSONObject) obj).get(key);
+//        }
+//        if (section == null) {
+//            key = Definitions.get(key);
+//            if (((JSONObject) obj).has(key)) {
+//                section = ((JSONObject) obj).get(key);
+//            }
+//        }
+        if(obj instanceof JSONObject) {
+            boolean exist = false;
+            exist = section("%def", obj, map);
+            exist = section("%expr", obj, map);
+            if (!exist) {
+                throw new Json2JsonException("While-Do process needs iteratable section : " + "e.g. \"%<>\"   : {\"<\":[ {\"%#\": \"%s\"}, 200]},");
+            }
+            exist = section("%do", obj, map);
+            if (!exist) {
+                throw new Json2JsonException("While-Do process needs each section : " + "e.g. \"%do\"   : {\"%+\": [\"%s\", \" next\"]},");
+            }
+            exist = section("%ret", obj, map);
+        } else {
+            throw new Json2JsonException("Wrong if-then-else format : " + obj + " is not {\"%!for\" : {\n" +
+                    "    \"%def\"     : {$initialization},\n" +
+                    "    \"%iter\"    : [$iterable, $index, $each],\n" +
+                    "    \"%each\"    : [{$each-process}, ...] ,\n" +
+                    "    \"%ret\"     : $return-object }}");
+        }
+        return map.get(Map_Ret);
     }
 
 
-    public static void ret (Object obj, Map<String, Object> map) throws Json2JsonException {
+    public static Object ret (Object obj, Map<String, Object> map) throws Json2JsonException {
         Object ret = Template2.replace(obj, map, null, null);
         map.put(Map_Ret, ret);
+        return ret;
     }
 
     public static Map<String, Object> variables (Object obj, Map<String, Object> map ) throws Json2JsonException {
@@ -226,6 +383,7 @@ public class Process {
     }
 
     public static  void steps (Object obj, Map<String, Object> map) throws Json2JsonException{
+        System.out.println("steps : " + obj);
         if (obj instanceof JSONArray) {
             for (int i = 0; i < ((JSONArray) obj).length(); i ++) {
                 steps(((JSONArray) obj).get(i), map);

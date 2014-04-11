@@ -427,7 +427,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%ret"  : $return-object
     }
 }</pre></td><td style="color:green">%!+ <br> %$<br> %{}<br> %# </td>
-        <td style="color:green"><pre>{"<b>%!+</b>" : {
+        <td style="color:green"><pre>{"<b>%!proc</b>" : {
     "%$"  : {$initialization},
     "%{}" : [{$Process}, ...],
     "%#"  : $return-object
@@ -439,7 +439,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%if"   : [$if-steps, ...] ,
     "%else" : [$else-steps, ...],
     "%ret"  : $return-object } }</pre></td>
-        <td>%!? <br> %<><br> %$<br> %if<br> %else<br> %#</td> <td><pre>{"%!?": {
+        <td>%!? <br> %<><br> %$<br> %if<br> %else<br> %#</td> <td><pre>{"%!if": {
     "%$"    : {   "%!id": "" },
     "%<>"   : { "==": [ "&$.name", "OpenNLP" ]},
     "%if"   : { "%id": "http://www.opennlp.org"},
@@ -449,7 +449,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%def"     : {$initialization},
     "%iter"    : [$iterable, $index, $each],
     "%each"    : [{$each-process}, ...] ,
-    "%ret"     : $return-object }}</pre></td><td>%!*<br> %[]<br> %$<br> %each<br> %#</td> <td><pre>{"%!*": {
+    "%ret"     : $return-object }}</pre></td><td>%!*<br> %[]<br> %$<br> %each<br> %#</td> <td><pre>{"%!for": {
     "%$"       : {   "%!s": "" },
     "%[]"      : [ ["hello", "world"], "%i", "%e"],
     "%each" : {"%+": ["%s", "%e"]},
@@ -459,7 +459,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%def"     : {$initialization},
     "%expr"    :  <em>$expression</em>,
     "%do" : [{$each-process}, ...] ,
-    "%ret"  : $return-object }}</pre></td><td>%!_<br> %<><br> %$<br> %do<br> %#</td> <td><pre>{"%!_": {
+    "%ret"  : $return-object }}</pre></td><td>%!_<br> %<><br> %$<br> %do<br> %#</td> <td><pre>{"%!while": {
     "%$"    : {   "%!s": "" },
     "%<>"   : {"<":[ {"%#": "%s"}, 200]},
     "%do"   : {"%+": ["%s", " next"]},
