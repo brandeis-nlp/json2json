@@ -18,11 +18,13 @@ public class Template2 extends Proxy implements ITemplate  {
     @Override
     public String transform(String template, String... jsons) throws Json2JsonException {
         HashMap<String, Object> cache = new HashMap<String, Object> ();
-        for (int i = 0; i < jsons.length; i ++ ) {
-            cache.put(String.valueOf(i), jsons[i]);
-        }
         Map<String, Object> variables = new HashMap<String, Object>();
         Map<String, Object> functions = new HashMap<String, Object>();
+
+        // put variables
+        for (int i = 0; i < jsons.length; i ++ ) {
+            variables.put(String.valueOf(i), jsons[i]);
+        }
 //        System.out.println("input json : " + toJSON(template.trim()));
         Object res = replace(toJSON(template.trim()), variables, functions, cache);
 //        System.out.println(variables);
@@ -40,7 +42,8 @@ public class Template2 extends Proxy implements ITemplate  {
         return res;
     }
 
-    public static Object read(String jsonpath, Map<String, Object> cache) throws Json2JsonException{
+    public static Object read(String jsonpath, Map<String, Object> variables,  Map<String, Object> cache) throws Json2JsonException{
+//        System.out.println("read : " + jsonpath + " " + variables);
         if (jsonpath != null){
             int pathBegin = jsonpath.indexOf("$.");
             if (pathBegin > 0) {
@@ -49,7 +52,12 @@ public class Template2 extends Proxy implements ITemplate  {
                 // other sequence "1"
                 if (pathBegin > 1)
                     sequence = jsonpath.substring(1, pathBegin);
-                String res =  Json2Json.path((String)cache.get(sequence), jsonpath.substring(pathBegin), cache).trim();
+                if (cache == null) {
+                    cache = new ConcurrentHashMap<String, Object>();
+                }
+                String res =  Json2Json.path((String)variables.get(sequence), jsonpath.substring(pathBegin), cache).trim();
+//                System.out.println("Template2.read : " + jsonpath);
+//                System.out.println("Template2.read : " + res);
                 // return different result.
                 if (res.startsWith("{")) {
                     return new JSONObject(res);
@@ -122,7 +130,7 @@ public class Template2 extends Proxy implements ITemplate  {
             String val = ((String) obj).trim();
             if (val.startsWith("&")) {
                 // read
-                Object res = read(val, cache);
+                Object res = read(val, variables, cache);
                 if (res != null) {
                     return res;
                 }

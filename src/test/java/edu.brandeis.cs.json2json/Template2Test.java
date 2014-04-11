@@ -18,6 +18,11 @@ public class Template2Test {
         return FileUtils.readFileToString(objFile);
     }
 
+
+    public static final void assertEqualJSON(String json1, String json2) {
+        Assert.assertEquals(new JSONObject(json1).toString(), new JSONObject(json2).toString());
+    }
+
     String [] StringFilters = new String [] {
             "{\"%+\" : [\"hello\",\"world\"]}",
             "{\"%|\" : [\"hello.world\",\".\"]} ",
@@ -110,6 +115,8 @@ public class Template2Test {
     @After
     public void tear() {}
 
+
+
     @Test
     public void test() throws Exception{
         String target = null;
@@ -177,12 +184,25 @@ public class Template2Test {
             Assert.assertEquals(target, out);
         }
 
+        in = readResources("obj.json");
+        out = template.transform("{\"jsonpath\":\"&$.Items.Request\"}", in);
+//        System.out.println(out);
+        target = "{\"jsonpath\":{\"ItemSearchRequest\":{\"ResponseGroup\":[\"Offers\",\"Similarities\",\"Small\"," +
+                "\"SalesRank\",\"SearchBins\",\"Images\"],\"ItemPage\":\"1\"," +
+                "\"SearchIndex\":\"All\",\"Keywords\":\"steve jobs\"}," +
+                "\"IsValid\":\"True\"}}";
+
+        assertEqualJSON(target, out);
 
         for (int i = 0; i < NumberOfResources; i++) {
             in = readResources(i + "in.json");
             target = readResources(i + "out.json");
             temp = readResources(i + "temp.json");
             out = template.transform(temp, in);
+
+//            System.out.println("---------- " + i + " -------------------");
+//            System.out.println(out);
+//            System.out.println();
             Assert.assertEquals(new JSONObject(target).toString(), new JSONObject(out).toString());
         }
     }

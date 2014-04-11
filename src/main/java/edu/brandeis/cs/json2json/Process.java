@@ -154,6 +154,7 @@ public class Process {
         ArrayList list = new ArrayList();
         if(obj instanceof JSONArray) {
             Object arr = ((JSONArray) obj).get(0);
+            arr = Template2.replace(arr, map, null, null);
             if (arr instanceof JSONArray) {
                 if (((JSONArray) obj).length() == 1) {
                     map.put(Map_Index, Default_Each_Index);
