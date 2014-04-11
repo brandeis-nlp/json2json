@@ -85,7 +85,9 @@ public class Template2 extends Proxy implements ITemplate  {
                 // 1. define variable
                 Object replacedVal = replace(((JSONObject) obj).get(key), variables, functions, cache);
                 if (lastKey.startsWith("%!")) {
-                    variables.put(lastKey.substring(2), replacedVal);
+                    if(variables != null) {
+                        variables.put(lastKey.substring(2), replacedVal);
+                    }
                 }
                 replacedObj.put(key, replacedVal);
             }
@@ -125,9 +127,11 @@ public class Template2 extends Proxy implements ITemplate  {
                 }
             } else if (val.startsWith("%")) {
                 // variable
-                Object res = variables.get(val.substring(1));
-                if (res != null) {
-                    return res;
+                if (variables != null) {
+                    Object res = variables.get(val.substring(1));
+                    if (res != null) {
+                        return res;
+                    }
                 }
             }
             return obj;

@@ -46,6 +46,37 @@ public class ProcessTest {
                     "    \"%else\" : { \"%id\": \"http://unknown.org\" },\n" +
                     "    \"%#\"    : \"%id\" } } "
     };
+    static String [] IF_THEN_ELSE_Results = {
+        "http://www.opennlp.org",
+    };
+
+    static String [] FOR_EACH = {
+            "{\"%!for\": {\n" +
+                    "    \"%$\"       : {   \"%!s\": \"\" },\n" +
+                    "    \"%[]\"      : [ [\"hello\", \"world\"], \"%i\", \"%e\"],\n" +
+                    "    \"%each\" : {\"%s\": {\"%+\": [\"%s\", \"%e\"]}},\n" +
+                    "    \"%#\"       : \"%s\" } }",
+    };
+
+
+    static String [] FOR_EACH_Results = {
+            "helloworld"
+    };
+
+
+
+    static String [] WHILE_DO = {
+            "{\"%!while\": {\n" +
+                    "    \"%$\"    : {   \"%!s\": \"\" },\n" +
+                    "    \"%<>\"   : {\"<\":[ {\"%#\": \"%s\"}, 20]},\n" +
+                    "    \"%do\"   : {\"%s\":{\"%+\": [\"%s\", \" next\"]}},\n" +
+                    "    \"%#\"    : \"%s\" } }  ",
+    };
+
+
+    static String [] WHILE_DO_Results = {
+            "next"
+    };
 
     @Before
     public void setup() throws Exception{
@@ -72,13 +103,34 @@ public class ProcessTest {
 
 
         for(String expr: EXPRS) {
+            map.clear();
             Process.expr(new JSONObject(expr), map);
             System.out.println("Expr : " + expr);
             System.out.println("Expr : " + map.get(Process.Map_Expr));
             System.out.println();
         }
 
-       Process.if_then_else(new JSONObject(IF_THEN_ELSE[0]).get("%!?"), map);
-       System.out.println("If-Then-Else : " + map.get(Process.Map_Ret));
+        for(int i = 0; i < IF_THEN_ELSE.length; i ++ ) {
+            map.clear();
+            Process.if_then_else(new JSONObject(IF_THEN_ELSE[i]).get("%!?"), map);
+
+            System.out.println("If-Then-Else : " + map.get(Process.Map_Ret));
+            Assert.assertEquals(IF_THEN_ELSE_Results[i], map.get(Process.Map_Ret));
+        }
+
+        for(int i = 0; i < FOR_EACH.length; i ++ ) {
+            map.clear();
+            Process.for_each(new JSONObject(FOR_EACH[i]).get("%!for"), map);
+            System.out.println("For-Each : " + map.get(Process.Map_Ret));
+            Assert.assertEquals(FOR_EACH_Results[i], map.get(Process.Map_Ret));
+        }
+
+        for(int i = 0; i < WHILE_DO.length; i ++ ) {
+            map.clear();
+            Process.while_do(new JSONObject(WHILE_DO[i]).get("%!while"), map);
+            System.out.println("While-Do : " + map.get(Process.Map_Ret));
+            Assert.assertEquals(WHILE_DO_Results[i], map.get(Process.Map_Ret));
+        }
+
     }
 }

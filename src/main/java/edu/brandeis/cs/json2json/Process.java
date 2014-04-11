@@ -90,9 +90,9 @@ public class Process {
                     val = ((JSONObject) obj).get(name);
                  }
              }
+             System.out.println();
              System.out.println("Section : " + name +" " +val);
              System.out.println("Map : " + map);
-             System.out.println();
              if (val != null) {
                 invoke(name, val, map);
                 return true;
@@ -103,7 +103,7 @@ public class Process {
          }
     }
 
-    public static void invoke(String name, Object obj, Map<String, Object> map) {
+    public static void invoke(String name, Object obj, Map<String, Object> map) throws Json2JsonException{
         System.out.println("invoke : " + name  + " ( " + obj +" )");
         // replace definition with symbol
         String symbol = Definitions.get(name);
@@ -121,7 +121,9 @@ public class Process {
         } else {
             String var = name.substring(1);
             if (map.containsKey(var)) {
-                map.put(var, obj);
+                Object replaced = Template2.replace(obj, map, null, null);
+                map.put(var, replaced);
+                System.out.println("assign : " + var +" = " + obj);
             }
         }
     }
@@ -144,6 +146,7 @@ public class Process {
     }
 
     public static Iterable iterate(Object obj, Map<String, Object> map)throws Json2JsonException {
+        System.out.println("iterate : "+ obj);
         ArrayList list = new ArrayList();
         if(obj instanceof JSONArray) {
             Object arr = ((JSONArray) obj).get(0);
@@ -168,8 +171,8 @@ public class Process {
                     throw new Json2JsonException("Wrong iteratable format : " + obj +" is not [$iterable, $index, $each] or not [$iterable].");
                 }
 
-                for(int i = 0; i < ((JSONArray) obj).length(); i++)
-                list.add(Template2.replace(((JSONArray) obj).get(i), map, null, null));
+                for(int i = 0; i < ((JSONArray) arr).length(); i++)
+                list.add(Template2.replace(((JSONArray) arr).get(i), map, null, null));
             } else {
                 throw new Json2JsonException("Wrong iteratable format : " + obj +" is not [[$i0, $i1, ...],\"%i\",\"%e\"] format.");
             }
@@ -227,6 +230,8 @@ public class Process {
                     bool = (Boolean)GroovyEngine.expr(key, objs);
                 }
             }
+        } else if(obj instanceof Boolean) {
+            bool = (Boolean)obj;
         }
         if(map != null) {
             map.put(Map_Expr, bool);
@@ -257,7 +262,7 @@ public class Process {
         }
     }
 
-    public static Object for_each(JSONObject obj, Map<String, Object> map) throws Json2JsonException{
+    public static Object for_each(Object obj, Map<String, Object> map) throws Json2JsonException{
         if(obj instanceof JSONObject) {
             boolean exist = false;
             exist = section("%def", obj, map);
@@ -364,12 +369,12 @@ public class Process {
             Iterator<String> keys = ((JSONObject) obj).keys();
             while(keys.hasNext()) {
                 String key = keys.next().trim();
+                Object replaced = Template2.replace(((JSONObject) obj).get(key), map, null, null);
                 if (key.startsWith("%!")) {
-                    map.put(key.substring(2), ((JSONObject) obj).get(key));
+                    map.put(key.substring(2), replaced);
                 } else if (key.startsWith("%")) {
                     String var = key.substring(1);
                     if (map.containsKey(var)) {
-                        Object replaced = Template2.replace(((JSONObject) obj).get(key), map, null, null);
                         map.put(var, replaced);
                     }
                 }
