@@ -118,6 +118,11 @@ public class Process {
             System.out.println("map before : " + map);
             GroovyEngine.invoke(SINGLE, methodName, obj, map);
             System.out.println("map after : " + map);
+        } else {
+            String var = name.substring(1);
+            if (map.containsKey(var)) {
+                map.put(var, obj);
+            }
         }
     }
 
@@ -128,6 +133,7 @@ public class Process {
             while(keys.hasNext()) {
                 String key = keys.next().trim();
                 Object val = ((JSONObject) obj).get(key);
+                System.out.println("key : "  + key);
                 if (key.startsWith("%")) {
                     invoke(key, val, map);
                 }
@@ -175,18 +181,6 @@ public class Process {
     }
 
     public static Object if_then_else(Object obj, Map<String, Object> map) throws Json2JsonException {
-//        Object section = null;
-//        String key = "%!if";
-//        if (((JSONObject) obj).has(key)) {
-//            section = ((JSONObject) obj).get(key);
-//        }
-//        if (section == null) {
-//            key = Definitions.get(key);
-//            if (((JSONObject) obj).has(key)) {
-//                section = ((JSONObject) obj).get(key);
-//            }
-//        }
-
         if(obj instanceof JSONObject) {
             boolean exist = false;
             exist = section("%def", obj, map);
@@ -264,17 +258,6 @@ public class Process {
     }
 
     public static Object for_each(JSONObject obj, Map<String, Object> map) throws Json2JsonException{
-//        Object section = null;
-//        String key = "%!for";
-//        if (((JSONObject) obj).has(key)) {
-//            section = ((JSONObject) obj).get(key);
-//        }
-//        if (section == null) {
-//            key = Definitions.get(key);
-//            if (((JSONObject) obj).has(key)) {
-//                section = ((JSONObject) obj).get(key);
-//            }
-//        }
         if(obj instanceof JSONObject) {
             boolean exist = false;
             exist = section("%def", obj, map);
@@ -327,17 +310,6 @@ public class Process {
     }
 
     public static Object while_do(Object obj, Map<String, Object> map)  throws Json2JsonException{
-//        Object section = null;
-//        String key = "%!while";
-//        if (((JSONObject) obj).has(key)) {
-//            section = ((JSONObject) obj).get(key);
-//        }
-//        if (section == null) {
-//            key = Definitions.get(key);
-//            if (((JSONObject) obj).has(key)) {
-//                section = ((JSONObject) obj).get(key);
-//            }
-//        }
         if(obj instanceof JSONObject) {
             boolean exist = false;
             exist = section("%def", obj, map);
