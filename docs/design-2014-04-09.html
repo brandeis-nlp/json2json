@@ -470,7 +470,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%ret"  : $return-object }}</pre></td><td>%!_<br> %<><br> %$<br> %do<br> %#</td> <td><pre>{"%!while": {
     "%$"    : {   "%!s": "" },
     "%<>"   : {"<":[ {"%#": "%s"}, 200]},
-    "%do"   : {"%s", {"%+": ["%s", " next"]}},
+    "%do"   : {"%s": {"%+": ["%s", " next"]}},
     "%#"    : "%s" } }       </pre></td><td>Result will be  " next next next next". </td></tr><tr>
         <!--<td>Iteration Closure</td> <td><b>%-</b><em>(array)</em><b>{ </b>  <b> }</b> </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td>array: string type json array, e.g. ["hello","world"]</td></tr><tr>-->
 
