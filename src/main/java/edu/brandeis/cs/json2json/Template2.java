@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by shi on 4/9/14.
  */
-public class Template2 extends Proxy2 implements ITemplate  {
+public class Template2 extends Proxy implements ITemplate  {
 
     @Override
     public String transform(String template, String... jsons) throws Json2JsonException {
@@ -33,32 +33,9 @@ public class Template2 extends Proxy2 implements ITemplate  {
 
     private static final ConcurrentHashMap<String, Method> cache = new ConcurrentHashMap<String, Method>();
 
-//    public static Method getMethod(String name) throws NoSuchMethodException {
-//        if (name == null)
-//            return null;
-//
-//        Method val = cache.get(name);
-//        if (val == null) {
-//            // replace definition with symbol
-//            String symbol = Definitions.get(name);
-//            if (symbol != null) {
-//                name = symbol;
-//            }
-//            // replace symbol with method name
-//            String methodName = Symbols.get(name);
-//            if (methodName == null) {
-//                return null;
-//            }
-//            // replace method name with method
-//            val = Template2.class.getMethod(methodName);
-//            if (val != null)
-//                cache.put(name, val);
-//        }
-//        return val;
-//    }
 
     public static Object invokeMethod(String name, Object obj) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Object res = Proxy2.invoke(name, obj);
+        Object res = Proxy.invoke(name, obj);
         return res;
     }
 
@@ -112,19 +89,23 @@ public class Template2 extends Proxy2 implements ITemplate  {
                 }
                 replacedObj.put(key, replacedVal);
             }
-            if (((JSONObject) obj).length() == 1 && lastKey.startsWith("%")) {
-                // 2. define function
-                if (lastKey.startsWith("%!!")) {
-                    functions.put(lastKey.substring(3), replacedObj.get(lastKey));
-                    return new JSONObject();
-                }
-                try {
-                    Object res = invokeMethod(lastKey, replacedObj.get(lastKey));
-                    if (res != null)
-                        return res;
-                } catch (Exception e) {
-                    // invoke method error.
-                    e.printStackTrace();
+            if (((JSONObject) obj).length() == 1) {
+                if(lastKey.startsWith("%")) {
+                    // 2. define function
+                    if (lastKey.startsWith("%!!")) {
+                        functions.put(lastKey.substring(3), replacedObj.get(lastKey));
+                        return new JSONObject();
+                    }
+                    try {
+                        Object res = invokeMethod(lastKey, replacedObj.get(lastKey));
+                        if (res != null)
+                            return res;
+                    } catch (Exception e) {
+                        // invoke method error.
+                        e.printStackTrace();
+                    }
+                } else if(Process.Exprs.contains(lastKey)){
+                    return Process.expr(replacedObj, null);
                 }
             }
             return replacedObj;

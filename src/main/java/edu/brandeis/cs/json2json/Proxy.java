@@ -7,7 +7,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +14,7 @@ import java.util.regex.Pattern;
 /**
  * Created by shi on 3/31/14.
  */
-public class Proxy2 {
+public class Proxy {
 
     protected static final ConcurrentHashMap<String, String> Symbols = new ConcurrentHashMap<String, String>();
     protected static final ConcurrentHashMap<String, String> Definitions = new ConcurrentHashMap<String, String>();
@@ -82,7 +81,7 @@ public class Proxy2 {
         Symbols.put("%}*", "map_keys");
     }
 
-    protected static Proxy2 SINGLE = new Proxy2();
+    protected static Proxy SINGLE = new Proxy();
 
     // JSON invoke to JSON
     public static Object invoke(String name, Object obj) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

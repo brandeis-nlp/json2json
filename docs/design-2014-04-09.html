@@ -407,7 +407,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     <table  class="v"><tbody><tr>
     <th>Function</th><th>Definition</th><th>Symbol</th><th>Example</th><th>Description</th> </tr><tr>
     <td>Define Variable</td><td>{"<b>%!</b><em>name</em>" : <em>$json-object</em>}</td><td>%!</td> <td>{"%!<em>v</em>" : 1, "%!<em>v2</em>" : "hello", "%!<em>v3</em>" : {}, "%!<em>v4</em>" : [] }</td><td>define number, string, map, and array</td></tr><tr>
-    <td>Assignment Variable</td><td>{"<b>%</b><em>name</em>" : <em>$json-object</em>}</td><td>%</td> <td>{"%<em>v1</em>" : {"%<em>v2</em>" : "hello"} } == {"%<em>v1</em>" : "hello"} == "hello"</td><td>define number, string, map, and array</td></tr><tr>
+    <td>Assignment Variable</td><td>{"<b>%</b><em>name</em>" : <em>$json-object</em>}</td><td>%</td> <td>{"%<em>v2</em>" : "hello"} == (<em>v2</em> = "hello")</td><td>define number, string, map, and array</td></tr><tr>
     <td>Define Function</td><td><pre>{"<b>%!!</b><em>name</em>" : {
     "%para" : [$parameters],
     "%def"  : {$initialization},

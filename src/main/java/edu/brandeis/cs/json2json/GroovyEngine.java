@@ -10,18 +10,6 @@ import org.json.JSONArray;
  */
 public class GroovyEngine {
 
-
-//    public static void run(String script){
-//        Binding binding = new Binding();
-//        binding.setVariable("foo", new Integer(2));
-//        GroovyShell shell = new GroovyShell(binding);
-//
-//        Object value = shell.evaluate("println 'Hello World!'; x = 123; return foo * 10");
-//        assert value.equals(new Integer(20));
-//        assert binding.getVariable("x").equals(new Integer(123));
-//    }
-
-
     public static final String StringProxyName = "_string_proxy_";
     public static final String ArrayIteratorName = "_array_iterator_";
     public static final String ArrayIteratorIndexName = "_array_iterator_index_";
@@ -36,6 +24,30 @@ public class GroovyEngine {
         }
         return script;
     }
+
+
+
+    public static Object expr(String expr, Object ... objs) {
+        Binding binding = new Binding();
+        long id = System.currentTimeMillis();
+        StringBuilder  sb = new StringBuilder();
+        if (1 == objs.length) {
+            binding.setVariable("__a__" + id, objs[0]);
+            sb.append("(").append(expr).append(" (");
+            sb.append("__a__" + id).append("))");
+        } else if (2 == objs.length) {
+            binding.setVariable("__a__" + id, objs[0]);
+            binding.setVariable("__b__" + id, objs[1]);
+            sb.append("( (").append("__a__" + id);
+            sb.append(") ").append(expr).append(" (");
+            sb.append("__b__" + id).append(") )");
+        }
+        GroovyShell shell = new GroovyShell(binding);
+//        System.out.println("script : " + sb.toString());
+        return shell.evaluate("return " + sb.toString());
+    }
+
+
 
     public static String invoke(Object obj, String methodName, Object... paras) {
         Binding binding = new Binding();
