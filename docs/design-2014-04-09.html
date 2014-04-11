@@ -359,7 +359,16 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     <td>&<b>int1</b><em>path1</em><b>string</b>&<b>int2</b><em>path2</em></td><td>"&$.name&2', '$.name"</td><td>Concatenate content of 2 Json path with string </td> </tr><tr>
 
     </tr></tbody></table>
-    
+
+    <a name="rule" />
+    <h2>Rule  <a href="#_top_" style="text-decoration: none;">^</a></h2>
+    <ul>
+        <li><b>Read</b>: If an Json value start with <b>"&"</b>, Then this value should read from other Json object.</li>
+        <li><b>Replace</b>: If an Json object has one key, and this key starts with <b>"%"</b>, Then this object should be executed and replaced with results.</li>
+        <li><b>Variable</b>: "<b>%</b><em>alphabeta</em>" is only allowed, When "<b>%!</b><em>alphabeta</em>" exists, Or <em>alphabeta</em> is <em>keyword</em> in definitions ( see  the above tables) .</li>
+    </ul>
+
+
 <h3>What is String Filter?</h3>
     The string filter has 7 basic functions to make it flexible.
     We want to implement these filter function by Java String functions.
@@ -486,13 +495,6 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
         <!--<td>Return Target Variable</td> <td>%-<em>(array)</em>{ <b>%r</b> } </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%r</b>: return value.</td>-->
     <!--</tr></tbody></table>-->
 <!----------------------------------------------------------------------->
-<a name="rule" />
-<h2>Rule  <a href="#_top_" style="text-decoration: none;">^</a></h2>
-<ul>
-<li><b>Read</b>: If an Json value start with <b>"&"</b>, Then this value should read from other Json object.</li>
-<li><b>Replace</b>: If an Json object has one key, and this key starts with <b>"%"</b>, Then this object should be executed and replaced with results.</li>
-<li><b>Define</b>: "<b>%</b><em>alphabeta</em>" is only allowed, When "<b>%!!</b><em>alphabeta</em>" exists, Or <em>alphabeta</em> is <em>keyword</em> in definitions ( see  the above tables) .</li>
-</ul>
 
 
 
