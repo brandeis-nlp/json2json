@@ -97,21 +97,21 @@ public class Proxy {
         if (methodName == null) {
             return null;
         }
-        System.out.println("Proxy.invoke : " + name +" ( " + obj +")");
+//        System.out.println("Proxy.invoke : " + name +" ( " + obj +")");
         Object [] params = fromJSON2Arr(obj);
         if (methodName.equals("array_size")) {
             params = new Object[] {obj};
         }
 
         Object ret = GroovyEngine.invoke(SINGLE, methodName, params);
-        System.out.println("Proxy.invoke : " + name +" " + obj + " -> " + ret +" " + ret.getClass());
+//        System.out.println("Proxy.invoke : " + name +" " + obj + " -> " + ret +" " + ret.getClass());
         return toJSON(ret);
     }
 
 
 
     public static Object toJSON (Object obj) {
-        System.out.println("Proxy.toJSON : " + obj + " " + obj.getClass());
+//        System.out.println("Proxy.toJSON : " + obj + " " + obj.getClass());
         if(obj instanceof  String) {
             String json = ((String) obj).trim();
             if (json.startsWith("{")) {

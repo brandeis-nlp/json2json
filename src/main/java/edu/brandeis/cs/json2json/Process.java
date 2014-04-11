@@ -90,9 +90,9 @@ public class Process {
                     val = ((JSONObject) obj).get(name);
                  }
              }
-             System.out.println();
-             System.out.println("Section : " + name +" " +val);
-             System.out.println("Map : " + map);
+//             System.out.println();
+//             System.out.println("Section : " + name +" " +val);
+//             System.out.println("Map : " + map);
              if (val != null) {
                 invoke(name, val, map);
                 return true;
@@ -104,7 +104,7 @@ public class Process {
     }
 
     public static Object invoke(String name, Object obj, Map<String, Object> map) throws Json2JsonException{
-        System.out.println("invoke : " + name  + " ( " + obj +" )");
+//        System.out.println("invoke : " + name  + " ( " + obj +" )");
         // replace definition with symbol
         Object ret = null;
         String symbol = Definitions.get(name);
@@ -116,15 +116,15 @@ public class Process {
         if (methodName != null) {
 //            System.out.println();
 //            System.out.println("invoke : " + name +"(" + obj +")");
-            System.out.println("map before : " + map);
+//            System.out.println("map before : " + map);
             ret = GroovyEngine.invoke(SINGLE, methodName, obj, map);
-            System.out.println("map after : " + map);
+//            System.out.println("map after : " + map);
         } else {
             String var = name.substring(1);
             if (map.containsKey(var)) {
                 Object replaced = Template2.replace(obj, map, null, null);
                 map.put(var, replaced);
-                System.out.println("assign : " + var +" = " + obj);
+//                System.out.println("assign : " + var +" = " + obj);
             }
             ret = true;
         }
@@ -132,13 +132,13 @@ public class Process {
     }
 
     public static boolean process (Object obj, Map<String, Object>  map) throws Json2JsonException {
-        System.out.println("process : " + obj);
+//        System.out.println("process : " + obj);
         if(obj instanceof JSONObject){
             Iterator<String> keys = ((JSONObject) obj).keys();
             while(keys.hasNext()) {
                 String key = keys.next().trim();
                 Object val = ((JSONObject) obj).get(key);
-                System.out.println("key : "  + key);
+//                System.out.println("key : "  + key);
                 if (key.startsWith("%")) {
                     invoke(key, val, map);
                 }
@@ -150,7 +150,7 @@ public class Process {
     }
 
     public static Iterable iterate(Object obj, Map<String, Object> map)throws Json2JsonException {
-        System.out.println("iterate : "+ obj);
+//        System.out.println("iterate : "+ obj);
         ArrayList list = new ArrayList();
         if(obj instanceof JSONArray) {
             Object arr = ((JSONArray) obj).get(0);
@@ -214,7 +214,7 @@ public class Process {
 
     public static boolean expr(Object obj, Map<String, Object>map) throws Json2JsonException {
         boolean bool = false;
-        System.out.println("expr : " + obj);
+//        System.out.println("expr : " + obj);
         if(obj instanceof JSONObject){
             Iterator<String> keys = ((JSONObject) obj).keys();
             while(keys.hasNext()) {
@@ -227,13 +227,13 @@ public class Process {
                         objs = new Object[((JSONArray) val).length()];
                         for (int i = 0; i < ((JSONArray) val).length(); i++) {
                             objs[i] = Template2.replace(((JSONArray) val).get(i), map, null, null);
-                            System.out.println(key + "---:" + objs[i].getClass());
+//                            System.out.println(key + "---:" + objs[i].getClass());
                         }
                     } else {
                         objs = new Object[]{Template2.replace(val, map, null, null)};
                     }
                     bool = (Boolean)GroovyEngine.expr(key, objs);
-                    System.out.println(key + "---:" + bool);
+//                    System.out.println(key + "---:" + bool);
                 }
             }
         } else if(obj instanceof Boolean) {
@@ -370,7 +370,7 @@ public class Process {
     }
 
     public static  boolean steps (Object obj, Map<String, Object> map) throws Json2JsonException{
-        System.out.println("steps : " + obj);
+//        System.out.println("steps : " + obj);
         if (obj instanceof JSONArray) {
             for (int i = 0; i < ((JSONArray) obj).length(); i ++) {
                 steps(((JSONArray) obj).get(i), map);

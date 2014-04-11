@@ -31,7 +31,7 @@ public class GroovyEngine {
 
 
     public static Object expr(String expr, Object ... objs) {
-        System.out.println("expr : " + expr + " " + Arrays.toString(objs));
+//        System.out.println("expr : " + expr + " " + Arrays.toString(objs));
         Binding binding = new Binding();
         long id = System.currentTimeMillis();
         StringBuilder  sb = new StringBuilder();

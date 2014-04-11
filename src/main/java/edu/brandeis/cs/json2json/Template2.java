@@ -25,9 +25,9 @@ public class Template2 extends Proxy implements ITemplate  {
         Map<String, Object> functions = new HashMap<String, Object>();
 //        System.out.println("input json : " + toJSON(template.trim()));
         Object res = replace(toJSON(template.trim()), variables, functions, cache);
-        System.out.println(variables);
-        System.out.println(functions);
-        System.out.println(cache);
+//        System.out.println(variables);
+//        System.out.println(functions);
+//        System.out.println(cache);
         return res.toString();
     }
 
@@ -35,7 +35,7 @@ public class Template2 extends Proxy implements ITemplate  {
 
 
     public static Object invokeMethod(String name, Object obj) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        System.out.println("invokeMethod : " + name + " " + obj);
+//        System.out.println("invokeMethod : " + name + " " + obj);
         Object res = Proxy.invoke(name, obj);
         return res;
     }
@@ -95,7 +95,7 @@ public class Template2 extends Proxy implements ITemplate  {
                         return new JSONObject();
                     } else if (Proxy.Definitions.containsKey(key) || Proxy.Symbols.containsKey(key)) {
                         replacedVal = replace(val, variables, functions, cache);
-                        System.out.println("Proxy : " + key +" " + val +" " + replacedVal);
+//                        System.out.println("Proxy : " + key +" " + val +" " + replacedVal);
                         Object res = Proxy.invoke(key, replacedVal);
                         return res;
                     } else if (Process.Definitions.containsKey(key) || Process.Symbols.containsKey(key)) {

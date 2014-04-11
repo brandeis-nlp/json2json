@@ -178,12 +178,12 @@ public class Template2Test {
         for (int i = 0; i < StringFilters.length; i++) {
             in = StringFilters[i];
             target = StringFilterResults[i];
-            System.out.println("<--------------------------");
+//            System.out.println("<--------------------------");
             out = template.transform(in, "{}");
-            System.out.println("in : " + in);
-            System.out.println("out : " + out);
-            System.out.println("-------------------------->");
-            System.out.println();
+//            System.out.println("in : " + in);
+//            System.out.println("out : " + out);
+//            System.out.println("-------------------------->");
+//            System.out.println();
             Assert.assertEquals(target, out);
         }
 
@@ -221,12 +221,12 @@ public class Template2Test {
         for (int i = 0; i < Processes.length; i++) {
             in = Processes[i];
             target = ProcessResults[i];
-            System.out.println("<--------------------------");
+//            System.out.println("<--------------------------");
             out = template.transform(in, "{}");
-            System.out.println("in : " + in);
-            System.out.println("out : " + out);
-            System.out.println("-------------------------->");
-            System.out.println();
+//            System.out.println("in : " + in);
+//            System.out.println("out : " + out);
+//            System.out.println("-------------------------->");
+//            System.out.println();
             Assert.assertEquals(target, out);
         }
     }
