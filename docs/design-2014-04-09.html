@@ -408,7 +408,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     <th>Function</th><th>Definition</th><th>Symbol</th><th>Example</th><th>Description</th> </tr><tr>
     <td>Define Variable</td><td>{"<b>%!</b><em>name</em>" : <em>$json-object</em>}</td><td>%!</td> <td>{"%!<em>v</em>" : 1, "%!<em>v2</em>" : "hello", "%!<em>v3</em>" : {}, "%!<em>v4</em>" : [] }</td><td>define number, string, map, and array</td></tr><tr>
     <td>Assignment Variable</td><td>{"<b>%</b><em>name</em>" : <em>$json-object</em>}</td><td>%</td> <td>{"%<em>v2</em>" : "hello"} == (<em>v2</em> = "hello")</td><td>define number, string, map, and array</td></tr><tr>
-    <td>Define Function</td><td><pre>{"<b>%!!</b><em>name</em>" : {
+    <!--td>Define Function</td><td><pre>{"<b>%!!</b><em>name</em>" : {
     "%para" : [$parameters],
     "%def"  : {$initialization},
     "%proc" : [{$process}, ...],
@@ -419,8 +419,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
                         "%|": [  "%str", "%sep"  ]
                         } },
         "%#"  : "%a" } }</pre>
-        <!--{"%!!<em>mysplit</em>" : [ ["%str", "%sep"], {"<em>%!a</em>":[]}, [ {"%a" : {"%|":["%str", "%sep"]}}], "%a" ]}-->
-    </td><td>This is rename filter <b>"%|"</b> as <em>mysplit</em>. We can call <em>mysplit</em> function by {"%mysplit":["hello.world", "."]}</td></tr><tr>
+    </td><td>This is rename filter <b>"%|"</b> as <em>mysplit</em>. We can call <em>mysplit</em> function by {"%mysplit":["hello.world", "."]}</td></tr><tr-->
     <td style="color:green">Process</td><td style="color:green"><pre>{"<b>%!proc</b>" : {
     "%def"  : {$initialization},
     "%steps" : [{$Process}, ...],
@@ -444,7 +443,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%<>"   : { "==": [ "&$.name", "OpenNLP" ]},
     "%if"   : { "%id": "http://www.opennlp.org"},
     "%else" : { "%id": "http://unknown.org" },
-    "%#"    : "%id" } }       </pre></td><td>define number, string, map, and array</td></tr><tr>
+    "%#"    : "%id" } }       </pre></td><td>Result will be "http://www.opennlp.org". </td></tr><tr>
     <td>For-Each</td><td><pre>{"<b>%!for</b>" : {
     "%def"     : {$initialization},
     "%iter"    : [$iterable, $index, $each],
@@ -453,7 +452,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%$"       : {   "%!s": "" },
     "%[]"      : [ ["hello", "world"], "%i", "%e"],
     "%each" : {"%+": ["%s", "%e"]},
-    "%#"       : "%s" } }       </pre></td><td>define number, string, map, and array</td></tr><tr>
+    "%#"       : "%s" } }       </pre></td><td>Result will be "helloworld". </td></tr><tr>
 
     <td>While</td><td><pre>{"<b>%!while</b>" : {
     "%def"     : {$initialization},
@@ -463,7 +462,7 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
     "%$"    : {   "%!s": "" },
     "%<>"   : {"<":[ {"%#": "%s"}, 200]},
     "%do"   : {"%+": ["%s", " next"]},
-    "%#"    : "%s" } }       </pre></td><td>define number, string, map, and array</td></tr><tr>
+    "%#"    : "%s" } }       </pre></td><td>Result will be  " next next next next". </td></tr><tr>
         <!--<td>Iteration Closure</td> <td><b>%-</b><em>(array)</em><b>{ </b>  <b> }</b> </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td>array: string type json array, e.g. ["hello","world"]</td></tr><tr>-->
 
     <!--<td>Iteration Element Variable</td> <td>%-<em>(array)</em>{ <b>%e</b>, <b>%i</b> } </td><td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%e</b>: element; <b>%i</b>: index [0 .. n]; </td></tr><tr>-->
@@ -561,13 +560,268 @@ Template is Json data with key-value pairs.  The value could be JsonPath or norm
 In order to prove that this JSON to JSON transformation works, we use the XSLT examples in <a href="http://www.w3schools.com/xsl/xsl_examples.asp" target="_blank">W3School</a>.
     All the XML input is firstly converted into JSON use online XML to JSON converter, e.g. <a href="http://www.utilities-online.info/xmltojson" target="_blank">Utilities Online</a>.
     Then we try to implement the target format using self-designed Template.
+    Here, we find an example from online XSLT <a href="http://www.freeformatter.com/xsl-transformer.html#ad-output" target="_blank">freeformatter</a>.
+
+
+<p>
+Original XML is catalog lists.
 
 <pre class="prettyprint linenum">
-
-
-
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+        &lt;catalog xmlns:foo="http://www.foo.org/" xmlns:bar="http://www.bar.org"&gt;
+            &lt;foo:cd&gt;
+                &lt;title&gt;Empire Burlesque&lt;/title&gt;
+                &lt;artist&gt;Bob Dylan&lt;/artist&gt;
+                &lt;country&gt;USA&lt;/country&gt;
+                &lt;company&gt;Columbia&lt;/company&gt;
+                &lt;price&gt;10.90&lt;/price&gt;
+                &lt;bar:year&gt;1985&lt;/bar:year&gt;
+            &lt;/foo:cd&gt;
+            &lt;foo:cd&gt;
+                &lt;title&gt;Hide your heart&lt;/title&gt;
+                &lt;artist&gt;Bonnie Tyler&lt;/artist&gt;
+                &lt;country&gt;UK&lt;/country&gt;
+                &lt;company&gt;CBS Records&lt;/company&gt;
+                &lt;price&gt;9.90&lt;/price&gt;
+                &lt;bar:year&gt;1988&lt;/bar:year&gt;
+            &lt;/foo:cd&gt;
+            &lt;foo:cd&gt;
+                &lt;title&gt;Greatest Hits&lt;/title&gt;
+                &lt;artist&gt;Dolly Parton&lt;/artist&gt;
+                &lt;country&gt;USA&lt;/country&gt;
+                &lt;company&gt;RCA&lt;/company&gt;
+                &lt;price&gt;9.90&lt;/price&gt;
+                &lt;bar:year&gt;1982&lt;/bar:year&gt;
+            &lt;/foo:cd&gt;
+        &lt;/catalog&gt;
 </pre>
-<!----------------------------------------------------------------------->
+
+<p>We turn it into JSON using <a href="http://www.utilities-online.info/xmltojson" target="_blank">Utilities Online</a>. </p>
+<pre class="prettyprint linenum">{
+  "catalog": {
+    "-xmlns:foo": "http://www.foo.org/",
+    "-xmlns:bar": "http://www.bar.org",
+    "foo:cd": [
+      {
+        "title": "Empire Burlesque",
+        "artist": "Bob Dylan",
+        "country": "USA",
+        "company": "Columbia",
+        "price": "10.90",
+        "bar:year": "1985"
+      },
+      {
+        "title": "Hide your heart",
+        "artist": "Bonnie Tyler",
+        "country": "UK",
+        "company": "CBS Records",
+        "price": "9.90",
+        "bar:year": "1988"
+      },
+      {
+        "title": "Greatest Hits",
+        "artist": "Dolly Parton",
+        "country": "USA",
+        "company": "RCA",
+        "price": "9.90",
+        "bar:year": "1982"
+      }
+    ]
+  }
+}
+</pre>
+
+The XSLT turns the XML into HTML.
+
+<pre class="prettyprint linenum">
+    &lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+    &lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foo="http://www.foo.org/" xmlns:bar="http://www.bar.org"&gt;
+        &lt;xsl:template match="/"&gt;
+            &lt;html&gt;
+            &lt;body&gt;
+            &lt;h2&gt;My CD Collection&lt;/h2&gt;
+            &lt;table border="1"&gt;
+                &lt;tr bgcolor="#9acd32"&gt;
+                    &lt;th&gt;Title&lt;/th&gt;
+                    &lt;th&gt;Artist&lt;/th&gt;
+                    &lt;th&gt;Country&lt;/th&gt;
+                    &lt;th&gt;Company&lt;/th&gt;
+                    &lt;th&gt;Price&lt;/th&gt;
+                    &lt;th&gt;Year&lt;/th&gt;
+                &lt;/tr&gt;
+                &lt;xsl:for-each select="catalog/foo:cd"&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="title"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="artist"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="country"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="company"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="price"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="bar:year"/&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/xsl:for-each&gt;
+            &lt;/table&gt;
+            &lt;/body&gt;
+            &lt;/html&gt;
+        &lt;/xsl:template&gt;
+    &lt;/xsl:stylesheet&gt;
+</pre>
+
+
+<p>Instead of XSLT, our JSON Template will be like this.
+<ul>
+        <li>We define a "%!s" is array with one object "th".</li>
+        <li>We want to use "for" function to process the transformation.</li>
+        <li>We iterate over JSON Path "$.catalog.foo:cd" using read ("&") function "&$.catalog.foo:cd"</li>
+        <li>We add "td" into array "%s" using array add function {"%]+", [ $array, $element ]}</li>
+        <li>We assign the new array as "%s" using assign function {"%s": $new }</li>
+        <li>We return the array "%s" using return function "%#".</li>
+</ul>
+
+<pre class="prettyprint linenum">
+{
+  "html": {
+    "-xmlns:bar": "http://www.bar.org",
+    "-xmlns:foo": "http://www.foo.org/",
+    "body": {
+      "h2": "My CD Collection",
+      "table": {
+        "-border": "1",
+        "tr": {"%!for": {
+               "%$"    : {"%!s":[ { "-bgcolor": "#9acd32",
+                                    "th": [
+                                      "Title",
+                                      "Artist",
+                                      "Country",
+                                      "Company",
+                                      "Price",
+                                      "Year" ]
+                                  } ]
+                         },
+               "%[]"   : ["&$.catalog.foo:cd", "%i", "%e"],
+               "%each" : {"%s": {"%]+": ["%s", {"td": [
+                                                        {"%&":["%e", "$.title"]} ,
+                                                        {"%&":["%e", "$.artist"]},
+                                                        {"%&":["%e", "$.country"]},
+                                                        {"%&":["%e", "$.company"]},
+                                                        {"%&":["%e", "$.price"]},
+                                                        {"%&":["%e", "$.bar:year"]}
+                                                       ]}]}},
+
+               "%#"    : "%s"
+              }
+        }
+      }
+    }
+  }
+}
+</pre>
+
+<p> We get the transformed result.</p>
+    <pre class="prettyprint linenum">{
+  "html": {
+    "-xmlns:bar": "http://www.bar.org",
+    "-xmlns:foo": "http://www.foo.org/",
+    "body": {
+      "h2": "My CD Collection",
+      "table": {
+        "-border": "1",
+        "tr": [
+          {
+            "-bgcolor": "#9acd32",
+            "th": [
+              "Title",
+              "Artist",
+              "Country",
+              "Company",
+              "Price",
+              "Year"
+            ]
+          },
+          {
+            "td": [
+              "Empire Burlesque",
+              "Bob Dylan",
+              "USA",
+              "Columbia",
+              "10.90",
+              "1985"
+            ]
+          },
+          {
+            "td": [
+              "Hide your heart",
+              "Bonnie Tyler",
+              "UK",
+              "CBS Records",
+              "9.90",
+              "1988"
+            ]
+          },
+          {
+            "td": [
+              "Greatest Hits",
+              "Dolly Parton",
+              "USA",
+              "RCA",
+              "9.90",
+              "1982"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}</pre>
+
+We turn it into XML using XML to JSON converter <a href="http://www.utilities-online.info/xmltojson" target="_blank">Utilities Online</a>.
+We get the XML result. It will be exactly the <a href="http://www.freeformatter.com/xsl-transformer.html#ad-output" target="_blank" >XSLT result</a>.
+
+
+<pre class="prettyprint linenum">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+        &lt;html xmlns:bar="http://www.bar.org" xmlns:foo="http://www.foo.org/"&gt;
+        &lt;body&gt;
+        &lt;h2&gt;My CD Collection&lt;/h2&gt;
+        &lt;table border="1"&gt;
+            &lt;tr bgcolor="#9acd32"&gt;
+                &lt;th&gt;Title&lt;/th&gt;
+                &lt;th&gt;Artist&lt;/th&gt;
+                &lt;th&gt;Country&lt;/th&gt;
+                &lt;th&gt;Company&lt;/th&gt;
+                &lt;th&gt;Price&lt;/th&gt;
+                &lt;th&gt;Year&lt;/th&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Empire Burlesque&lt;/td&gt;
+                &lt;td&gt;Bob Dylan&lt;/td&gt;
+                &lt;td&gt;USA&lt;/td&gt;
+                &lt;td&gt;Columbia&lt;/td&gt;
+                &lt;td&gt;10.90&lt;/td&gt;
+                &lt;td&gt;1985&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Hide your heart&lt;/td&gt;
+                &lt;td&gt;Bonnie Tyler&lt;/td&gt;
+                &lt;td&gt;UK&lt;/td&gt;
+                &lt;td&gt;CBS Records&lt;/td&gt;
+                &lt;td&gt;9.90&lt;/td&gt;
+                &lt;td&gt;1988&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Greatest Hits&lt;/td&gt;
+                &lt;td&gt;Dolly Parton&lt;/td&gt;
+                &lt;td&gt;USA&lt;/td&gt;
+                &lt;td&gt;RCA&lt;/td&gt;
+                &lt;td&gt;9.90&lt;/td&gt;
+                &lt;td&gt;1982&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;
+</pre>
+
+
+    <!----------------------------------------------------------------------->
 <a name="deploy" />
 <h2>Deployment  <a href="#_top_" style="text-decoration: none;">^</a></h2>
 <code class="code prettyprint">
