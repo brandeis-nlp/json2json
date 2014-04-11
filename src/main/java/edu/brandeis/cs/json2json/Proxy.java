@@ -84,7 +84,7 @@ public class Proxy {
     protected static Proxy SINGLE = new Proxy();
 
     // JSON invoke to JSON
-    public static Object invoke(String name, Object obj) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static Object invoke(String name, Object obj) {
         if (name == null)
             return null;
         // replace definition with symbol
@@ -97,30 +97,32 @@ public class Proxy {
         if (methodName == null) {
             return null;
         }
-        System.out.println("invoke : " + name +"(" + obj +")");
+        System.out.println("Proxy.invoke : " + name +" ( " + obj +")");
         Object [] params = fromJSON2Arr(obj);
         if (methodName.equals("array_size")) {
             params = new Object[] {obj};
         }
 
         Object ret = GroovyEngine.invoke(SINGLE, methodName, params);
-        System.out.println("invoke : " + name +" " + obj + " -> " + ret +" " + ret.getClass());
+        System.out.println("Proxy.invoke : " + name +" " + obj + " -> " + ret +" " + ret.getClass());
         return toJSON(ret);
     }
 
 
 
-    public static Object toJSON (Object json) {
-        System.out.println("toJSON : " + json + " " + json.getClass());
-        if(json instanceof  String) {
-            if (((String) json).startsWith("{")) {
+    public static Object toJSON (Object obj) {
+        System.out.println("Proxy.toJSON : " + obj + " " + obj.getClass());
+        if(obj instanceof  String) {
+            String json = ((String) obj).trim();
+            if (json.startsWith("{")) {
                 return new JSONObject((String)json);
-            } else if (((String) json).startsWith("[")) {
+            } else if (json.startsWith("[")) {
                 return new JSONArray((String)json);
             }
         }
-        return json;
+        return obj;
     }
+
 
     public static Object[] fromJSON2Arr (Object obj) {
         if (obj instanceof JSONArray) {

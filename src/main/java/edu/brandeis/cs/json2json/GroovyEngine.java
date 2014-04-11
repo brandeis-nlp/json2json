@@ -47,7 +47,7 @@ public class GroovyEngine {
             sb.append("__b__" + id).append(") )");
         }
         GroovyShell shell = new GroovyShell(binding);
-        System.out.println("script : " + sb.toString());
+//        System.out.println("script : " + sb.toString());
         return shell.evaluate("return " + sb.toString());
     }
 
@@ -66,7 +66,7 @@ public class GroovyEngine {
         sb.setLength(sb.length() - 1);
         sb.append(")");
         GroovyShell shell = new GroovyShell(binding);
-        System.out.println("script : " + sb.toString());
+//        System.out.println("script : " + sb.toString());
         Object res = shell.evaluate("return " + sb.toString());
         if(res == null)
             return null;

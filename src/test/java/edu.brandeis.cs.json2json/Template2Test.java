@@ -138,6 +138,19 @@ public class Template2Test {
             "[\"hello\"]"
     };
 
+    String [] Processes = {
+            "{\"%!for\": {\n" +
+                    "    \"%$\"       : {   \"%!s\": \"\" },\n" +
+                    "    \"%[]\"      : [ [\"hello\", \"world\"], \"%i\", \"%e\"],\n" +
+                    "    \"%each\" : {\"%s\": {\"%+\": [\"%s\", \"%e\"]}},\n" +
+                    "    \"%#\"       : \"%s\" } }",
+    };
+
+
+    String [] ProcessResults = {
+            "helloworld"
+    };
+
 
 
 
@@ -193,6 +206,21 @@ public class Template2Test {
         for (int i = 0; i < MapOperators.length; i++) {
             in = MapOperators[i];
             target = MapOperatorResults[i];
+//            System.out.println("<--------------------------");
+            out = template.transform(in, "{}");
+//            System.out.println("in : " + in);
+//            System.out.println("out : " + out);
+//            System.out.println("-------------------------->");
+//            System.out.println();
+            Assert.assertEquals(target, out);
+        }
+
+
+
+
+        for (int i = 0; i < Processes.length; i++) {
+            in = Processes[i];
+            target = ProcessResults[i];
             System.out.println("<--------------------------");
             out = template.transform(in, "{}");
             System.out.println("in : " + in);

@@ -103,9 +103,10 @@ public class Process {
          }
     }
 
-    public static void invoke(String name, Object obj, Map<String, Object> map) throws Json2JsonException{
+    public static Object invoke(String name, Object obj, Map<String, Object> map) throws Json2JsonException{
         System.out.println("invoke : " + name  + " ( " + obj +" )");
         // replace definition with symbol
+        Object ret = null;
         String symbol = Definitions.get(name);
         if (symbol != null) {
             name = symbol;
@@ -116,7 +117,7 @@ public class Process {
 //            System.out.println();
 //            System.out.println("invoke : " + name +"(" + obj +")");
             System.out.println("map before : " + map);
-            GroovyEngine.invoke(SINGLE, methodName, obj, map);
+            ret = GroovyEngine.invoke(SINGLE, methodName, obj, map);
             System.out.println("map after : " + map);
         } else {
             String var = name.substring(1);
@@ -125,10 +126,12 @@ public class Process {
                 map.put(var, replaced);
                 System.out.println("assign : " + var +" = " + obj);
             }
+            ret = true;
         }
+        return ret;
     }
 
-    public static void process (Object obj, Map<String, Object>  map) throws Json2JsonException {
+    public static boolean process (Object obj, Map<String, Object>  map) throws Json2JsonException {
         System.out.println("process : " + obj);
         if(obj instanceof JSONObject){
             Iterator<String> keys = ((JSONObject) obj).keys();
@@ -143,6 +146,7 @@ public class Process {
         } else if(obj instanceof JSONArray) {
             steps(obj, map);
         }
+        return true;
     }
 
     public static Iterable iterate(Object obj, Map<String, Object> map)throws Json2JsonException {
@@ -242,27 +246,30 @@ public class Process {
         return bool;
     }
 
-    public static void do_(Object obj, Map<String, Object> map) throws Json2JsonException {
+    public static boolean do_(Object obj, Map<String, Object> map) throws Json2JsonException {
         Boolean bool = (Boolean)map.get(Map_Expr);
         while(bool) {
             process(obj, map);
             expr(map.get(Map_Expr_Obj), map);
             bool = (Boolean)map.get(Map_Expr);
         }
+        return true;
     }
 
-    public static void if_(Object obj, Map<String, Object> map) throws Json2JsonException {
+    public static boolean if_(Object obj, Map<String, Object> map) throws Json2JsonException {
         Boolean bool = (Boolean)map.get(Map_Expr);
         if(bool) {
             process(obj, map);
         }
+        return bool;
     }
 
-    public static void else_(Object obj, Map<String, Object> map) throws Json2JsonException {
+    public static boolean else_(Object obj, Map<String, Object> map) throws Json2JsonException {
         Boolean bool = (Boolean)map.get(Map_Expr);
         if(!bool) {
             process(obj, map);
         }
+        return bool;
     }
 
     public static Object for_each(Object obj, Map<String, Object> map) throws Json2JsonException{
@@ -362,7 +369,7 @@ public class Process {
         return map;
     }
 
-    public static  void steps (Object obj, Map<String, Object> map) throws Json2JsonException{
+    public static  boolean steps (Object obj, Map<String, Object> map) throws Json2JsonException{
         System.out.println("steps : " + obj);
         if (obj instanceof JSONArray) {
             for (int i = 0; i < ((JSONArray) obj).length(); i ++) {
@@ -383,8 +390,6 @@ public class Process {
                 }
             }
         }
+        return true;
     }
-
-
-
 }

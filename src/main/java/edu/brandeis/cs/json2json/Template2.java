@@ -23,25 +23,13 @@ public class Template2 extends Proxy implements ITemplate  {
         }
         Map<String, Object> variables = new HashMap<String, Object>();
         Map<String, Object> functions = new HashMap<String, Object>();
-        System.out.println("input json : " + toJSON(template.trim()));
+//        System.out.println("input json : " + toJSON(template.trim()));
         Object res = replace(toJSON(template.trim()), variables, functions, cache);
         System.out.println(variables);
         System.out.println(functions);
         System.out.println(cache);
         return res.toString();
     }
-
-//    public static Object toJSON (String json) {
-//        if(json instanceof  String) {
-//            if (((String) json).startsWith("{")) {
-//                return new JSONObject(json);
-//            } else if (((String) json).startsWith("[")) {
-//                return new JSONArray(json);
-//            }
-//        }
-//        return json;
-//    }
-
 
     private static final ConcurrentHashMap<String, Method> cache = new ConcurrentHashMap<String, Method>();
 
@@ -88,40 +76,39 @@ public class Template2 extends Proxy implements ITemplate  {
 
     // {key:val} --> target
     public static Object replace(Object obj, Map<String, Object> variables, Map<String, Object> functions, Map<String, Object> cache) throws Json2JsonException{
-        System.out.println("replace : " + obj);
+//        System.out.println("replace : " + obj);
         if (obj instanceof JSONObject) {
             JSONObject replacedObj = new JSONObject();
             Iterator<?> keys = ((JSONObject) obj).keys();
-            String lastKey = null;
             while( keys.hasNext() ){
                 String key = (String)keys.next();
-                lastKey = key.trim();
-                // 1. define variable
-                Object replacedVal = replace(((JSONObject) obj).get(key), variables, functions, cache);
-                if (lastKey.startsWith("%!")) {
-                    if(variables != null) {
-                        variables.put(lastKey.substring(2), replacedVal);
-                    }
-                }
-                replacedObj.put(key, replacedVal);
-            }
-            if (((JSONObject) obj).length() == 1) {
-                if(lastKey.startsWith("%")) {
+                Object val = ((JSONObject) obj).get(key);
+                Object replacedVal = null;
+                // check key.
+                key = key.trim();
+                if(key.startsWith("%")) {
                     // 2. define function
-                    if (lastKey.startsWith("%!!")) {
-                        functions.put(lastKey.substring(3), replacedObj.get(lastKey));
+                    if (key.startsWith("%!!")) {
+                        // 1. define variable
+                        replacedVal = replace(val, variables, functions, cache);
+                        functions.put(key.substring(3), replacedVal);
                         return new JSONObject();
+                    } else if (Proxy.Definitions.containsKey(key) || Proxy.Symbols.containsKey(key)) {
+                        replacedVal = replace(val, variables, functions, cache);
+                        System.out.println("Proxy : " + key +" " + val +" " + replacedVal);
+                        Object res = Proxy.invoke(key, replacedVal);
+                        return res;
+                    } else if (Process.Definitions.containsKey(key) || Process.Symbols.containsKey(key)) {
+                        Map<String, Object> map = new HashMap<String, Object>(variables);
+                        return Process.invoke(key, val, map);
                     }
-                    try {
-                        Object res = invokeMethod(lastKey, replacedObj.get(lastKey));
-                        if (res != null)
-                            return res;
-                    } catch (Exception e) {
-                        // invoke method error.
-                        e.printStackTrace();
-                    }
-                } else if(Process.Exprs.contains(lastKey)){
-                    return Process.expr(replacedObj, null);
+                } else if(Process.Exprs.contains(key)){
+                    replacedVal = replace(val, variables, functions, cache);
+                    replacedObj.put(key, replacedVal);
+                    return Process.expr(replacedObj, variables);
+                } else {
+                    replacedVal = replace(val, variables, functions, cache);
+                    replacedObj.put(key, replacedVal);
                 }
             }
             return replacedObj;
