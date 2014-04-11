@@ -75,7 +75,7 @@ public class ProcessTest {
 
 
     static String [] WHILE_DO_Results = {
-            "next"
+            " next next next next"
     };
 
     @Before

@@ -5,6 +5,8 @@ import groovy.lang.GroovyShell;
 import net.minidev.json.JSONObject;
 import org.json.JSONArray;
 
+import java.util.Arrays;
+
 /**
  * Created by shi on 4/1/14.
  */
@@ -18,6 +20,7 @@ public class GroovyEngine {
     public static final String ReturnVariableName = "_return_variable_";
 
 
+    @Deprecated
     public static String stringFilter(String script) {
         for(String key: StringProxy.Proxy.keySet()) {
             script = StringProxy.replace(script, key,  StringProxyName + "." + StringProxy.Proxy.get(key));
@@ -28,6 +31,7 @@ public class GroovyEngine {
 
 
     public static Object expr(String expr, Object ... objs) {
+        System.out.println("expr : " + expr + " " + Arrays.toString(objs));
         Binding binding = new Binding();
         long id = System.currentTimeMillis();
         StringBuilder  sb = new StringBuilder();
@@ -43,13 +47,13 @@ public class GroovyEngine {
             sb.append("__b__" + id).append(") )");
         }
         GroovyShell shell = new GroovyShell(binding);
-//        System.out.println("script : " + sb.toString());
+        System.out.println("script : " + sb.toString());
         return shell.evaluate("return " + sb.toString());
     }
 
 
 
-    public static String invoke(Object obj, String methodName, Object... paras) {
+    public static Object invoke(Object obj, String methodName, Object... paras) {
         Binding binding = new Binding();
         long id = System.currentTimeMillis();
         StringBuilder  sb = new StringBuilder("__v__" + id);
@@ -66,9 +70,10 @@ public class GroovyEngine {
         Object res = shell.evaluate("return " + sb.toString());
         if(res == null)
             return null;
-        return res.toString();
+        return res;
     }
 
+    @Deprecated
     public static String runFilter(String script) {
         Binding binding = new Binding();
         binding.setVariable(StringProxyName, new StringProxy());
@@ -83,6 +88,8 @@ public class GroovyEngine {
     public static final String ArrayIteratorBegin = "%-(";
     public static final String ArrayIteratorMiddle = "){";
     public static final String ArrayIteratorEnd = "}";
+
+    @Deprecated
     public static class ArrayIterator {
         public static long count = 0;
         public String sarr = null;
@@ -127,6 +134,7 @@ public class GroovyEngine {
     }
 
 
+    @Deprecated
     public static String arrayIterate(String script, Binding binding) {
         int start = script.indexOf(ArrayIteratorBegin);
         int end = 0;

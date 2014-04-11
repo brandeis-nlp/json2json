@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 /**
  * Created by shi on 3/31/14.
  */
+@Deprecated
 public class Template implements ITemplate {
     public static final String JsonFilterRegex = "%[\\+\\|\\*\\?_%/-=][\\|/]?\\(.+";
     public static final String JsonPathRegex = "\\$\\.[^\\s\"\'\\\\,]+";

@@ -102,19 +102,24 @@ public class Proxy {
         if (methodName.equals("array_size")) {
             params = new Object[] {obj};
         }
-        return toJSON(GroovyEngine.invoke(SINGLE, methodName, params));
+
+        Object ret = GroovyEngine.invoke(SINGLE, methodName, params);
+        System.out.println("invoke : " + name +" " + obj + " -> " + ret +" " + ret.getClass());
+        return toJSON(ret);
     }
 
 
 
-    public static Object toJSON (String json) {
-        if (json.startsWith("{")) {
-            return new JSONObject(json);
-        } else if (json.startsWith("[")) {
-            return new JSONArray(json);
-        } else {
-            return json;
+    public static Object toJSON (Object json) {
+        System.out.println("toJSON : " + json + " " + json.getClass());
+        if(json instanceof  String) {
+            if (((String) json).startsWith("{")) {
+                return new JSONObject((String)json);
+            } else if (((String) json).startsWith("[")) {
+                return new JSONArray((String)json);
+            }
         }
+        return json;
     }
 
     public static Object[] fromJSON2Arr (Object obj) {

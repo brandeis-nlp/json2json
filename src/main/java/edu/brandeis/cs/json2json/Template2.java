@@ -23,18 +23,31 @@ public class Template2 extends Proxy implements ITemplate  {
         }
         Map<String, Object> variables = new HashMap<String, Object>();
         Map<String, Object> functions = new HashMap<String, Object>();
+        System.out.println("input json : " + toJSON(template.trim()));
         Object res = replace(toJSON(template.trim()), variables, functions, cache);
-//        System.out.println(variables);
-//        System.out.println(functions);
-//        System.out.println(cache);
+        System.out.println(variables);
+        System.out.println(functions);
+        System.out.println(cache);
         return res.toString();
     }
+
+//    public static Object toJSON (String json) {
+//        if(json instanceof  String) {
+//            if (((String) json).startsWith("{")) {
+//                return new JSONObject(json);
+//            } else if (((String) json).startsWith("[")) {
+//                return new JSONArray(json);
+//            }
+//        }
+//        return json;
+//    }
 
 
     private static final ConcurrentHashMap<String, Method> cache = new ConcurrentHashMap<String, Method>();
 
 
     public static Object invokeMethod(String name, Object obj) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        System.out.println("invokeMethod : " + name + " " + obj);
         Object res = Proxy.invoke(name, obj);
         return res;
     }
@@ -75,6 +88,7 @@ public class Template2 extends Proxy implements ITemplate  {
 
     // {key:val} --> target
     public static Object replace(Object obj, Map<String, Object> variables, Map<String, Object> functions, Map<String, Object> cache) throws Json2JsonException{
+        System.out.println("replace : " + obj);
         if (obj instanceof JSONObject) {
             JSONObject replacedObj = new JSONObject();
             Iterator<?> keys = ((JSONObject) obj).keys();

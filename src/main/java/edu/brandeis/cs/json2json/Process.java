@@ -210,6 +210,7 @@ public class Process {
 
     public static boolean expr(Object obj, Map<String, Object>map) throws Json2JsonException {
         boolean bool = false;
+        System.out.println("expr : " + obj);
         if(obj instanceof JSONObject){
             Iterator<String> keys = ((JSONObject) obj).keys();
             while(keys.hasNext()) {
@@ -222,12 +223,13 @@ public class Process {
                         objs = new Object[((JSONArray) val).length()];
                         for (int i = 0; i < ((JSONArray) val).length(); i++) {
                             objs[i] = Template2.replace(((JSONArray) val).get(i), map, null, null);
-//                            System.out.println("---:" + objs[i]);
+                            System.out.println(key + "---:" + objs[i].getClass());
                         }
                     } else {
                         objs = new Object[]{Template2.replace(val, map, null, null)};
                     }
                     bool = (Boolean)GroovyEngine.expr(key, objs);
+                    System.out.println(key + "---:" + bool);
                 }
             }
         } else if(obj instanceof Boolean) {
@@ -245,6 +247,7 @@ public class Process {
         while(bool) {
             process(obj, map);
             expr(map.get(Map_Expr_Obj), map);
+            bool = (Boolean)map.get(Map_Expr);
         }
     }
 
