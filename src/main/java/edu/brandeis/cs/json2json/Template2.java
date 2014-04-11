@@ -15,6 +15,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Template2 extends Proxy implements ITemplate  {
 
+
+    public static final String Map_JSONs = "____json____";
+
     @Override
     public String transform(String template, String... jsons) throws Json2JsonException {
         HashMap<String, Object> cache = new HashMap<String, Object> ();
@@ -23,7 +26,7 @@ public class Template2 extends Proxy implements ITemplate  {
 
         // put variables
         for (int i = 0; i < jsons.length; i ++ ) {
-            variables.put(String.valueOf(i), jsons[i]);
+            variables.put(Map_JSONs + String.valueOf(i), jsons[i]);
         }
 //        System.out.println("input json : " + toJSON(template.trim()));
         Object res = replace(toJSON(template.trim()), variables, functions, cache);
@@ -55,7 +58,7 @@ public class Template2 extends Proxy implements ITemplate  {
                 if (cache == null) {
                     cache = new ConcurrentHashMap<String, Object>();
                 }
-                String res =  Json2Json.path((String)variables.get(sequence), jsonpath.substring(pathBegin), cache).trim();
+                String res =  Json2Json.path((String)variables.get(Map_JSONs + sequence), jsonpath.substring(pathBegin), cache).trim();
 //                System.out.println("Template2.read : " + jsonpath);
 //                System.out.println("Template2.read : " + res);
                 // return different result.

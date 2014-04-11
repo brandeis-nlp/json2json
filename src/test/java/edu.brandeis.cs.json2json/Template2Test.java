@@ -104,7 +104,7 @@ public class Template2Test {
 
 
 
-    int NumberOfResources = 2;
+    int NumberOfResources = 3;
 
 
     @Before

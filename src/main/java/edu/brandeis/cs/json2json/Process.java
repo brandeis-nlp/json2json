@@ -22,6 +22,16 @@ public class Process {
     protected static final ConcurrentHashMap<String, String> Definitions = new ConcurrentHashMap<String, String>();
     private static final ConcurrentHashMap<String, Method> cache = new ConcurrentHashMap<String, Method>();
 
+    public static final String Map_Iterable = "___iterable___";
+    public static final String Map_Each = "___each___";
+    public static final String Map_Index = "___index___";
+    public static final String Map_Expr = "___expr___";
+
+    public static final String Map_Ret = "___ret___";
+    public static final String Map_Expr_Obj = "___expr_obj___";
+    public static final String Default_Each = "e";
+    public static final String Default_Each_Index = "i";
+
     static {
         // Process
         Definitions.put("%!proc", "%!+");
@@ -296,15 +306,6 @@ public class Process {
         return map.get(Map_Ret);
     }
 
-    public static final String Map_Iterable = "___iterable___";
-    public static final String Map_Each = "___each___";
-    public static final String Map_Index = "___index___";
-    public static final String Map_Expr = "___expr___";
-
-    public static final String Map_Ret = "___ret___";
-    public static final String Map_Expr_Obj = "___expr_obj___";
-    public static final String Default_Each = "e";
-    public static final String Default_Each_Index = "i";
 
     public static void each_(Object obj, Map<String, Object> map)  throws Json2JsonException{
         int i = 0;
