@@ -1,14 +1,15 @@
 package org.lappsgrid.json2json;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.lappsgrid.json2json.JsonProxy.JsonArray;
+import org.lappsgrid.json2json.JsonProxy.JsonObject;
 
 /**
  * Created by shi on 4/9/14.
@@ -63,9 +64,9 @@ public class Template2 extends Proxy implements ITemplate  {
 //                System.out.println("Template2.read : " + res);
                 // return different result.
                 if (res.startsWith("{")) {
-                    return new JSONObject(res);
+                    return JsonProxy.readObject(res);
                 } else if (res.startsWith("[")) {
-                    return new JSONArray(res);
+                    return JsonProxy.readArray(res);
                 } else {
                     return res;
                 }
@@ -75,25 +76,24 @@ public class Template2 extends Proxy implements ITemplate  {
     }
 
 
-    public static Object fromJSON (Object obj) {
-        if (obj instanceof String[]) {
-            return new JSONArray(obj).toString();
-        } else if (obj instanceof Map) {
-            return new JSONObject(obj);
-        } else {
-            return obj;
-        }
-    }
+//    public static Object fromJSON (Object obj) {
+//        if (obj instanceof String[]) {
+//            return new JsonArray(obj).toString();
+//        } else if (obj instanceof Map) {
+//            return new JsonObject(obj);
+//        } else {
+//            return obj;
+//        }
+//    }
 
     // {key:val} --> target
     public static Object replace(Object obj, Map<String, Object> variables, Map<String, Object> functions, Map<String, Object> cache) throws Json2JsonException{
 //        System.out.println("replace : " + obj);
-        if (obj instanceof JSONObject) {
-            JSONObject replacedObj = new JSONObject();
-            Iterator<?> keys = ((JSONObject) obj).keys();
-            while( keys.hasNext() ){
-                String key = (String)keys.next();
-                Object val = ((JSONObject) obj).get(key);
+        if (obj instanceof JsonObject) {
+            JsonObject replacedObj = JsonProxy.newObject();
+            List<String> keys = ((JsonObject) obj).keys();
+            for(String key: keys){
+                Object val = ((JsonObject) obj).get(key);
                 Object replacedVal = null;
                 // check key.
                 key = key.trim();
@@ -103,7 +103,7 @@ public class Template2 extends Proxy implements ITemplate  {
                         // 1. define variable
                         replacedVal = replace(val, variables, functions, cache);
                         functions.put(key.substring(3), replacedVal);
-                        return new JSONObject();
+                        return JsonProxy.newObject();
                     } else if (Proxy.Definitions.containsKey(key) || Proxy.Symbols.containsKey(key)) {
                         replacedVal = replace(val, variables, functions, cache);
 //                        System.out.println("Proxy : " + key +" " + val +" " + replacedVal);
@@ -123,10 +123,10 @@ public class Template2 extends Proxy implements ITemplate  {
                 }
             }
             return replacedObj;
-        } else if (obj instanceof JSONArray) {
-            JSONArray replacedVal = new JSONArray();
-            for (int i=0; i < ((JSONArray) obj).length(); i++ ) {
-                replacedVal.put(replace(((JSONArray) obj).get(i), variables, functions, cache));
+        } else if (obj instanceof JsonArray) {
+            JsonArray replacedVal = JsonProxy.newArray();
+            for (int i=0; i < ((JsonArray) obj).length(); i++ ) {
+                replacedVal.add(replace(((JsonArray) obj).get(i), variables, functions, cache));
             }
             return replacedVal;
         } else if (obj instanceof String) {

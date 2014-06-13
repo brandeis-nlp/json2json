@@ -2,7 +2,6 @@ package org.lappsgrid.json2json;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
-import org.json.JSONArray;
 
 /**
  * Created by shi on 4/1/14.
@@ -92,7 +91,7 @@ public class GroovyEngine {
         public String sarr = null;
         public String scon = null;
         public String [] arr = null;
-        public JSONArray jarr =  null;
+        public JsonProxy.JsonArray jarr =  null;
         public String iterator = null;
         public String index =  null;
         public String each =  null;
@@ -109,7 +108,7 @@ public class GroovyEngine {
                     int aiEnd = s.indexOf(ArrayIteratorEnd, middle1);
                     if(aiEnd >= 0 && aiEnd<=end) {
                         sarr = s.substring(aiStart1, middle);
-                        jarr = new JSONArray(sarr);
+                        jarr = JsonProxy.readArray(sarr);
                         arr = new String[jarr.length()];
                         iterator = ArrayIteratorName + count;
                         index = ArrayIteratorIndexName + count;

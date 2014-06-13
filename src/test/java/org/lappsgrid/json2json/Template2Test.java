@@ -3,7 +3,6 @@ package org.lappsgrid.json2json;
 
 import junit.framework.Assert;
 import org.apache.commons.io.FileUtils;
-import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +18,7 @@ public class Template2Test {
 
 
     public static final void assertEqualJSON(String json1, String json2) {
-        Assert.assertEquals(new JSONObject(json1).toString(), new JSONObject(json2).toString());
+        Assert.assertEquals(JsonProxy.readObject(json1).toString(), JsonProxy.readObject(json2).toString());
     }
 
     String [] StringFilters = new String [] {
@@ -202,7 +201,7 @@ public class Template2Test {
 //            System.out.println("---------- " + i + " -------------------");
 //            System.out.println(out);
 //            System.out.println();
-            Assert.assertEquals(new JSONObject(target).toString(), new JSONObject(out).toString());
+            Assert.assertEquals(JsonProxy.readObject(target).toString(), JsonProxy.readObject(out).toString());
         }
     }
 

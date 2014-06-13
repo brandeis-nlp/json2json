@@ -5,6 +5,7 @@ package org.lappsgrid.json2json;
 import org.lappsgrid.json2json.JsonProxy.JsonArray;
 import org.lappsgrid.json2json.JsonProxy.JsonObject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -117,10 +118,6 @@ public class StringProxy {
     public static String regex_replace(String s, String regex, String rep) {
         return s.replaceAll(regex, rep);
     }
-
-//    public static String replace(String s, String f, String rep) {
-//        return s.replaceAll(Pattern.quote(f), rep);
-//    }
 
     public static String replace(String s, String f, String r) {
         String t = s;

@@ -2,7 +2,6 @@ package org.lappsgrid.json2json;
 
 
 import junit.framework.Assert;
-import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -89,7 +88,7 @@ public class ProcessTest {
     public void test() throws Exception{
         Object target = null;
 
-        Map<String,Object> map = Process.variables(new JSONObject(Variables[0]), null);
+        Map<String,Object> map = Process.variables(JsonProxy.readObject(Variables[0]), null);
         System.out.println("Before variables : " + map);
         for(int i = 0; i < Steps.length; i ++ ) {
             System.out.println("Step : " + i + " " + Steps[i]);
@@ -103,7 +102,7 @@ public class ProcessTest {
 
         for(String expr: EXPRS) {
             map.clear();
-            Process.expr(new JSONObject(expr), map);
+            Process.expr(JsonProxy.readObject(expr), map);
             System.out.println("Expr : " + expr);
             System.out.println("Expr : " + map.get(Process.Map_Expr));
             System.out.println();
@@ -111,7 +110,7 @@ public class ProcessTest {
 
         for(int i = 0; i < IF_THEN_ELSE.length; i ++ ) {
             map.clear();
-            Process.if_then_else(new JSONObject(IF_THEN_ELSE[i]).get("%!?"), map);
+            Process.if_then_else(JsonProxy.readObject(IF_THEN_ELSE[i]).get("%!?"), map);
 
             System.out.println("If-Then-Else : " + map.get(Process.Map_Ret));
             Assert.assertEquals(IF_THEN_ELSE_Results[i], map.get(Process.Map_Ret));
@@ -119,14 +118,14 @@ public class ProcessTest {
 
         for(int i = 0; i < FOR_EACH.length; i ++ ) {
             map.clear();
-            Process.for_each(new JSONObject(FOR_EACH[i]).get("%!for"), map);
+            Process.for_each(JsonProxy.readObject(FOR_EACH[i]).get("%!for"), map);
             System.out.println("For-Each : " + map.get(Process.Map_Ret));
             Assert.assertEquals(FOR_EACH_Results[i], map.get(Process.Map_Ret));
         }
 
         for(int i = 0; i < WHILE_DO.length; i ++ ) {
             map.clear();
-            Process.while_do(new JSONObject(WHILE_DO[i]).get("%!while"), map);
+            Process.while_do(JsonProxy.readObject(WHILE_DO[i]).get("%!while"), map);
             System.out.println("While-Do : " + map.get(Process.Map_Ret));
             Assert.assertEquals(WHILE_DO_Results[i], map.get(Process.Map_Ret));
         }
