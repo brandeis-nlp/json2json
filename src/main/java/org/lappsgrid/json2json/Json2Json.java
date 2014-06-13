@@ -1,4 +1,4 @@
-package edu.brandeis.cs.json2json;
+package org.lappsgrid.json2json;
 
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;

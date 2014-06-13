@@ -1,4 +1,4 @@
-package edu.brandeis.cs.json2json;
+package org.lappsgrid.json2json;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;

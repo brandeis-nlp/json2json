@@ -1,8 +1,7 @@
-package edu.brandeis.cs.json2json;
+package org.lappsgrid.json2json;
 
 
 
-public interface
-        ITemplate {
+public interface ITemplate {
     public String transform(String template, String... jsons) throws Json2JsonException;
 }

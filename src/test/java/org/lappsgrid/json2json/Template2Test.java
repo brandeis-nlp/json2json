@@ -1,9 +1,8 @@
-package edu.brandeis.cs.json2json;
+package org.lappsgrid.json2json;
 
 
 import junit.framework.Assert;
 import org.apache.commons.io.FileUtils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;

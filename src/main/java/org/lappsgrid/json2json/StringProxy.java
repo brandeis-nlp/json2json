@@ -1,10 +1,10 @@
-package edu.brandeis.cs.json2json;
+package org.lappsgrid.json2json;
 
-import org.json.JSONArray;
 
-import java.io.IOException;
+
+import org.lappsgrid.json2json.JsonProxy.JsonArray;
+import org.lappsgrid.json2json.JsonProxy.JsonObject;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,7 +30,7 @@ public class StringProxy {
 
 //    public static String split(String s, String sep) {
 //        String [] arr = s.split(Pattern.quote(sep));
-//        return new JSONArray(arr).toString();
+//        return JsonProxy.convertArray(arr).toString();
 //    }
 
 
@@ -50,12 +50,12 @@ public class StringProxy {
             list.add(s.substring(start));
         }
         String [] arr = list.toArray(new String[list.size()]);
-        return new JSONArray(arr).toString();
+        return JsonProxy.convertArray(arr).toString();
     }
 
     public static String regex_split(String s, String sep) {
         String [] arr = s.split(sep);
-        return new JSONArray(arr).toString();
+        return JsonProxy.convertArray(arr).toString();
     }
 
     public static int length (String s) {
@@ -67,7 +67,7 @@ public class StringProxy {
     }
 
     public static String join(String sarr, String sep) {
-        JSONArray jarr =  new JSONArray(sarr);
+        JsonArray jarr =  JsonProxy.readArray(sarr);
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < jarr.length(); i ++) {
             sb.append(sep);
@@ -103,7 +103,7 @@ public class StringProxy {
             arr.add(m.group());
         }
 //        System.out.println(arr);
-        return new JSONArray(arr).toString();
+        return JsonProxy.convertArray(arr).toString();
     }
 
     public static String jsonpath(String json, String jsonpath) {

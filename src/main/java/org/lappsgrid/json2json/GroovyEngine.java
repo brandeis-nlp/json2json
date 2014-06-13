@@ -1,11 +1,8 @@
-package edu.brandeis.cs.json2json;
+package org.lappsgrid.json2json;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
-import net.minidev.json.JSONObject;
 import org.json.JSONArray;
-
-import java.util.Arrays;
 
 /**
  * Created by shi on 4/1/14.

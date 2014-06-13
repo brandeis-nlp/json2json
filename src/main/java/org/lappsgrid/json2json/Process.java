@@ -1,14 +1,10 @@
-package edu.brandeis.cs.json2json;
+package org.lappsgrid.json2json;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
+import org.lappsgrid.json2json.JsonProxy.JsonArray;
+import org.lappsgrid.json2json.JsonProxy.JsonObject;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -85,19 +81,19 @@ public class Process {
 
 
     protected static boolean section(String name, Object obj,  Map<String, Object> map) throws Json2JsonException{
-         if (obj instanceof JSONObject) {
+         if (obj instanceof JsonObject) {
 //             System.out.println("Section " + name +" " + obj);
              Object val = null;
-             if(((JSONObject) obj).has(name)){
-                 val = ((JSONObject) obj).get(name);
+             if(((JsonObject) obj).has(name)){
+                 val = ((JsonObject) obj).get(name);
              }
              // update to new name.
              if(Definitions.containsKey(name)) {
                  name = Definitions.get(name);
              }
              if (val == null) {
-                 if(((JSONObject) obj).has(name)){
-                    val = ((JSONObject) obj).get(name);
+                 if(((JsonObject) obj).has(name)){
+                    val = ((JsonObject) obj).get(name);
                  }
              }
 //             System.out.println();
@@ -143,17 +139,16 @@ public class Process {
 
     public static boolean process (Object obj, Map<String, Object>  map) throws Json2JsonException {
 //        System.out.println("process : " + obj);
-        if(obj instanceof JSONObject){
-            Iterator<String> keys = ((JSONObject) obj).keys();
-            while(keys.hasNext()) {
-                String key = keys.next().trim();
-                Object val = ((JSONObject) obj).get(key);
+        if(obj instanceof JsonObject){
+            List<String> keys = ((JsonObject) obj).keys();
+            for(String key: keys) {
+                Object val = ((JsonObject) obj).get(key);
 //                System.out.println("key : "  + key);
                 if (key.startsWith("%")) {
                     invoke(key, val, map);
                 }
             }
-        } else if(obj instanceof JSONArray) {
+        } else if(obj instanceof JsonArray) {
             steps(obj, map);
         }
         return true;
@@ -162,23 +157,23 @@ public class Process {
     public static Iterable iterate(Object obj, Map<String, Object> map)throws Json2JsonException {
 //        System.out.println("iterate : "+ obj);
         ArrayList list = new ArrayList();
-        if(obj instanceof JSONArray) {
-            Object arr = ((JSONArray) obj).get(0);
+        if(obj instanceof JsonArray) {
+            Object arr = ((JsonArray) obj).get(0);
             arr = Template2.replace(arr, map, null, null);
-            if (arr instanceof JSONArray) {
-                if (((JSONArray) obj).length() == 1) {
+            if (arr instanceof JsonArray) {
+                if (((JsonArray) obj).length() == 1) {
                     map.put(Map_Index, Default_Each_Index);
                     map.put(Map_Each, Default_Each);
-                } else if (((JSONArray) obj).length() == 3) {
-                    String var_each_idx = (String)((JSONArray) obj).get(1);
-                    String var_each=  (String)((JSONArray) obj).get(2);
+                } else if (((JsonArray) obj).length() == 3) {
+                    String var_each_idx = (String)((JsonArray) obj).get(1);
+                    String var_each=  (String)((JsonArray) obj).get(2);
                     var_each_idx = var_each_idx.trim();
                     var_each = var_each.trim();
                     if (!var_each_idx.startsWith("%")) {
-                        throw new Json2JsonException("Wrong iteratable's index format : " + ((JSONArray) obj).get(1) + " is not %[a-z]* format.");
+                        throw new Json2JsonException("Wrong iteratable's index format : " + ((JsonArray) obj).get(1) + " is not %[a-z]* format.");
                     }
                     if (!var_each.startsWith("%")) {
-                        throw new Json2JsonException("Wrong iteratable's iterator format : " + ((JSONArray) obj).get(2) + " is not %[a-z]* format.");
+                        throw new Json2JsonException("Wrong iteratable's iterator format : " + ((JsonArray) obj).get(2) + " is not %[a-z]* format.");
                     }
                     map.put(Map_Index, var_each_idx.substring(1));
                     map.put(Map_Each, var_each.substring(1));
@@ -186,8 +181,8 @@ public class Process {
                     throw new Json2JsonException("Wrong iteratable format : " + obj +" is not [$iterable, $index, $each] or not [$iterable].");
                 }
 
-                for(int i = 0; i < ((JSONArray) arr).length(); i++)
-                list.add(Template2.replace(((JSONArray) arr).get(i), map, null, null));
+                for(int i = 0; i < ((JsonArray) arr).length(); i++)
+                list.add(Template2.replace(((JsonArray) arr).get(i), map, null, null));
             } else {
                 throw new Json2JsonException("Wrong iteratable format : " + obj +" is not [[$i0, $i1, ...],\"%i\",\"%e\"] format.");
             }
@@ -199,7 +194,7 @@ public class Process {
     }
 
     public static Object if_then_else(Object obj, Map<String, Object> map) throws Json2JsonException {
-        if(obj instanceof JSONObject) {
+        if(obj instanceof JsonObject) {
             boolean exist = false;
             exist = section("%def", obj, map);
             exist = section("%expr", obj, map);
@@ -226,18 +221,17 @@ public class Process {
     public static boolean expr(Object obj, Map<String, Object>map) throws Json2JsonException {
         boolean bool = false;
 //        System.out.println("expr : " + obj);
-        if(obj instanceof JSONObject){
-            Iterator<String> keys = ((JSONObject) obj).keys();
-            while(keys.hasNext()) {
-                String key = keys.next().trim();
-                Object val = ((JSONObject) obj).get(key);
+        if(obj instanceof JsonObject){
+            List<String> keys = ((JsonObject) obj).keys();
+            for(String key: keys) {
+                Object val = ((JsonObject) obj).get(key);
 
                 if(Exprs.contains(key)) {
                     Object [] objs = null;
-                    if(val instanceof JSONArray) {
-                        objs = new Object[((JSONArray) val).length()];
-                        for (int i = 0; i < ((JSONArray) val).length(); i++) {
-                            objs[i] = Template2.replace(((JSONArray) val).get(i), map, null, null);
+                    if(val instanceof JsonArray) {
+                        objs = new Object[((JsonArray) val).length()];
+                        for (int i = 0; i < ((JsonArray) val).length(); i++) {
+                            objs[i] = Template2.replace(((JsonArray) val).get(i), map, null, null);
 //                            System.out.println(key + "---:" + objs[i].getClass());
                         }
                     } else {
@@ -284,7 +278,7 @@ public class Process {
     }
 
     public static Object for_each(Object obj, Map<String, Object> map) throws Json2JsonException{
-        if(obj instanceof JSONObject) {
+        if(obj instanceof JsonObject) {
             boolean exist = false;
             exist = section("%def", obj, map);
             exist = section("%iter", obj, map);
@@ -327,7 +321,7 @@ public class Process {
     }
 
     public static Object while_do(Object obj, Map<String, Object> map)  throws Json2JsonException{
-        if(obj instanceof JSONObject) {
+        if(obj instanceof JsonObject) {
             boolean exist = false;
             exist = section("%def", obj, map);
             exist = section("%expr", obj, map);
@@ -359,12 +353,11 @@ public class Process {
     public static Map<String, Object> variables (Object obj, Map<String, Object> map ) throws Json2JsonException {
         if (map == null)
             map = new HashMap<String, Object>();
-        if(obj instanceof JSONObject) {
-            Iterator<String> keys = ((JSONObject) obj).keys();
-            while(keys.hasNext()) {
-                String key = keys.next().trim();
+        if(obj instanceof JsonObject) {
+            List<String> keys = ((JsonObject) obj).keys();
+            for(String key:keys) {
                 if (key.startsWith("%!")) {
-                    map.put(key.substring(2), Template2.replace(((JSONObject) obj).get(key), map, null, null));
+                    map.put(key.substring(2), Template2.replace(((JsonObject) obj).get(key), map, null, null));
                 }
             }
         }
@@ -373,15 +366,14 @@ public class Process {
 
     public static  boolean steps (Object obj, Map<String, Object> map) throws Json2JsonException{
 //        System.out.println("steps : " + obj);
-        if (obj instanceof JSONArray) {
-            for (int i = 0; i < ((JSONArray) obj).length(); i ++) {
-                steps(((JSONArray) obj).get(i), map);
+        if (obj instanceof JsonArray) {
+            for (int i = 0; i < ((JsonArray) obj).length(); i ++) {
+                steps(((JsonArray) obj).get(i), map);
             }
-        } else if (obj instanceof JSONObject) {
-            Iterator<String> keys = ((JSONObject) obj).keys();
-            while(keys.hasNext()) {
-                String key = keys.next().trim();
-                Object replaced = Template2.replace(((JSONObject) obj).get(key), map, null, null);
+        } else if (obj instanceof JsonObject) {
+            List<String> keys = ((JsonObject) obj).keys();
+            for(String key : keys) {
+                Object replaced = Template2.replace(((JsonObject) obj).get(key), map, null, null);
                 if (key.startsWith("%!")) {
                     map.put(key.substring(2), replaced);
                 } else if (key.startsWith("%")) {

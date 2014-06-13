@@ -1,15 +1,14 @@
-package edu.brandeis.cs.json2json;
+package org.lappsgrid.json2json;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.lappsgrid.json2json.JsonProxy.JsonArray;
+import org.lappsgrid.json2json.JsonProxy.JsonObject;
 
 /**
  * Created by shi on 3/31/14.
@@ -115,9 +114,9 @@ public class Proxy {
         if(obj instanceof  String) {
             String json = ((String) obj).trim();
             if (json.startsWith("{")) {
-                return new JSONObject((String)json);
+                return JsonProxy.readObject((String)json);
             } else if (json.startsWith("[")) {
-                return new JSONArray((String)json);
+                return JsonProxy.readArray((String)json);
             }
         }
         return obj;
@@ -125,10 +124,10 @@ public class Proxy {
 
 
     public static Object[] fromJSON2Arr (Object obj) {
-        if (obj instanceof JSONArray) {
-            Object [] ret = new Object[((JSONArray) obj).length()];
-            for (int i = 0; i < ((JSONArray) obj).length(); i++) {
-                Object item = ((JSONArray) obj).get(i);
+        if (JsonProxy.isArray(obj)) {
+            Object [] ret = new Object[((JsonProxy.JsonArray) obj).length()];
+            for (int i = 0; i < ((JsonProxy.JsonArray) obj).length(); i++) {
+                Object item = ((JsonProxy.JsonArray) obj).get(i);
                 ret[i] = item;
             }
             return ret;
@@ -156,11 +155,11 @@ public class Proxy {
             list.add(s.substring(start));
         }
         String [] arr = list.toArray(new String[list.size()]);
-        return new JSONArray(arr).toString();
+        return JsonProxy.convertArray(arr).toString();
     }
 
     public static String join(String sarr, String sep) {
-        JSONArray jarr =  new JSONArray(sarr);
+        JsonProxy.JsonArray jarr = JsonProxy.readArray(sarr);
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < jarr.length(); i ++) {
             sb.append(sep);
@@ -169,7 +168,7 @@ public class Proxy {
         return sb.substring(sep.length());
     }
 
-    public static String join(JSONArray jarr, String sep) {
+    public static String join(JsonArray jarr, String sep) {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < jarr.length(); i ++) {
             sb.append(sep);
@@ -224,12 +223,12 @@ public class Proxy {
             arr.add(m.group());
         }
 //        System.out.println(arr);
-        return new JSONArray(arr).toString();
+        return JsonProxy.convertArray(arr).toString();
     }
 
     public static String regex_split(String s, String sep) {
         String [] arr = s.split(sep);
-        return new JSONArray(arr).toString();
+        return JsonProxy.convertArray(arr).toString();
     }
 
     public static boolean regex_contains(String s, String regex) {
@@ -242,7 +241,7 @@ public class Proxy {
         return s.replaceAll(regex, rep);
     }
 
-    public static String jsonpath(JSONObject json, String jsonpath) {
+    public static String jsonpath(JsonObject json, String jsonpath) {
         try {
             return Json2Json.path(json.toString(), jsonpath);
         } catch (Json2JsonException e) {
@@ -260,20 +259,20 @@ public class Proxy {
 
 
     /////////////////////////////////// Array Operations ///////////////////////////////////////////////////////////
-    public static JSONArray array_add (JSONArray arr, Object obj) {
-        return arr.put(obj);
+    public static JsonArray array_add (JsonArray arr, Object obj) {
+        return arr.add(obj);
     }
 
-    public static JSONArray array_remove (JSONArray arr, int i) {
+    public static JsonArray array_remove (JsonArray arr, int i) {
         arr.remove(i);
         return arr;
     }
 
-    public static Object array_get (JSONArray arr, int i) {
+    public static Object array_get (JsonArray arr, int i) {
         return arr.get(i);
     }
 
-    public static JSONArray array_sub (JSONArray arr, int start, int end) {
+    public static JsonArray array_sub (JsonArray arr, int start, int end) {
         if (start < 0) {
             start = 0;
         }
@@ -281,14 +280,14 @@ public class Proxy {
         if (end > arr.length()) {
             end = arr.length();
         }
-        JSONArray narr = new JSONArray();
+        JsonArray narr = JsonProxy.newArray();
         for (int i = start; i < end; i ++) {
-            narr.put(arr.get(i));
+            narr.add(arr.get(i));
         }
         return narr;
     }
 
-    public static Object array_index(JSONArray arr, Object obj) {
+    public static Object array_index(JsonArray arr, Object obj) {
         for (int i = 0; i < arr.length(); i ++) {
             if (obj.equals(arr.get(i))) {
                 return i;
@@ -297,35 +296,34 @@ public class Proxy {
         return -1;
     }
 
-    public static int array_size (JSONArray arr) {
+    public static int array_size (JsonArray arr) {
         return arr.length();
     }
 
     /////////////////////////////////// Map Operations ///////////////////////////////////////////////////////////
-    public static JSONObject map_put (JSONObject obj, JSONObject m) {
-        Iterator<String> keys = m.keys();
-        while (keys.hasNext()) {
-            String key = keys.next();
+    public static JsonObject map_put (JsonObject obj, JsonObject m) {
+        List<String> keys = m.keys();
+        for (String key:keys) {
             Object val = m.get(key);
             obj.put(key,val);
         }
         return obj;
     }
 
-    public static Object map_get (JSONObject obj, String key) {
+    public static Object map_get (JsonObject obj, String key) {
         return obj.get(key);
     }
 
-    public static JSONObject map_remove (JSONObject obj, String key) {
+    public static JsonObject map_remove (JsonObject obj, String key) {
         obj.remove(key);
         return obj;
     }
 
-    public static JSONArray map_keys(JSONObject obj) {
-        return new JSONArray(obj.keySet());
+    public static JsonArray map_keys(JsonObject obj) {
+        return JsonProxy.convertArray(obj.keys());
     }
 
-    public static int map_size (JSONObject obj) {
+    public static int map_size (JsonObject obj) {
         return obj.length();
     }
 

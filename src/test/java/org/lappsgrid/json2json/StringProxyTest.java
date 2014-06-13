@@ -1,4 +1,4 @@
-package edu.brandeis.cs.json2json;
+package org.lappsgrid.json2json;
 
 
 import junit.framework.Assert;
@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GroovyEngineTest {
+public class StringProxyTest {
 
     String [] paths = new String []{
         "$.store.book[*].author",
@@ -38,11 +38,9 @@ public class GroovyEngineTest {
             "}";
 
     String[] tempatePaths = new String []{
-            "&$.@context.homepage.*[0]",
+            "&$.@context.homepage.*",
             "&$.homepage"
     };
-
-
 
     @Before
     public void setup() throws Exception{
@@ -54,38 +52,28 @@ public class GroovyEngineTest {
 
     @Test
     public void test(){
-        System.out.println();
-        String filter = "%+(\"hello\",\"world\") ";
-        String t = GroovyEngine.runFilter(filter);
-        Assert.assertEquals("helloworld",t);
-
-
-
-        filter = "%|(\"http://manu.sporny.org/\",\".\")";
-        t = GroovyEngine.runFilter(filter);
-        Assert.assertEquals("[\"http://manu\",\"sporny\",\"org/\"]",t);
-
-        filter = "%|(\"hello.world\", \".\") ";
-        t = GroovyEngine.runFilter(filter);
+        String t = StringProxy.split("hello.world", ".");
         Assert.assertEquals("[\"hello\",\"world\"]",t);
 
-        filter = "%*(\"[\\\"hello\\\",\\\"world\\\"]\", \".\")";
-        t = GroovyEngine.runFilter(filter);
+
+        t = StringProxy.regex_split("hello.world", ".l");
+        Assert.assertEquals("[\"h\",\"lo.wo\",\"d\"]",t);
+
+        t = StringProxy.join("[\"hello\",\"world\"]", ".");
         Assert.assertEquals("hello.world",t);
 
-        filter = "%%(\"hello.world\",\"[a-z]+\")";
-        t = GroovyEngine.runFilter(filter);
+        t = StringProxy.join("[\"hello\",\"world\"]", ".");
+        Assert.assertEquals("hello.world",t);
+
+        t = StringProxy.regex_match("hello.world", "[a-z]+");
         Assert.assertEquals("[\"hello\",\"world\"]",t);
 
-        filter = "%%(%*(%|(\"hello.world\", \".\"), \"x\"),\"[a-z]+\")";
-        t = GroovyEngine.runFilter(filter);
-        Assert.assertEquals("[\"helloxworld\"]",t);
 
+        t = StringProxy.regex_replace("hello.world", ".l", "-");
+        Assert.assertEquals("h-lo.wo-d",t);
 
-
-        String iterate = "%|(%-([\"hello\", \".world\"]){ %r += %e;},\".\")";
-        t = GroovyEngine.runFilter(iterate);
-        Assert.assertEquals("[\"hello\",\"world\"]",t);
+        t = StringProxy.jsonpath("{\"hello\" : 1,  \"world\" : 2 }", "$.hello");
+        Assert.assertEquals("1",t);
 
     }
     

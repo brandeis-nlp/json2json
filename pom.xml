@@ -10,15 +10,14 @@
     <description />
     <packaging>jar</packaging>
 
-
     <issueManagement>
-        <url>https://github.com/chunqishi/edu.brandeis.cs.json2json/issues</url>
+        <url>https://github.com/chunqishi/json2json/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
     <scm>
-        <url>https://github.com/chunqishi/edu.brandeis.cs.json2json</url>
-        <connection>scm:git:https://github.com/chunqishi/edu.brandeis.cs.json2json.git</connection>
-        <developerConnection>scm:git:https://github.com/chunqishi/edu.brandeis.cs.json2json.git</developerConnection>
+        <url>https://github.com/chunqishi/json2json</url>
+        <connection>scm:git:https://github.com/chunqishi/json2json.git</connection>
+        <developerConnection>scm:git:https://github.com/chunqishi/json2json.git</developerConnection>
         <tag>v0.1</tag>
     </scm>
     <distributionManagement>
@@ -42,12 +41,9 @@
     </developers>
 
     <properties>
-        <!--<jetty.version>7.0.2.v20100331</jetty.version>-->
-        <!--<slf4j.version>1.7.5</slf4j.version>-->
-        <!--<guice.version>3.1.3</guice.version>-->
-        <!--<jersey.version>1.18</jersey.version>-->
-        <!--<jackson.version>2.3.0</jackson.version>-->
-        <!--<cloudy.version>0.0.4</cloudy.version>-->
+        <jayway.version>0.9.1</jayway.version>
+        <minimal-json.version>0.9.1</minimal-json.version>
+        <groovy.version>2.2.2</groovy.version>
     </properties>
 
     <dependencies>
@@ -55,60 +51,31 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
-            <version>0.9.1</version>
+            <version>${jayway.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.apache.camel</groupId>-->
-            <!--<artifactId>camel-jsonpath</artifactId>-->
-            <!--<version>2.13.0</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.nebhale.jsonpath</groupId>-->
-            <!--<artifactId>jsonpath</artifactId>-->
-            <!--<version>1.2</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>io.gatling</groupId>-->
-            <!--<artifactId>jsonpath_2.10</artifactId>-->
-            <!--<version>0.4.0</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.codehaus.jackson</groupId>-->
-            <!--<artifactId>jackson-xc</artifactId>-->
-            <!--<version>1.9.13</version>-->
-        <!--</dependency>-->
 
         <!-- =============================================  -->
         <!-- ^^^^^^^^^^^^^^ JSON      ^^^^^^^^^^^^^^^^^^^^^ -->
         <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20140107</version>
+            <groupId>com.eclipsesource.minimal-json</groupId>
+            <artifactId>minimal-json</artifactId>
+            <version>${minimal-json.version}</version>
         </dependency>
         <!-- =============================================  -->
         <!-- ^^^^^^^^^^^^^^ Groovy    ^^^^^^^^^^^^^^^^^^^^^ -->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-console</artifactId>
-            <version>2.2.2</version>
+            <version>${groovy.version}</version>
         </dependency>
 
         <!-- =============================================  -->
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>commons-io</groupId>-->
-            <!--<artifactId>commons-io</artifactId>-->
-            <!--<version>20030203.000550</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -131,38 +98,8 @@
                 <filtering>true</filtering>
             </testResource>
         </testResources>
+
         <plugins>
-            <!--<plugin>-->
-                <!--<groupId>br.com.ingenieux</groupId>-->
-                <!--<artifactId>beanstalk-maven-plugin</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>expose-security-credentials</id>-->
-                        <!--<phase>validate</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>expose-security-credentials</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-compiler-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<source>1.6</source>-->
-                    <!--<target>1.6</target>-->
-                    <!--<encoding>UTF-8</encoding>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.mortbay.jetty</groupId>-->
-                <!--<artifactId>jetty-maven-plugin</artifactId>-->
-                <!--<version>${jetty.version}</version>-->
-                <!--<configuration>-->
-                    <!--<scanIntervalSeconds>0</scanIntervalSeconds>-->
-                    <!--<useTestClasspath>true</useTestClasspath>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
 
         <pluginManagement>
@@ -182,171 +119,5 @@
     </build>
 
     <profiles>
-        <!--<profile>-->
-            <!--<id>releases</id>-->
-            <!--<build>-->
-                <!--<plugins>-->
-                    <!--<plugin>-->
-                        <!--<groupId>org.sonatype.plugins</groupId>-->
-                        <!--<artifactId>nexus-staging-maven-plugin</artifactId>-->
-                        <!--<version>1.6</version>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<id>default-deploy</id>-->
-                                <!--<phase>deploy</phase>-->
-                                <!--<goals>-->
-                                    <!--<goal>deploy</goal>-->
-                                <!--</goals>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                        <!--<configuration>-->
-                            <!--<serverId>anc-releases</serverId>-->
-                            <!--<nexusUrl>http://www.anc.org:8080/nexus/</nexusUrl>-->
-                            <!--<skipStaging>true</skipStaging>-->
-                        <!--</configuration>-->
-                    <!--</plugin>-->
-                <!--</plugins>-->
-            <!--</build>-->
-        <!--</profile>-->
-
-        <!--<profile>-->
-            <!--<id>deploy</id>-->
-            <!--<properties>-->
-                <!--<maven.test.skip>true</maven.test.skip>-->
-                <!--<maven.install.skip>true</maven.install.skip>-->
-                <!--<maven.deploy.skip>true</maven.deploy.skip>-->
-            <!--</properties>-->
-            <!--<build>-->
-                <!--<defaultGoal>deploy</defaultGoal>-->
-                <!--<plugins>-->
-                    <!--<plugin>-->
-                        <!--<groupId>br.com.ingenieux</groupId>-->
-                        <!--<artifactId>beanstalk-maven-plugin</artifactId>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<id>deploy</id>-->
-                                <!--<phase>deploy</phase>-->
-                                <!--<goals>-->
-                                    <!--<goal>fast-deploy</goal>-->
-                                    <!--<goal>replace-environment</goal>-->
-                                <!--</goals>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                        <!--<configuration>-->
-                            <!--<skipEnvironmentUpdate>true</skipEnvironmentUpdate>-->
-                        <!--</configuration>-->
-                    <!--</plugin>-->
-                <!--</plugins>-->
-            <!--</build>-->
-        <!--</profile>-->
-        <!--<profile>-->
-            <!--<id>fast-deploy</id>-->
-            <!--<properties>-->
-                <!--<maven.test.skip>true</maven.test.skip>-->
-                <!--<maven.install.skip>true</maven.install.skip>-->
-                <!--<maven.deploy.skip>true</maven.deploy.skip>-->
-            <!--</properties>-->
-            <!--<build>-->
-                <!--<defaultGoal>deploy</defaultGoal>-->
-                <!--<plugins>-->
-                    <!--<plugin>-->
-                        <!--<artifactId>maven-war-plugin</artifactId>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<id>default-war</id>-->
-                                <!--<phase>package</phase>-->
-                                <!--<goals>-->
-                                    <!--<goal>exploded</goal>-->
-                                <!--</goals>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                    <!--</plugin>-->
-                    <!--<plugin>-->
-                        <!--<groupId>br.com.ingenieux</groupId>-->
-                        <!--<artifactId>beanstalk-maven-plugin</artifactId>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<id>deploy</id>-->
-                                <!--<phase>deploy</phase>-->
-                                <!--<goals>-->
-                                    <!--<goal>fast-deploy</goal>-->
-                                <!--</goals>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                    <!--</plugin>-->
-                <!--</plugins>-->
-            <!--</build>-->
-        <!--</profile>-->
-        <!--<profile>-->
-            <!--<id>worker</id>-->
-            <!--<properties>-->
-                <!--<beanstalk.environmentRef>edu.brandeis.cs.json2json-worker</beanstalk.environmentRef>-->
-                <!--<beanstalk.environmentName>edu.brandeis.cs.json2json-worker</beanstalk.environmentName>-->
-                <!--<beanstalk.environmentTierName>Worker</beanstalk.environmentTierName>-->
-                <!--<beanstalk.sqsdHttpPath>/services/api/v1/sqsd</beanstalk.sqsdHttpPath>-->
-            <!--</properties>-->
-        <!--</profile>-->
-        <!--<profile>-->
-            <!--<id>s3-deploy</id>-->
-            <!--<properties>-->
-                <!--<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>-->
-                <!--<beanstalk.versionLabel>${maven.build.timestamp}</beanstalk.versionLabel>-->
-                <!--<maven.test.skip>true</maven.test.skip>-->
-                <!--<maven.install.skip>true</maven.install.skip>-->
-                <!--<maven.deploy.skip>true</maven.deploy.skip>-->
-            <!--</properties>-->
-            <!--<build>-->
-                <!--<plugins>-->
-                    <!--<plugin>-->
-                        <!--<groupId>br.com.ingenieux</groupId>-->
-                        <!--<artifactId>beanstalk-maven-plugin</artifactId>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<id>deploy</id>-->
-                                <!--<phase>deploy</phase>-->
-                                <!--<goals>-->
-                                    <!--<goal>upload-source-bundle</goal>-->
-                                    <!--<goal>create-application-version</goal>-->
-                                    <!--&lt;!&ndash; replace to replace-environment or blue-green-->
-                                         <!--if you want zero downtime or blue-green &ndash;&gt;-->
-                                    <!--<goal>put-environment</goal>-->
-                                <!--</goals>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                    <!--</plugin>-->
-                <!--</plugins>-->
-            <!--</build>-->
-        <!--</profile>-->
-        <!--<profile>-->
-            <!--<id>bluegreen-s3-deploy</id>-->
-            <!--<properties>-->
-                <!--<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>-->
-                <!--<beanstalk.versionLabel>${maven.build.timestamp}</beanstalk.versionLabel>-->
-                <!--<maven.test.skip>true</maven.test.skip>-->
-                <!--<maven.install.skip>true</maven.install.skip>-->
-                <!--<maven.deploy.skip>true</maven.deploy.skip>-->
-            <!--</properties>-->
-            <!--<build>-->
-                <!--<plugins>-->
-                    <!--<plugin>-->
-                        <!--<groupId>br.com.ingenieux</groupId>-->
-                        <!--<artifactId>beanstalk-maven-plugin</artifactId>-->
-                        <!--<executions>-->
-                            <!--<execution>-->
-                                <!--<id>deploy</id>-->
-                                <!--<phase>deploy</phase>-->
-                                <!--<goals>-->
-                                    <!--<goal>upload-source-bundle</goal>-->
-                                    <!--<goal>create-application-version</goal>-->
-                                    <!--&lt;!&ndash; replace to replace-environment or blue-green-->
-                                         <!--if you want zero downtime or blue-green &ndash;&gt;-->
-                                    <!--<goal>blue-green</goal>-->
-                                <!--</goals>-->
-                            <!--</execution>-->
-                        <!--</executions>-->
-                    <!--</plugin>-->
-                <!--</plugins>-->
-            <!--</build>-->
-        <!--</profile>-->
     </profiles>
 </project>
