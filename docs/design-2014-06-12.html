@@ -1,0 +1,853 @@
+<!DOCTYPE HTML>
+<html>
+    <meta charset="utf-8" />
+    <head>
+<!--TODO: title -->    
+    <title>JOSN 2 JSON</title>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js" >  </script>     
+    <style>      
+        body, p, td, pre {
+            font-size: 14pt; }
+        
+        body {  
+            background-color:lightyellow; 
+            counter-reset: section subsection figure;}
+        
+        h1 {
+            text-align:center }
+        
+        h2 {
+            counter-increment: section; }    
+
+        h3 {
+            counter-increment: subsection; }
+        
+        h4 {
+            counter-increment: figure; }
+        
+        h2:before {
+            content:counter(section) ". "; }
+        
+        h3:before {
+            content:counter(section) "." counter(subsection) " "; }
+        
+        h4:before{
+            content:"Fig. " counter(section) "." counter(figure) " - ";}
+        
+        .reset {
+            counter-reset:subsection figure;}
+        
+        .nav-bar{
+            list-style-type:none;
+            margin:0;
+            padding:0; }
+        
+        img {
+            margin-left: 10pt;
+            border: thin solid gray; }
+        
+        .sample { 
+            background-color: black;
+            font-size: 12pt;
+            color:white;
+            padding: 4pt;
+            margin-left: 10pt;
+            margin-right: 30pt; 
+            display: block;
+            white-space: pre-line;}
+        
+        .code { 
+            padding: 4pt;
+            font-size: 12pt;
+            background-color: whitesmoke;
+            border: thin dotted gray;
+            margin-left: 10pt;
+            margin-right: 30pt; 
+            display: block; 
+            white-space: pre-line;}
+        
+        .author {
+            font-size: 16pt; 
+            text-align:center;}
+
+
+        /*  grid tables  */
+        table.g {
+            margin: 8px;
+            border-width: 1px;
+            border-color: gray;
+            border-collapse: collapse; }
+
+        table.g th {
+            border-width: 1px;
+            padding: 8px 8px 8px 8px;
+            border-style: solid;
+            border-color: gray;
+            background-color: lightyellow; }
+
+        table.g td {
+            text-align:center;
+            border-width: 1px;
+            padding: 8px 8px 8px 8px;
+            border-style:solid;
+            border-color: gray;
+            background-color: #ffffff; }
+
+        /*  vertical tables  */
+        table.v {
+            margin: 8px;
+            border-collapse: collapse; }
+
+        table.v thead {
+            border-right: 10px solid;
+            border-left: 10px solid;
+            background: #fc9;
+            border-color: #fc9;}
+
+        table.v th {
+            padding: 4px 20px 4px 20px;
+            border: 1px #fff solid; }
+
+        table.v tbody{
+            text-align:left;
+            border-right: 10px solid;
+            border-left: 10px solid;
+            border-color: #adf;
+            background: #adf;
+            vertical-align: top; }
+
+        table.v td {
+            padding:  4px 20px 4px 20px;
+            border: 1px #fff solid; }
+
+        /*  horizontal tables  */
+        table.h {
+            margin: 8px;
+            border-collapse:collapse; }
+
+        table.h th {
+            padding:  4px 40px 4px 40px;
+            border:1px solid #98bf21;
+            background-color:#A7C942;
+            color:#fff; }
+
+        table.h td {
+            text-align:center;
+            border:1px solid #98bf21;
+            padding: 4px 40px 4px 40px; }
+
+        table.h tr.alt td {
+            color:#000;
+            background-color:#EAF2D3; }
+        /**
+            http://learnlayout.com/inline-block.html
+            http://www.w3schools.com/cssref/css_colornames.asp
+        **/
+
+        div.link {
+            display: inline-block;
+            width: 80px;
+            height: 100px;
+            position: relative;
+            text-align:center;
+            vertical-align: middle; }
+
+        div.black {
+            border-color: Black ;
+            border-width: 2px; }
+
+        div.black span.h {
+            background-color: Black       ;
+            color: Snow ;  }
+
+        div.white {
+            border-color: Lavender  ;
+            border-width: 2px; }
+
+        div.white span.h {
+            background-color: Snow       ;
+            color: Black ; }
+
+        div.red {  border-color: HotPink }
+
+        div.red span.h {
+            background-color: HotPink;
+            color: LightCyan;         }
+
+        div.yellow { border-color: GoldenRod  }
+
+        div.yellow span.h {
+            background-color: GoldenRod    ;
+            color: Azure ;         }
+
+        div.blue { border-color: DodgerBlue }
+
+        div.blue span.h {
+            background-color: DodgerBlue     ;
+            color: Snow ;  }
+
+        div.green { border-color: ForestGreen }
+
+        div.green span.h {
+            background-color: MediumSeaGreen    ;
+            color: Ivory   ; }
+
+        div.box {
+            display: inline-block;
+            width: 200px;
+            height: 100px;
+            margin: 8px;
+                border-style:solid;
+            border-width: 1.5px;
+            position: relative;
+            text-align:center;
+            vertical-align: middle;  }
+
+        div.box span.h {
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align:left;
+            padding: 1px 2px 2px 1px;
+            position: absolute;
+            font-weight:bold;
+            line-height: 1em;  }
+
+        </style></head>
+<body>
+    <a name="_top_" />
+    <nav class="nav-bar">
+        <a href="#design">design</a>
+        | 
+        <a href="#program">program</a>
+        |
+        <a href="#deploy">deploy</a>
+        |
+        <a href="https://github.com/chunqishi/edu.brandeis.cs.json2json/issues" target="_blank">report bugs</a>
+    </nav>
+
+
+
+
+<!--TODO: title -->    
+    <h1>Json2Json:  Template Based Json Transform</h1>
+    <p class="author">
+ Version <var>0.10</var>,
+        <!--<ruby>史 春奇 <rt> Chunqi Shi</rt></ruby>,  -->
+        Apr. 2014</p>
+
+
+<!----------------------------------------------------------------------->
+<a name="design" />
+<h2>Json Path based Template</h2>
+
+Here we discuss about how Json data can be transformed into another Json data.
+    Here are several issues.
+<ol>
+    <li>How to read data from source Json?</li>
+    <li>How to fill data into target Json?</li>
+    <li>How to filer the data?</li>
+</ol>
+
+
+Since Json can be replacement of XML. One solution of XML to XML transformation is called XSL Transformations(XSLT).
+    However NO Json transformation is popular. But the key idea is mapping and filter data from source to target.
+    From this direction, we can get the source data, filter it, and put it into target position. To realize this,
+
+    <ol>
+        <li>Json Path is a nice solution for get the source data.</li>
+        <li>Json Template is a nice solution to tell the position of target data.</li>
+        <li>String based function (<em>concatenate</em>, <em>split</em>, <em>join</em>, <em>index</em>, <em>substring</em>,
+            <em>regex-match</em>, <em>regex-replace</em> ) can be filter tool.</li>
+    </ol>
+
+
+<h3>What is JsonPath?</h3>
+    JsonPath is totally a replacement of <a href="http://en.wikipedia.org/wiki/XPath_2.0" target="_blank"> XPath</a>.
+    The idea of XPath is <b>tree representation</b> of the formatted data.
+
+    <p>Here is a complete overview and a side by side comparison of the JSONPath syntax elements with its XPath counterparts.</p>
+    <table  class="v"><tbody><tr><td> <strong>XPath</strong> </td><td> <strong>JSONPath</strong> </td><td> <strong>Description</strong> </td></tr>
+    <tr><td> / </td><td> $ </td><td>the root object/element </td></tr>
+    <tr><td> . </td><td> @ </td><td>the current object/element </td></tr>
+    <tr><td> / </td><td> . or [] </td><td>child operator </td></tr>
+    <tr><td> .. </td><td> n/a </td><td>parent operator </td></tr>
+    <tr><td> // </td><td> .. </td><td>recursive descent. JSONPath borrows this syntax from E4X. </td></tr>
+    <tr><td> * </td><td> * </td><td>wildcard. All objects/elements regardless their names. </td></tr>
+    <tr><td> @ </td><td> n/a </td><td>attribute access. JSON structures don't have attributes. </td></tr>
+    <tr><td> [] </td><td> [] </td><td>subscript operator. XPath uses it to iterate over element collections and for <a href="http://www.w3.org/TR/xpath#predicates">predicates</a>. In Javascript and JSON it is the native array operator. </td></tr>
+    <tr><td> | </td><td> [,] </td><td>Union operator in XPath results in a combination of node sets. JSONPath allows alternate names or array indices as a set. </td></tr>
+    <tr><td> n/a </td><td> [start:end:step] </td><td>array slice operator borrowed from ES4. </td></tr>
+    <tr><td> [] </td><td> ?() </td><td>applies a filter (script) expression. </td></tr>
+    <tr><td> n/a </td><td> () </td><td>script expression, using the underlying script engine. </td></tr>
+    <tr><td> () </td><td> n/a </td><td>grouping in Xpath </td></tr></tbody></table>
+
+    <p>XPath has a lot more to offer (Location pathes in not abbreviated syntax, operators and functions) than listed here. Moreover there is a remarkable difference how the subscript operator works in Xpath and JSONPath.</p>
+
+<pre><code>
+    JSON_PATH:   ROOT ( CHILD | INDEX )*
+
+    ROOT:                   ROOT
+    CHILD:                  DOT_CHILD | ARRAY_CHILD
+    INDEX:                  ARRAY_OPEN ( INDEX_CHARACTER* | WILDCARD ) ARRAY_CLOSE
+    DOT_CHILD:              DOT SIMPLE_NAME
+    ARRAY_CHILD:            ARRAY_OPEN ( QUOTE COMPLEX_NAME QUOTE | DOUBLE_QUOTE COMPLEX_NAME DOUBLE_QUOTE ) ARRAY_CLOSE
+    SIMPLE_NAME:            SIMPLE_NAME_CHARACTER* | WILDCARD
+    COMPLEX_NAME:           COMPLEX_NAME_CHARACTER* | WILDCARD
+
+    COMPLEX_NAME_CHARACTER: LETTER | DIGIT | COMMA | HYPHEN | SPACE | UNDERSCORE
+    SIMPLE_NAME_CHARACTER:  LETTER | DIGIT | UNDERSCORE
+    INDEX_CHARACTER:        DIGIT | COMMA | SPACE
+    LETTER:                 [A-Za-z]
+    DIGIT:                  [0-9]
+
+    ARRAY_CLOSE:            ]
+    ARRAY_OPEN:             [
+    COMMA:                  ,
+    DOT:                    .
+    DOUBLE_QUOTE:           "
+    HYPHEN:                 -
+    QUOTE:                  '
+    ROOT:                   $
+    SPACE:                  ' '
+    UNDERSCORE:             _
+    WILDCARD:               *
+</code></pre>
+
+
+For an example, we have a Json data:
+<code class="code prettyprint linenums">{
+    "@context": {
+    "name": "http://schema.org/name",
+    "homepage": {
+    "@id": "http://schema.org/url",
+    "@type": "@id"
+    },
+    "image": {
+    "@id": "http://schema.org/image",
+    "@type": "@id"
+    }
+    },
+    "image": "http://manu.sporny.org/images/manu.png",
+    "name": "Manu Sporny",
+    "homepage": "http://manu.sporny.org/"
+}
+</code>
+
+<p></p>    and Json Path:
+<code class="code prettyprint linenums">$.@context.homepage.*</code>
+    <p></p>Then the results of the above Json Path will be:
+    <code class="code prettyprint linenums">[
+        "http://schema.org/url",
+        "@id"
+]
+    </code>
+<h3>What is Template?</h3>
+Template is Json data with key-value pairs.  The value could be JsonPath or normal properties.
+
+<code class="code  prettyprint linenums">
+{
+    "@context": { "&$.@context.homepage.*" },
+    "homepage": "&$.homepage"
+}
+</code>
+
+    <table  class="v"><tbody><tr>
+    <th>Definition</th><th>Example</th><th>Description</th> </tr><tr>
+    <td><b>&</b><em>path</em></td><td>"&$.homepage"</td><td>Reference of JsonPath of default source Json.</td> </tr><tr>
+    <td>&<b>integer</b><em>path</em></td><td>"&2$.homepage"</td><td>Reference of JsonPath of the <b>2nd</b> source Json.</td> </tr><tr>
+    <td>&<b>int1</b><em>path1</em><b>string</b>&<b>int2</b><em>path2</em></td><td>"&$.name&2', '$.name"</td><td>Concatenate content of 2 Json path with string </td> </tr><tr>
+
+    </tr></tbody></table>
+
+    <a name="rule" />
+    <h2>Rule  <a href="#_top_" style="text-decoration: none;">^</a></h2>
+    <ul>
+        <li><b>Reading</b>: If an Json value start with <b>"&"</b>, Then this value should read from other Json object.</li>
+        <li><b>Replacement</b>: If an Json object has one key, and this key starts with <b>"%"</b>, Then this object should be executed and replaced with results.</li>
+        <li><b>Variable</b>: "<b>%</b><em>alphabeta</em>" is only allowed, When "<b>%!</b><em>alphabeta</em>" exists, Or <em>alphabeta</em> is <em>keyword</em> in definitions ( see  the above tables) .</li>
+    </ul>
+
+
+<h3>What is String Filter?</h3>
+    The string filter has 7 basic functions to make it flexible.
+    We want to implement these filter function by Java String functions.
+
+    <table  class="v"><tbody><tr>
+        <th>Function</th><th>Definition</th><th>Symbol</th><th>Example</th><th>Description</th> </tr><tr>
+        <td style="color:green"><em>function name</em></td><td style="color:green"> <em>keywords </em></td><td style="color:green"><em> symbol </em></td><td style="color:green"><em>{ "$symbol" : [$para1, $para2, ...]}</em> == <em>$result</em></td><td>.</td> </tr><tr>
+        <td>concatenate</td><td> %concat </td><td> %+ </td><td>{"%+" : ["hello","world"]} == "helloworld"</td><td>.</td> </tr><tr>
+        <td>split</td><td> %split </td><td> %| </td><td>{"%|" : ["hello.world","."]} == ["hello", "world"]</td><td>.</td> </tr><tr>
+        <td>join</td><td> %join </td><td> %* </td><td>{"%*" : [["hello", "world"],"."]} == "hello.world"</td><td>.</td> </tr><tr>
+        <td>index</td><td> %idx </td><td>%?</td><td>{"%?" : ["hello.world", "hello"]} == 0 </td><td>.</td> </tr><tr>
+        <td>substring</td><td> %sub </td><td>%_</td><td>{"%_" : ["hello.world", 0, 5]} == "hello"</td><td>.</td> </tr><tr>
+        <td>length</td><td> %len </td><td>%#</td><td>{"%#" : "hello world"} == 11</td><td>.</td> </tr><tr>
+        <td>replace</td><td> %rep </td><td>%/</td><td>{"%/" : ["hello.world", ".", " "]} ==  "hello world"</td><td>.</td> </tr><tr>
+        <td>regex-match</td><td> %rmatch </td><td>%%</td><td>{"%%" : ["hello.world", "[a-z]+"]} ==  ["hello", "world"]</td><td>.</td> </tr><tr>
+        <td>regex-split</td><td> %rsplit </td><td>%%|</td><td>{"%%|" : ["hello.world", ".l"]} ==  ["h", "lo.wo", "d"]</td><td>.</td> </tr><tr>
+        <td>regex-replace</td><td> %rrep </td><td>%%/</td><td>{"%%/" : ["hello.world", ".l", "-"]} ==  "h-lo.wo-d"</td><td>.</td> </tr><tr>
+        <td>jsonpath</td><td> %path </td><td>%&</td><td>{"%&" : [{"hello" : "1",  "world" : "2"}, "$.hello"]} ==  "1"</td><td>.</td> </tr><tr>
+    </tr></tbody></table>
+
+<h3>What is Array Operator?</h3>
+    <table  class="v"><tbody><tr>
+        <th>Function</th><th>Definition</th><th>Symbol</th><th>Example</th><th>Description</th> </tr><tr>
+        <td style="color:green"><em>function name</em></td><td style="color:green"> <em>keywords </em></td><td style="color:green"><em> symbol </em></td><td style="color:green"><em>{ "$symbol" : [$para1, $para2, ...]}</em> == <em>$result</em></td><td>.</td> </tr><tr>
+        <td>add</td><td> %array-add </td><td> %]+ </td><td>{"%]+" : [ ["hello","world"], "!" ] } ==  ["hello","world", "!"]</td><td>.</td> </tr><tr>
+        <td>remove</td><td> %array-remove </td><td> %]- </td><td>{"%]-" : [ ["hello","world"], 0] } == ["world"]</td><td>.</td> </tr><tr>
+        <td>get</td><td> %array-get</td><td> %]$ </td><td>{"%]$" : [ ["hello", "world"], 0]} == "hello"</td><td>.</td> </tr><tr>
+        <td>sublist</td><td> %array-sub</td><td> %]_ </td><td>{"%]_" : [ ["hello", "world"], 0, 0]} == ["hello"]</td><td>.</td> </tr><tr>
+        <td>index</td><td> %array-idx </td><td>%]?</td><td>{"%]?" : [ ["hello", "world"],"hello"]} == 0 </td><td>.</td> </tr><tr>
+        <td>size</td><td> %array-size </td><td>%]#</td><td>{"%]#" : ["hello", "world"]} == 2</td><td>.</td> </tr><tr>
+    </tr></tbody></table>
+
+<h3>What is Map Operator?</h3>
+    <table  class="v"><tbody><tr>
+        <th>Function</th><th>Definition</th><th>Symbol</th><th>Example</th><th>Description</th> </tr><tr>
+        <td style="color:green"><em>function name</em></td><td style="color:green"> <em>keywords </em></td><td style="color:green"><em> symbol </em></td><td style="color:green"><em>{ "$symbol" : [$para1, $para2, ...]}</em> == <em>$result</em></td><td>.</td> </tr><tr>
+        <td>put</td><td> %map-put </td><td> %}+ </td><td>{"%}+" : [{}, {"hello":"world"}] } == {"hello":"world"}</td><td>.</td> </tr><tr>
+        <td>get</td><td> %map-get </td><td> %}$ </td><td>{"%}$" : [{"hello":"world"},"hello"]} == "world"</td><td>.</td> </tr><tr>
+        <td>remove</td><td> %map-remove </td><td> %}- </td><td>{"%}-" : [{"hello" : "world"}, "hello"]} == {}</td><td>.</td> </tr><tr>
+        <td>size</td><td> %map-size </td><td>%}#</td><td>{"%}#" : {"hello":"world"}} == 1 </td><td>.</td> </tr><tr>
+        <td>keys</td><td> %map-keys </td><td>%}*</td><td>{"%}*" : {"hello":"world"}} == ["hello"]</td><td>.</td> </tr><tr>
+    </tr></tbody></table>
+<h3>Process</h3>
+
+    <table  class="v"><tbody><tr>
+    <th>Function</th><th>Definition</th><th>Symbol</th><th>Example</th><th>Description</th> </tr><tr>
+    <td>Define Variable</td><td>{"<b>%!</b><em>name</em>" : <em>$json-object</em>}</td><td>%!</td> <td>{"%!<em>v</em>" : 1, "%!<em>v2</em>" : "hello", "%!<em>v3</em>" : {}, "%!<em>v4</em>" : [] }</td><td>define number, string, map, and array</td></tr><tr>
+    <td>Assignment Variable</td><td>{"<b>%</b><em>name</em>" : <em>$json-object</em>}</td><td>%</td> <td>{"%<em>v2</em>" : "hello"} == (<em>v2</em> = "hello")</td><td>define number, string, map, and array</td></tr><tr>
+    <!--td>Define Function</td><td><pre>{"<b>%!!</b><em>name</em>" : {
+    "%para" : [$parameters],
+    "%def"  : {$initialization},
+    "%proc" : [{$process}, ...],
+    "%ret"  : $return-object  } }</pre></td><td>%!!<br>  %()<br>  %$<br>  %{}<br>  %#</td> <td><pre>{"%!!mysplit": {
+        "%()" : [ "%str", "%sep"   ],
+        "%$"  : {   "%!a": []    },
+        "%{}" : { "%a": {
+                        "%|": [  "%str", "%sep"  ]
+                        } },
+        "%#"  : "%a" } }</pre>
+    </td><td>This is rename filter <b>"%|"</b> as <em>mysplit</em>. We can call <em>mysplit</em> function by {"%mysplit":["hello.world", "."]}</td></tr><tr-->
+    <td style="color:green">Process</td><td style="color:green"><pre>{"<b>%!proc</b>" : {
+    "%def"  : {$initialization},
+    "%steps" : [{$Process}, ...],
+    "%ret"  : $return-object
+    }
+}</pre></td><td style="color:green">%!+ <br> %$<br> %{}<br> %# </td>
+        <td style="color:green"><pre>{"<b>%!proc</b>" : {
+    "%$"  : {$initialization},
+    "%{}" : [{$Process}, ...],
+    "%#"  : $return-object
+    }
+}</pre></td><td></td></tr><tr>
+    <td>If-Then-Else</td><td><pre>{"<b>%!if</b>" : {
+    "%def"  : {$initialization},
+    "%expr" : <em>$expression</em>,
+    "%if"   : [$if-steps, ...] ,
+    "%else" : [$else-steps, ...],
+    "%ret"  : $return-object } }</pre></td>
+        <td>%!? <br> %<><br> %$<br> %if<br> %else<br> %#</td> <td><pre>{"%!if": {
+    "%$"    : {   "%!id": "" },
+    "%<>"   : { "==": [ "&$.name", "OpenNLP" ]},
+    "%if"   : { "%id": "http://www.opennlp.org"},
+    "%else" : { "%id": "http://unknown.org" },
+    "%#"    : "%id" } }       </pre></td><td>Result will be "http://www.opennlp.org". </td></tr><tr>
+    <td>For-Each</td><td><pre>{"<b>%!for</b>" : {
+    "%def"     : {$initialization},
+    "%iter"    : [$iterable, $index, $each],
+    "%each"    : [{$each-process}, ...] ,
+    "%ret"     : $return-object }}</pre></td><td>%!*<br> %[]<br> %$<br> %each<br> %#</td> <td><pre>{"%!for": {
+    "%$"       : {   "%!s": "" },
+    "%[]"      : [ ["hello", "world"], "%i", "%e"],
+    "%each" : {"%s": {"%+": ["%s", "%e"]}},
+    "%#"       : "%s" } }       </pre></td><td>Result will be "helloworld". </td></tr><tr>
+
+    <td>While</td><td><pre>{"<b>%!while</b>" : {
+    "%def"     : {$initialization},
+    "%expr"    :  <em>$expression</em>,
+    "%do" : [{$each-process}, ...] ,
+    "%ret"  : $return-object }}</pre></td><td>%!_<br> %<><br> %$<br> %do<br> %#</td> <td><pre>{"%!while": {
+    "%$"    : {   "%!s": "" },
+    "%<>"   : {"<":[ {"%#": "%s"}, 200]},
+    "%do"   : {"%s": {"%+": ["%s", " next"]}},
+    "%#"    : "%s" } }       </pre></td><td>Result will be  " next next next next". </td></tr><tr>
+        <!--<td>Iteration Closure</td> <td><b>%-</b><em>(array)</em><b>{ </b>  <b> }</b> </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td>array: string type json array, e.g. ["hello","world"]</td></tr><tr>-->
+
+    <!--<td>Iteration Element Variable</td> <td>%-<em>(array)</em>{ <b>%e</b>, <b>%i</b> } </td><td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%e</b>: element; <b>%i</b>: index [0 .. n]; </td></tr><tr>-->
+
+    <!--<td>Return Target Variable</td> <td>%-<em>(array)</em>{ <b>%r</b> } </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%r</b>: return value.</td>-->
+    </tr></tbody></table>
+
+
+
+<!--<h3>How to Iterate Array?</h3>-->
+    <!--The array object in Json data is very popular. How to process the arrays, especially in the String Filter functions-->
+    <!--becomes a problem. We want to enable the closure type of array process, which can be implemented by Groovy-->
+    <!--Engine function.-->
+
+    <!--<table  class="v"><tbody><tr>-->
+        <!--<th>Function</th><th>Definition</th><th>Example</th><th>Description</th> </tr><tr>-->
+        <!--<td>Iteration Closure</td> <td><b>%-</b><em>(array)</em><b>{ </b>  <b> }</b> </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td>array: string type json array, e.g. ["hello","world"]</td></tr><tr>-->
+
+        <!--<td>Iteration Element Variable</td> <td>%-<em>(array)</em>{ <b>%e</b>, <b>%i</b> } </td><td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%e</b>: element; <b>%i</b>: index [0 .. n]; </td></tr><tr>-->
+
+        <!--<td>Return Target Variable</td> <td>%-<em>(array)</em>{ <b>%r</b> } </td> <td>%-(["hello", ".world"]){ %r += %e;} == "hello.world"</td><td><b>%r</b>: return value.</td>-->
+    <!--</tr></tbody></table>-->
+<!----------------------------------------------------------------------->
+
+
+
+<!----------------------------------------------------------------------->
+<a name="program" />
+<h2>Project  <a href="#_top_" style="text-decoration: none;">^</a></h2>
+    We want to realize the java project by taking advantage of
+    JsonPath Implementation, Java String Functions, and Groovy script engine.
+
+    <ol>
+        <li><p>JsonPath Implementation --> We tested 3 open source implementation (Jayway, Nebhale, Camel, Gatling).
+            Our conclusion is that Camel is a wrapper of Jayway. Nebhale and Gatling are not stable for several cases.
+            Thus, <b>Jayway</b> is the choice.
+        </li>
+        <li>
+            <p>Template Replacement --> We filter all the JsonPath  into <b>Hash Map</b>, run JsonPath result,
+            and hold key-value pairs <em>(JsonPath, Result)</em>. This will prevent repeating of the JsonPath.
+        </li>
+        <li><p>Java String Function --> We replace the string filter mark using Java string function results.
+            <ul><li>Realize a <b>ProxyJavaClass</b> to fulfil the definition through <em>static function</em> based on Java String Functions.
+            </li><li>Replace the % keywords by <b>ProxyJavaClass.</b><em>funtion()</em>.
+            </li></ul></li>
+        <li><p>Array Iteration --> We want to using groovy  </li>
+    </ol>
+
+    <h3 class="reset">Implementation</h3>
+    <ol>
+        <li><p>Github Hold</p>
+            <a href="https://github.com/chunqishi/edu.brandeis.cs.json2json" target="_blank">https://github.com/chunqishi/edu.brandeis.cs.json2json</a>
+
+            <samp class="sample">$
+                $ git clone https://github.com/chunqishi/edu.brandeis.cs.json2json.git <font style="color:blue">&crarr;</font>
+                $
+            </samp>
+        </li>
+        <li><p>Maven Dependency</p>
+
+            <code class="code prettyprint">
+            &lt;!-- ^^^^^^^^^^^^^^ JSON Path ^^^^^^^^^^^^^^^^^^^^^ --&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;com.jayway.jsonpath&lt;/groupId&gt;
+                &lt;artifactId&gt;json-path&lt;/artifactId&gt;
+                &lt;version&gt;0.9.1&lt;/version&gt;
+            &lt;/dependency&gt;
+            &lt;!-- =============================================  --&gt;
+            &lt;!-- ^^^^^^^^^^^^^^ JSON      ^^^^^^^^^^^^^^^^^^^^^ --&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.json&lt;/groupId&gt;
+                &lt;artifactId&gt;json&lt;/artifactId&gt;
+                &lt;version&gt;20140107&lt;/version&gt;
+            &lt;/dependency&gt;
+            &lt;!-- =============================================  --&gt;
+            &lt;!-- ^^^^^^^^^^^^^^ Groovy    ^^^^^^^^^^^^^^^^^^^^^ --&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.codehaus.groovy&lt;/groupId&gt;
+                &lt;artifactId&gt;groovy-console&lt;/artifactId&gt;
+                &lt;version&gt;2.0.1&lt;/version&gt;
+            &lt;/dependency&gt;
+            &lt;!-- =============================================  --&gt;
+            </code>
+        </li>
+    </ol>
+
+    <h3>Examples</h3>
+In order to prove that this JSON to JSON transformation works, we use the XSLT examples in <a href="http://www.w3schools.com/xsl/xsl_examples.asp" target="_blank">W3School</a>.
+    All the XML input is firstly converted into JSON use online XML to JSON converter, e.g. <a href="http://www.utilities-online.info/xmltojson" target="_blank">Utilities Online</a>.
+    Then we try to implement the target format using self-designed Template.
+    Here, we find an example from online XSLT <a href="http://www.freeformatter.com/xsl-transformer.html#ad-output" target="_blank">freeformatter</a>.
+
+
+<p>
+Original XML is catalog lists.
+
+<pre class="prettyprint linenum">
+&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+        &lt;catalog xmlns:foo="http://www.foo.org/" xmlns:bar="http://www.bar.org"&gt;
+            &lt;foo:cd&gt;
+                &lt;title&gt;Empire Burlesque&lt;/title&gt;
+                &lt;artist&gt;Bob Dylan&lt;/artist&gt;
+                &lt;country&gt;USA&lt;/country&gt;
+                &lt;company&gt;Columbia&lt;/company&gt;
+                &lt;price&gt;10.90&lt;/price&gt;
+                &lt;bar:year&gt;1985&lt;/bar:year&gt;
+            &lt;/foo:cd&gt;
+            &lt;foo:cd&gt;
+                &lt;title&gt;Hide your heart&lt;/title&gt;
+                &lt;artist&gt;Bonnie Tyler&lt;/artist&gt;
+                &lt;country&gt;UK&lt;/country&gt;
+                &lt;company&gt;CBS Records&lt;/company&gt;
+                &lt;price&gt;9.90&lt;/price&gt;
+                &lt;bar:year&gt;1988&lt;/bar:year&gt;
+            &lt;/foo:cd&gt;
+            &lt;foo:cd&gt;
+                &lt;title&gt;Greatest Hits&lt;/title&gt;
+                &lt;artist&gt;Dolly Parton&lt;/artist&gt;
+                &lt;country&gt;USA&lt;/country&gt;
+                &lt;company&gt;RCA&lt;/company&gt;
+                &lt;price&gt;9.90&lt;/price&gt;
+                &lt;bar:year&gt;1982&lt;/bar:year&gt;
+            &lt;/foo:cd&gt;
+        &lt;/catalog&gt;
+</pre>
+
+<p>We turn it into JSON using <a href="http://www.utilities-online.info/xmltojson" target="_blank">Utilities Online</a>. </p>
+<pre class="prettyprint linenum">{
+  "catalog": {
+    "-xmlns:foo": "http://www.foo.org/",
+    "-xmlns:bar": "http://www.bar.org",
+    "foo:cd": [
+      {
+        "title": "Empire Burlesque",
+        "artist": "Bob Dylan",
+        "country": "USA",
+        "company": "Columbia",
+        "price": "10.90",
+        "bar:year": "1985"
+      },
+      {
+        "title": "Hide your heart",
+        "artist": "Bonnie Tyler",
+        "country": "UK",
+        "company": "CBS Records",
+        "price": "9.90",
+        "bar:year": "1988"
+      },
+      {
+        "title": "Greatest Hits",
+        "artist": "Dolly Parton",
+        "country": "USA",
+        "company": "RCA",
+        "price": "9.90",
+        "bar:year": "1982"
+      }
+    ]
+  }
+}
+</pre>
+
+The XSLT turns the XML into HTML.
+
+<pre class="prettyprint linenum">
+    &lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+    &lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:foo="http://www.foo.org/" xmlns:bar="http://www.bar.org"&gt;
+        &lt;xsl:template match="/"&gt;
+            &lt;html&gt;
+            &lt;body&gt;
+            &lt;h2&gt;My CD Collection&lt;/h2&gt;
+            &lt;table border="1"&gt;
+                &lt;tr bgcolor="#9acd32"&gt;
+                    &lt;th&gt;Title&lt;/th&gt;
+                    &lt;th&gt;Artist&lt;/th&gt;
+                    &lt;th&gt;Country&lt;/th&gt;
+                    &lt;th&gt;Company&lt;/th&gt;
+                    &lt;th&gt;Price&lt;/th&gt;
+                    &lt;th&gt;Year&lt;/th&gt;
+                &lt;/tr&gt;
+                &lt;xsl:for-each select="catalog/foo:cd"&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="title"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="artist"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="country"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="company"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="price"/&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;xsl:value-of select="bar:year"/&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/xsl:for-each&gt;
+            &lt;/table&gt;
+            &lt;/body&gt;
+            &lt;/html&gt;
+        &lt;/xsl:template&gt;
+    &lt;/xsl:stylesheet&gt;
+</pre>
+
+
+<p>Instead of XSLT, our JSON Template will be like this.
+<ul>
+        <li>We define a "%!s" is array with one object "th".</li>
+        <li>We want to use "for" function to process the transformation.</li>
+        <li>We iterate over JSON Path "$.catalog.foo:cd" using read ("&") function "&$.catalog.foo:cd"</li>
+        <li>We add "td" into array "%s" using array add function {"%]+", [ $array, $element ]}</li>
+        <li>We assign the new array as "%s" using assign function {"%s": $new }</li>
+        <li>We return the array "%s" using return function "%#".</li>
+</ul>
+
+<pre class="prettyprint linenum">
+{
+  "html": {
+    "-xmlns:bar": "http://www.bar.org",
+    "-xmlns:foo": "http://www.foo.org/",
+    "body": {
+      "h2": "My CD Collection",
+      "table": {
+        "-border": "1",
+        "tr": {"%!for": {
+               "%$"    : {"%!s":[ { "-bgcolor": "#9acd32",
+                                    "th": [
+                                      "Title",
+                                      "Artist",
+                                      "Country",
+                                      "Company",
+                                      "Price",
+                                      "Year" ]
+                                  } ]
+                         },
+               "%[]"   : ["&$.catalog.foo:cd", "%i", "%e"],
+               "%each" : {"%s": {"%]+": ["%s", {"td": [
+                                                        {"%&":["%e", "$.title"]} ,
+                                                        {"%&":["%e", "$.artist"]},
+                                                        {"%&":["%e", "$.country"]},
+                                                        {"%&":["%e", "$.company"]},
+                                                        {"%&":["%e", "$.price"]},
+                                                        {"%&":["%e", "$.bar:year"]}
+                                                       ]}]}},
+
+               "%#"    : "%s"
+              }
+        }
+      }
+    }
+  }
+}
+</pre>
+
+<p> We get the transformed result.</p>
+    <pre class="prettyprint linenum">{
+  "html": {
+    "-xmlns:bar": "http://www.bar.org",
+    "-xmlns:foo": "http://www.foo.org/",
+    "body": {
+      "h2": "My CD Collection",
+      "table": {
+        "-border": "1",
+        "tr": [
+          {
+            "-bgcolor": "#9acd32",
+            "th": [
+              "Title",
+              "Artist",
+              "Country",
+              "Company",
+              "Price",
+              "Year"
+            ]
+          },
+          {
+            "td": [
+              "Empire Burlesque",
+              "Bob Dylan",
+              "USA",
+              "Columbia",
+              "10.90",
+              "1985"
+            ]
+          },
+          {
+            "td": [
+              "Hide your heart",
+              "Bonnie Tyler",
+              "UK",
+              "CBS Records",
+              "9.90",
+              "1988"
+            ]
+          },
+          {
+            "td": [
+              "Greatest Hits",
+              "Dolly Parton",
+              "USA",
+              "RCA",
+              "9.90",
+              "1982"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}</pre>
+
+We turn it into XML using XML to JSON converter <a href="http://www.utilities-online.info/xmltojson" target="_blank">Utilities Online</a>.
+We get the XML result. It will be exactly the <a href="http://www.freeformatter.com/xsl-transformer.html#ad-output" target="_blank" >XSLT result</a>.
+
+
+<pre class="prettyprint linenum">
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+        &lt;html xmlns:bar="http://www.bar.org" xmlns:foo="http://www.foo.org/"&gt;
+        &lt;body&gt;
+        &lt;h2&gt;My CD Collection&lt;/h2&gt;
+        &lt;table border="1"&gt;
+            &lt;tr bgcolor="#9acd32"&gt;
+                &lt;th&gt;Title&lt;/th&gt;
+                &lt;th&gt;Artist&lt;/th&gt;
+                &lt;th&gt;Country&lt;/th&gt;
+                &lt;th&gt;Company&lt;/th&gt;
+                &lt;th&gt;Price&lt;/th&gt;
+                &lt;th&gt;Year&lt;/th&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Empire Burlesque&lt;/td&gt;
+                &lt;td&gt;Bob Dylan&lt;/td&gt;
+                &lt;td&gt;USA&lt;/td&gt;
+                &lt;td&gt;Columbia&lt;/td&gt;
+                &lt;td&gt;10.90&lt;/td&gt;
+                &lt;td&gt;1985&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Hide your heart&lt;/td&gt;
+                &lt;td&gt;Bonnie Tyler&lt;/td&gt;
+                &lt;td&gt;UK&lt;/td&gt;
+                &lt;td&gt;CBS Records&lt;/td&gt;
+                &lt;td&gt;9.90&lt;/td&gt;
+                &lt;td&gt;1988&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td&gt;Greatest Hits&lt;/td&gt;
+                &lt;td&gt;Dolly Parton&lt;/td&gt;
+                &lt;td&gt;USA&lt;/td&gt;
+                &lt;td&gt;RCA&lt;/td&gt;
+                &lt;td&gt;9.90&lt;/td&gt;
+                &lt;td&gt;1982&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;
+</pre>
+
+
+    <!----------------------------------------------------------------------->
+<a name="deploy" />
+<h2>Deployment  <a href="#_top_" style="text-decoration: none;">^</a></h2>
+<code class="code prettyprint">
+    &lt;dependencies&gt;
+    &lt;dependency&gt;
+    &lt;groupId&gt;org.lappsgrid&lt;/groupId&gt;
+    &lt;artifactId&gt;json2json&lt;/artifactId&gt;
+    &lt;version&gt;0.1.6&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependencies&gt;
+</code>
+
+
+
+
+
+
+<footer><hr/> 
+<p>
+    Progress: 
+    <progress value="90" max="100"></progress></p>
+<p>
+    Contacts: 
+    <nonsense>shi</nonsense>cq@<nonsense>cs.</nonsense>brandeis.<nonsense></nonsense>edu,
+    <nonsense>mar</nonsense>c@<nonsense>cs.</nonsense>brandeis.<nonsense></nonsense>edu  </p></footer>
+    
+    </body></html>
