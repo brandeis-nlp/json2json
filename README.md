@@ -646,7 +646,7 @@ We implement a Template.
       "table": {
         "-border": "1",
         "tr": { "%!FOR"  : {
-                 "%$"    : {"%!s":[ { "-bgcolor": "#9acd32",
+                 "%$"    : {"%!arr":[ { "-bgcolor": "#9acd32",
                                     "th": [
                                       "Title",
                                       "Artist",
@@ -657,7 +657,7 @@ We implement a Template.
                                   } ]
                           },
                 "%[]"   : ["&$.catalog.foo:cd", "%i", "%e"],
-                "%EACH" : {"%s": {"%]+": ["%s", {"td": [
+                "%EACH" : {"%arr": {"%]+": ["%arr", {"td": [
                                                         {"%&":["%e", "$.title"]} ,
                                                         {"%&":["%e", "$.artist"]},
                                                         {"%&":["%e", "$.country"]},
@@ -665,7 +665,7 @@ We implement a Template.
                                                         {"%&":["%e", "$.price"]},
                                                         {"%&":["%e", "$.bar:year"]}
                                                        ]}]}},
-               "%#"    : "%s"
+               "%#"    : "%arr"
               }
         }
       }
@@ -675,12 +675,12 @@ We implement a Template.
 ```
 
 
-1. Define *`"%!s"`* as an array with one element "th".
+1. Define *`"%!arr"`* as an array with one element "th".
 2. Use **"FOR"** procedure to realize the transformation.
 3. Iterate over **Json Path Reference** (*`"&$.catalog.foo:cd"`*).
-4. Add each "td" into the array *"%s"* using the **Array ADD Command** (*`{"%]+",[ $array, $element ]}`*)
-5. Assign the ADDED array ( *`"%s"`*) using the **Assign Step** (*`{"%s": *ADDED* }`*)
-6. Return the array ( *`"%s"`*).  
+4. Add each "td" into the array *"%arr"* using the **Array ADD Command** (*`{"%]+",[ $array, $element ]}`*)
+5. Assign the ADDED array ( *`"%arr"`*) using the **Assign Step** (*`{"%arr": *ADDED* }`*)
+6. Return the array ( *`"%arr"`*).  
 
 
 ### Usage
