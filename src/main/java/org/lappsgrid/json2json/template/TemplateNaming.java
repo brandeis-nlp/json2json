@@ -102,19 +102,25 @@ public class TemplateNaming {
         for(int i = 0; i < NamingLength; i ++) {
             Indexes[i] = new LinkedHashMap<String, String[]>();
             for(String [] naming: Namings) {
-                if(!Indexes[i].containsKey(naming[i])){
-                    Indexes[i].put(naming[i], naming);
+
+                String indexKey = naming[i];
+                if (i == Symbol) {
+                    /** update symbol as Category symbol concatenated with individual Symbol. **/
+                    indexKey = naming[Category_Symbol] + indexKey;
+                }
+                if(!Indexes[i].containsKey(indexKey)){
+                    Indexes[i].put(indexKey, naming);
                 } else {
-                    List<String> groupNamings = GroupHelper.get(naming[i]);
+                    List<String> groupNamings = GroupHelper.get(indexKey);
                     if(groupNamings == null) {
                         groupNamings = new ArrayList<String>();
-                        groupNamings.add(Indexes[i].get(naming[i])[Name]);
-                        GroupHelper.put(naming[i], groupNamings);
+                        groupNamings.add(Indexes[i].get(indexKey)[Name]);
+                        GroupHelper.put(indexKey, groupNamings);
                     } else {
-                        groupNamings.add(Indexes[i].get(naming[i])[Name]);
-                        GroupHelper.put(naming[i], groupNamings);
+                        groupNamings.add(Indexes[i].get(indexKey)[Name]);
+                        GroupHelper.put(indexKey, groupNamings);
                         /** all the namings in this group will be indexed. **/
-                        Indexes[i].put(naming[i], groupNamings.toArray(new String[groupNamings.size()]));
+                        Indexes[i].put(indexKey, groupNamings.toArray(new String[groupNamings.size()]));
                     }
                 }
             }
