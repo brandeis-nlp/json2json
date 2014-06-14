@@ -38,7 +38,7 @@ Just like the [XSLT](http://www.freeformatter.com/xsl-transformer.html) design, 
 { "json2json" : "hello world" }
 ```
 -->
-* Note: Template must be a valid Json ( [online Json validation](http://lappsgrid.org/json.html) ). 
+* Note: Template must be a valid Json ( [online Json validation](http://eldrad.cs-i.brandeis.edu:8484/jld/json.html) ). 
 
 
 > #### Template Json
@@ -53,7 +53,7 @@ Just like the [XSLT](http://www.freeformatter.com/xsl-transformer.html) design, 
 ```
 -->
 
-You can **test** this json2json with the example at [online test](http://lappsgrid.org/json.html).
+You can **test** this json2json with the example at [online test](http://eldrad.cs-i.brandeis.edu:8484/jld/json.html).
 
 <!-- -->
 ## How Template Works?
