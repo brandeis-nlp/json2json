@@ -102,14 +102,14 @@ Transformed Unit == "hello world"
 	Input Json Unit + Command/Procedue --> Output Json Unit. 
 
 ## How to Read Input Json Unit?
-We use JsonPath to read Input Json Unit from the source. 
+We use JsonPath to read Input Json Unit from the source. <a name="json-path-reference"></a>
 > #### Json Path Reference
 > To read json unit from the Source Json, we design the following reference. 
 > 
 ```
 " &JSONPATH " , e.g. "&$.json"
 ```
-To understand how JsonPath works, you could read online [JsonPath Design](http://goessner.net/articles/JsonPath/index.html#e2), and you can [test/evaluate](http://jsonpath.curiousconcept.com/) online. 
+To understand how JsonPath works, you could read online [JsonPath Design](http://goessner.net/articles/JsonPath/index.html#e2), and you can [test / evaluate](http://jsonpath.curiousconcept.com/) online. 
 
 * Note: DO NOT forget the *reference* ( **&** ) mark.
 
@@ -117,6 +117,7 @@ To understand how JsonPath works, you could read online [JsonPath Design](http:/
 ## What Commands and Procedures?
 How to design commands and procedure under the [Template Unit](#template-unit) framework?
 
+<a name="command"></a>
 ### Command Units
 Since Json Objects include **String**, **JsonArray**, **JsonObject**, and others (e.g. boolean, numbers). We design **String**, **Array**, **Map**, and **Expression** commands. 
 
@@ -130,7 +131,7 @@ Generally, we design command units as following:
 {"COMMAND-SYMBOL" : [PARAMETER_1, PARAMETER_2, ..., PARAMETER_m ] }
 ```
 
-
+<a name="string"></a>
 
 <!-- -->
 > #### String Commands
@@ -153,6 +154,8 @@ jsonpath | %& | %path|[*jsonobject*, *path*]|{"%&" : [{"hello" : "1", "world" : 
 
 *  Note: We note the **Single-Parameter Command** with *star* (**\***) mark.  
 
+
+<a name="array"></a>
 > #### Array Commands
 
 Command | Symbol | Keyword | Parameter | Example| Output 
@@ -268,8 +271,10 @@ From the above, the Transformed Unit will be **"Return-Value"**. Once the proced
  "PROCESS-SYMBOL" : [Step_1, Step_2, ..., Step_m], 
 }
 ```
-> Each **Step** can be and **Command** or an **Assign Step**. 
+> Each **Step** can be a [**Command**](#command) or an **Assign Step**. 
 > #### Assign Step
+<a name="assign-step"></a>
+> 
 ```
 {
  "%variable" : value, 
@@ -280,6 +285,7 @@ From the above, the Transformed Unit will be **"Return-Value"**. Once the proced
 
 
 <!-- -->
+<a name="initialization"></a>
 > #### Initialization
 >
 > Variables must be declared and initialized in this sub-unit. 
@@ -296,14 +302,17 @@ From the above, the Transformed Unit will be **"Return-Value"**. Once the proced
 *  Note: Variable is declared by "%!"
 
 <!-- -->
+<a name="return-value"></a>
 > #### Return-Value
 Return value can be a constant value, or a variable defined in the initialization. 
 
 <!-- -->
+<a name="process"></a>
 > #### Processes
-There are 3 typical procedures: **IF-TEHN-ELSE**, **FOR-EACH**, and **DO-WHILE**.
+There are 3 typical procedures: **[IF-TEHN-ELSE](#if-then-else)**, **[FOR-EACH](#for-each)**, and **[DO-WHILE](#do-while)**.
 
 
+<a name="if-then-else"></a>
 > #### IF-TEHN-ELSE
 
 ```
@@ -373,6 +382,7 @@ The Target Json will be:
 { "uri" : "http://www.opennlp.org" }
 ```
 
+<a name="for-each"></a>
 > #### FOR-EACH
 
 
@@ -439,6 +449,9 @@ The Target Json will be:
 ```
 { "letters" : "helloworld" }
 ```
+
+
+<a name="do-while"></a>
 > #### DO-WHILE
 
 
@@ -697,10 +710,10 @@ We implement a Template.
 
 
 1. Define *`"%!arr"`* as an array with one element "th".
-2. Use **"FOR"** procedure to realize the transformation.
-3. Iterate over **Json Path Reference** (*`"&$.catalog.foo:cd"`*).
-4. Add each "td" into the array *"%arr"* using the **Array ADD Command** (*`{"%]+",[ $array, $element ]}`*)
-5. Assign the ADDED array ( *`"%arr"`*) using the **Assign Step** (*`{"%arr": *ADDED* }`*)
+2. Use **"[FOR-EACH](#for-each)"** procedure to realize the transformation.
+3. Iterate over **[Json Path Reference](#json-path-reference)** (*`"&$.catalog.foo:cd"`*).
+4. Add each "td" into the array *"%arr"* using the **[Array ADD Command](#array)** (*`{"%]+",[ $array, $element ]}`*)
+5. Assign the ADDED array ( *`"%arr"`*) using the **[Assign Step](#assign-step)** (*`{"%arr": *ADDED* }`*)
 6. Return the array ( *`"%arr"`*).  
 
 
