@@ -324,18 +324,6 @@ Expression       | %EXP          | %<>
 We provide an example that choosing a URL according to name. 
 
 ```
-{ "uri" :  { "%!IF": {
-                          "%$"      :  {   "%!uri": "" },
-                          "%<>"     :  { "==": [ "&$.name", "OpenNLP" ]},
-                          "%THEN"   :  { "%uri": "http://www.opennlp.org"},
-                          "%ELSE"   :  { "%uri": "http://unknown.org" }
-                          "%#"      :  "%uri"    } 
-           } 
-}          
-```
-Or it can also be:
-
-```
 { "uri" :  { "%!IF": [   {   "%!uri": "" },
                          {   "%<>"     : { "==": [ "&$.name", "OpenNLP" ]},
                              "%THEN"   : { "%uri": "http://www.opennlp.org"},
@@ -345,6 +333,19 @@ Or it can also be:
             } 
 }          
 ```
+Or it can also be:
+
+```
+{ "uri" :  { "%!IF": {
+                          "%$"      :  {   "%!uri": "" },
+                          "%<>"     :  { "==": [ "&$.name", "OpenNLP" ]},
+                          "%THEN"   :  { "%uri": "http://www.opennlp.org"},
+                          "%ELSE"   :  { "%uri": "http://unknown.org" }
+                          "%#"      :  "%uri"    } 
+           } 
+}          
+```
+
 The Target Json will be:
 
 ```
@@ -539,8 +540,18 @@ The Target Json will be:
 
 
 
+### Usage
+Maven dependency is like this.
 
-
+```
+<dependencies> 
+<dependency> 
+<groupId>org.lappsgrid</groupId> 
+<artifactId>json2json</artifactId> 
+<version>0.1.6</version> 
+</dependency> 
+<dependencies>
+```
 
 
 
