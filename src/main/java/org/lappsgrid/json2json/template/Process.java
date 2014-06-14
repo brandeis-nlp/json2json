@@ -18,7 +18,7 @@ package org.lappsgrid.json2json.template;
 
 import org.lappsgrid.json2json.GroovyEngine;
 import org.lappsgrid.json2json.Json2JsonException;
-import org.lappsgrid.json2json.Template2;
+import org.lappsgrid.json2json.Template;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 import java.lang.reflect.Method;
@@ -146,7 +146,7 @@ public class Process {
         } else {
             String var = name.substring(1);
             if (map.containsKey(var)) {
-                Object replaced = Template2.replace(obj, map, null, null);
+                Object replaced = Template.replace(obj, map, null, null);
                 map.put(var, replaced);
 //                System.out.println("assign : " + var +" = " + obj);
             }
@@ -177,7 +177,7 @@ public class Process {
         ArrayList list = new ArrayList();
         if(obj instanceof JsonArray) {
             Object arr = ((JsonArray) obj).get(0);
-            arr = Template2.replace(arr, map, null, null);
+            arr = Template.replace(arr, map, null, null);
             if (arr instanceof JsonArray) {
                 if (((JsonArray) obj).length() == 1) {
                     map.put(Map_Index, Default_Each_Index);
@@ -200,7 +200,7 @@ public class Process {
                 }
 
                 for(int i = 0; i < ((JsonArray) arr).length(); i++)
-                list.add(Template2.replace(((JsonArray) arr).get(i), map, null, null));
+                list.add(Template.replace(((JsonArray) arr).get(i), map, null, null));
             } else {
                 throw new Json2JsonException("Wrong iteratable format : " + obj +" is not [[$i0, $i1, ...],\"%i\",\"%e\"] format.");
             }
@@ -249,11 +249,11 @@ public class Process {
                     if(val instanceof JsonArray) {
                         objs = new Object[((JsonArray) val).length()];
                         for (int i = 0; i < ((JsonArray) val).length(); i++) {
-                            objs[i] = Template2.replace(((JsonArray) val).get(i), map, null, null);
+                            objs[i] = Template.replace(((JsonArray) val).get(i), map, null, null);
 //                            System.out.println(key + "---:" + objs[i].getClass());
                         }
                     } else {
-                        objs = new Object[]{Template2.replace(val, map, null, null)};
+                        objs = new Object[]{Template.replace(val, map, null, null)};
                     }
                     bool = (Boolean)GroovyEngine.expr(key, objs);
 //                    System.out.println(key + "---:" + bool);
@@ -363,7 +363,7 @@ public class Process {
 
 
     public static Object ret (Object obj, Map<String, Object> map) throws Json2JsonException {
-        Object ret = Template2.replace(obj, map, null, null);
+        Object ret = Template.replace(obj, map, null, null);
         map.put(Map_Ret, ret);
         return ret;
     }
@@ -375,7 +375,7 @@ public class Process {
             Collection<String> keys = ((JsonObject) obj).keys();
             for(String key:keys) {
                 if (key.startsWith("%!")) {
-                    map.put(key.substring(2), Template2.replace(((JsonObject) obj).get(key), map, null, null));
+                    map.put(key.substring(2), Template.replace(((JsonObject) obj).get(key), map, null, null));
                 }
             }
         }
@@ -391,7 +391,7 @@ public class Process {
         } else if (obj instanceof JsonObject) {
             Collection<String> keys = ((JsonObject) obj).keys();
             for(String key : keys) {
-                Object replaced = Template2.replace(((JsonObject) obj).get(key), map, null, null);
+                Object replaced = Template.replace(((JsonObject) obj).get(key), map, null, null);
                 if (key.startsWith("%!")) {
                     map.put(key.substring(2), replaced);
                 } else if (key.startsWith("%")) {

@@ -13,18 +13,23 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  **********************************************************************************************************************/
-package org.lappsgrid.json2json;
+package org.lappsgrid.json2json.jsonpath;
 
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import com.jayway.jsonpath.internal.JsonReader;
+import org.lappsgrid.json2json.Json2JsonException;
 
 import java.util.Map;
+import org.lappsgrid.json2json.jsonpath.JsonPath.IPath;
 
 /**
- * Created by shi on 3/30/14.
+ * <p>JsonPath implementation is not popular and made standard.
+ * I have test several JsonPath, but JayWay is the fastest implementation.
+ * </p>
+ * <a href="https://github.com/jayway/JsonPath">JayWay</a>
  */
-public class Json2JayWay implements IPath {
+public class JayWayJsonPath implements IPath {
     public String path(String json, String path) throws Json2JsonException {
         return JsonPath.read(json, path).toString();
     }

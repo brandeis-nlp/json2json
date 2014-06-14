@@ -5,11 +5,12 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.lappsgrid.json2json.jsonpath.JayWayJsonPath;
 
 import java.io.File;
 
 public class Json2JsonTest {
-    Json2JayWay j2j = null;
+    JayWayJsonPath j2j = null;
     String json = null;
     long begin, end;
 
@@ -27,13 +28,13 @@ public class Json2JsonTest {
     public void testTime() throws Exception{
         ////////////////////////////////////////////////////////
         begin = System.currentTimeMillis();
-        j2j = new Json2JayWay();
+        j2j = new JayWayJsonPath();
         for(int i = 0; i < 100; i++) {
             String target = j2j.path(json, "$.Items.Item[2].ItemLinks");
 //            System.out.println(target);
         }
         end = System.currentTimeMillis();
-        System.out.print(Json2JayWay.class.getSimpleName() + "\t");
+        System.out.print(JayWayJsonPath.class.getSimpleName() + "\t");
         System.out.println(end - begin);
         System.out.println();
 

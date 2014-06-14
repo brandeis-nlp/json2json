@@ -95,7 +95,7 @@ public class ProcessTest {
         for(int i = 0; i < Steps.length; i ++ ) {
             System.out.println("Step : " + i + " " + Steps[i]);
             System.out.println();
-            Object obj = Template2.toJSON(Steps[i]);
+            Object obj = Template.toJSON(Steps[i]);
             Process.steps(obj, map);
         }
         Assert.assertEquals("hello", map.get("v3"));

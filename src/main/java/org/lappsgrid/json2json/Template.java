@@ -31,7 +31,7 @@ import org.lappsgrid.json2json.template.Proxy;
 /**
  * Created by shi on 4/9/14.
  */
-public class Template2 extends Proxy implements ITemplate  {
+public class Template extends Proxy implements ITemplate  {
 
 
     public static final String Map_JSONs = "____json____";

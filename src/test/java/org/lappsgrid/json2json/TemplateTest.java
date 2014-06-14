@@ -10,7 +10,7 @@ import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
 import java.io.File;
 
-public class Template2Test {
+public class TemplateTest {
 
     public static final String readResources (String name) throws Exception{
         File objFile = new File(Json2JsonTest.class.getResource("/" + name).toURI());
@@ -122,7 +122,7 @@ public class Template2Test {
         String in = null;
         String out = null;
         String temp = null;
-        Template2 template = new Template2();
+        Template template = new Template();
 //        target = template.transform("{\"%v2\" : {\"%!v2\" : \"hello\"} } ", "{}");
 //        System.out.println(target);
 //
