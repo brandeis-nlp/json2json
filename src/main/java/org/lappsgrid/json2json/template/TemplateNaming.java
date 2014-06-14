@@ -1,6 +1,8 @@
 package org.lappsgrid.json2json.template;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,7 +17,7 @@ public class TemplateNaming {
     public static final int Name = 4;
     public static final int NamingLength = 5;
 
-    // [ Category, Category-Symbol, Symbol, KeyWord, Name]
+    // [ Category, Category-Symbol, Symbol, KeyWord, Name, Class, Function-Name]
     public static final String [][] Namings = new String [][]{
 
             /** json path operation**/
@@ -94,10 +96,27 @@ public class TemplateNaming {
     public static final Map<String, String[]> [] Indexes = new LinkedHashMap[NamingLength];
 
     static {
+        /** if index is group information, all the Names in this group will be put in the Indexes **/
+        final Map<String, List<String>> GroupHelper = new LinkedHashMap<String, List<String>>();
+
         for(int i = 0; i < NamingLength; i ++) {
             Indexes[i] = new LinkedHashMap<String, String[]>();
             for(String [] naming: Namings) {
-                Indexes[i].put(naming[i], naming);
+                if(!Indexes[i].containsKey(naming[i])){
+                    Indexes[i].put(naming[i], naming);
+                } else {
+                    List<String> groupNamings = GroupHelper.get(naming[i]);
+                    if(groupNamings == null) {
+                        groupNamings = new ArrayList<String>();
+                        groupNamings.add(Indexes[i].get(naming[i])[Name]);
+                        GroupHelper.put(naming[i], groupNamings);
+                    } else {
+                        groupNamings.add(Indexes[i].get(naming[i])[Name]);
+                        GroupHelper.put(naming[i], groupNamings);
+                        /** all the namings in this group will be indexed. **/
+                        Indexes[i].put(naming[i], groupNamings.toArray(new String[groupNamings.size()]));
+                    }
+                }
             }
         }
     }
