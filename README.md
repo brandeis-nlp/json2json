@@ -141,14 +141,14 @@ Command | Symbol | Keyword | Parameter | Example| Output
 :----------- | :-----------: | :-----------: | :-----------: | :----------- | -----------:
 name | %*symbol* | %*keyword* | [ *para_1,..., para_n* ] | { "%*symbol*" : [ *para_1,..., para_n* ] } | output
 concatenate | %+ | *%concat*|[*str_1*,*str_2*]|{ "%+" : ["hello","world"] } |"helloworld" 
-split | %\| | *%split*|[*str*, *sep*]|{ "%\|" : ["hello.world","."] }  | ["hello", "world"]
+split | %&#124; | *%split*|[*str*, *sep*]|{ "%&#124;" : ["hello.world","."] }  | ["hello", "world"]
 join | %* | *%join*|[ [*str_1,..., str_n*] , *sep*]|{ "%*" :   [ ["hello", "world"],"."] }  | "hello.world"
 index | %? | *%idx*|[*str_1*, *str_2*]|{"%?" : ["hello.world", "hello"] }  | 0
 substring | %_ | *%sub*|[*str*, *start*, *end*]|{"%_" : ["hello.world", 0, 5] }  | "hello"
 *length | %#| *%len* | *str*|{"%#" : "hello world"} |  11
 replace | %/ | *%rep*|[*str*, *s*, *r*]|{"%/" : ["hello.world", ".", " "]}   | "hello world"
 regex-match | %% | *%rmatch*|[*str*, *reg*]|{"%%" : ["hello.world", "[a-z]+"]}  | ["hello", "world"]
-regex-split | %%\| | *%rsplit*|[*str*, *rsep*]|{"%%\|" : ["hello.world", ".l"]}  | ["h", "lo.wo", "d"]
+regex-split | %%&#124; | *%rsplit*|[*str*, *rsep*]|{"%%&#124;" : ["hello.world", ".l"]}  | ["h", "lo.wo", "d"]
 regex-replace | %%/ | *%rrep*|[*str*, *sreg*, *r*]|{"%%/" : ["hello.world", ".l", "-"]}   | "h-lo.wo-d"
 jsonpath | %& | %path|[*jsonobject*, *path*]|{"%&" : [{"hello" : "1", "world" : "2"}, "$.hello"] }    | "1"
 
@@ -193,7 +193,7 @@ Command | Symbol | Parameter | Example| Output
 name | *symbol* | [ *para_1, para_2* ] | { "*symbol*" : [ *para_1, para_2* ] } | output
 add , subtract , times , divide | + , - , * , / | [*num_1*, *num_2*]|{ "+": [1, 2] } | 3
 equal , not equal , greater than , less than | == , != , > , < | [*num_1*, *num_2*]|{ ">": [1, 2] } | false
-and , or | && , \|\| | [*bool_1*, *bool_2*]|{ "&&": [true, false] } | false
+and , or | && , &#124;&#124; | [*bool_1*, *bool_2*]|{ "&&": [true, false] } | false
 *negative | ! | *bool*|{ "!": true } | false
 
 
