@@ -717,6 +717,11 @@ We implement a Template.
 6. Return the array ( *`"%arr"`*).  
 
 
+### Next 
+1. Multiple Json Sources Support
+2. URI import Json Support. 
+3. Remove dependence of Groovy engine. 
+
 ### Usage
 Maven dependency is like this.
 
