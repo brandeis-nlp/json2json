@@ -18,6 +18,7 @@ package org.lappsgrid.json2json;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.lappsgrid.json2json.template.Proxy;
 import org.lappsgrid.json2json.template.StringTemplate;
 
 /**
@@ -35,8 +36,8 @@ public class GroovyEngine {
 
     @Deprecated
     public static String stringFilter(String script) {
-        for(String key: StringTemplate.Proxy.keySet()) {
-            script = StringTemplate.replace(script, key, StringProxyName + "." + StringTemplate.Proxy.get(key));
+        for(String key: Proxy.Symbols.keySet()) {
+            script = StringTemplate.replace(script, key, StringProxyName + "." + Proxy.Symbols.get(key));
         }
         return script;
     }

@@ -32,21 +32,6 @@ import java.util.regex.Pattern;
  * Created by shi on 3/31/14.
  */
 public class StringTemplate {
-    public static HashMap<String,String> Proxy = new HashMap<String, String>();
-    static {
-        Proxy.put("%+","concat");
-        Proxy.put("%|","split");
-        Proxy.put("%*","join");
-        Proxy.put("%?","idx");
-        Proxy.put("%_","sub");
-        Proxy.put("%#","len");
-        Proxy.put("%/","replace");
-        Proxy.put("%%","regex_match");
-        Proxy.put("%%/","regex_replace");
-        Proxy.put("%%|","regex_split");
-        Proxy.put("%&","jsonpath");
-    }
-
 //    public static String split(String s, String sep) {
 //        String [] arr = s.split(Pattern.quote(sep));
 //        return JsonProxy.convertArray(arr).toString();
