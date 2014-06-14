@@ -67,6 +67,11 @@ public class JsonProxy {
         public Object original();
     }
 
+
+    public static interface NewProxy {
+        public JsonArray newArray();
+        public JsonObject newObject();
+    }
     /** static methods for read / is / convert **/
 
     public static JsonArray convertArray(String [] arr) {
@@ -98,24 +103,23 @@ public class JsonProxy {
     }
 
     /** fill in the proxy **/
-//
-//    public static JsonArray newArray() {
-//        // FIXME: exchange other proxy
-//        return new MinimalJsonProxy.MinimalJsonArray();
-//    }
-//
-//    public static JsonObject newObject() {
-//        // FIXME: exchange other proxy
-//        return new MinimalJsonProxy.MinimalJsonObject();
-//    }
 
-    public static JsonArray newArray() {
-        // FIXME: exchange other proxy
-        return new JacksonJsonProxy.JacksonJsonArray();
+
+    public static JsonArray newArray(){
+        return newProxy().newArray();
+    }
+    public static JsonObject newObject(){
+        return newProxy().newObject();
     }
 
-    public static JsonObject newObject() {
+
+//    public static NewProxy newProxy() {
+//        // FIXME: exchange other proxy
+//        return new MinimalJsonProxy();
+//    }
+
+    public static NewProxy newProxy() {
         // FIXME: exchange other proxy
-        return new JacksonJsonProxy.JacksonJsonObject();
+        return new JacksonJsonProxy();
     }
 }

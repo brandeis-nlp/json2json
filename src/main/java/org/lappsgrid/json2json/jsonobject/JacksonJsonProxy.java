@@ -27,7 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * <a href="https://github.com/FasterXML">Jackson Json</a>.
  *
  */
-public class JacksonJsonProxy {
+public class JacksonJsonProxy implements JsonProxy.NewProxy {
 
 
     public static Object valueOf(Object obj) {
@@ -49,6 +49,15 @@ public class JacksonJsonProxy {
         return obj;
     }
 
+    @Override
+    public JsonArray newArray() {
+        return new JacksonJsonArray();
+    }
+
+    @Override
+    public JsonObject newObject() {
+        return new JacksonJsonObject();
+    }
 
 
     public static class JacksonJsonObject implements JsonObject {

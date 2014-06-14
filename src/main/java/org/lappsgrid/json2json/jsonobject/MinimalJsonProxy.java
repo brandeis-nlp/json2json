@@ -25,7 +25,17 @@ import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
  * <a href="https://github.com/ralfstx/minimal-json">Minimal Json</a>.
  *
  */
-public class MinimalJsonProxy {
+public class MinimalJsonProxy implements JsonProxy.NewProxy{
+    @Override
+    public JsonArray newArray() {
+        return new MinimalJsonArray();
+    }
+
+    @Override
+    public JsonObject newObject() {
+        return new MinimalJsonObject();
+    }
+
     public static class MinimalJsonObject implements JsonObject {
         com.eclipsesource.json.JsonObject jsonObject = null;
 
