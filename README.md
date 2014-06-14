@@ -536,8 +536,151 @@ The Target Json will be:
 
 ### More Examples
 
- 
+We have a Source Json. It is records of CDs.  
 
+```
+{
+  "catalog": {
+    "-xmlns:foo": "http://www.foo.org/",
+    "-xmlns:bar": "http://www.bar.org",
+    "foo:cd": [
+      {
+        "title": "Empire Burlesque",
+        "artist": "Bob Dylan",
+        "country": "USA",
+        "company": "Columbia",
+        "price": "10.90",
+        "bar:year": "1985"
+      },
+      {
+        "title": "Hide your heart",
+        "artist": "Bonnie Tyler",
+        "country": "UK",
+        "company": "CBS Records",
+        "price": "9.90",
+        "bar:year": "1988"
+      },
+      {
+        "title": "Greatest Hits",
+        "artist": "Dolly Parton",
+        "country": "USA",
+        "company": "RCA",
+        "price": "9.90",
+        "bar:year": "1982"
+      }
+    ]
+  }
+}
+```
+If we want to organize it into the table. 
+
+```
+{
+  "html": {
+    "-xmlns:bar": "http://www.bar.org",
+    "-xmlns:foo": "http://www.foo.org/",
+    "body": {
+      "h2": "My CD Collection",
+      "table": {
+        "-border": "1",
+        "tr": [
+          {
+            "-bgcolor": "#9acd32",
+            "th": [
+              "Title",
+              "Artist",
+              "Country",
+              "Company",
+              "Price",
+              "Year"
+            ]
+          },
+          {
+            "td": [
+              "Empire Burlesque",
+              "Bob Dylan",
+              "USA",
+              "Columbia",
+              "10.90",
+              "1985"
+            ]
+          },
+          {
+            "td": [
+              "Hide your heart",
+              "Bonnie Tyler",
+              "UK",
+              "CBS Records",
+              "9.90",
+              "1988"
+            ]
+          },
+          {
+            "td": [
+              "Greatest Hits",
+              "Dolly Parton",
+              "USA",
+              "RCA",
+              "9.90",
+              "1982"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
+``` 
+
+How can we realize this transformation?
+
+We implement a Template. 
+
+```
+{
+  "html": {
+    "-xmlns:bar": "http://www.bar.org",
+    "-xmlns:foo": "http://www.foo.org/",
+    "body": {
+      "h2": "My CD Collection",
+      "table": {
+        "-border": "1",
+        "tr": { "%!FOR"  : {
+                 "%$"    : {"%!s":[ { "-bgcolor": "#9acd32",
+                                    "th": [
+                                      "Title",
+                                      "Artist",
+                                      "Country",
+                                      "Company",
+                                      "Price",
+                                      "Year" ]
+                                  } ]
+                          },
+                "%[]"   : ["&$.catalog.foo:cd", "%i", "%e"],
+                "%EACH" : {"%s": {"%]+": ["%s", {"td": [
+                                                        {"%&":["%e", "$.title"]} ,
+                                                        {"%&":["%e", "$.artist"]},
+                                                        {"%&":["%e", "$.country"]},
+                                                        {"%&":["%e", "$.company"]},
+                                                        {"%&":["%e", "$.price"]},
+                                                        {"%&":["%e", "$.bar:year"]}
+                                                       ]}]}},
+               "%#"    : "%s"
+              }
+        }
+      }
+    }
+  }
+}
+```
+
+
+1. Define *`"%!s"`* as an array with one element "th".
+2. Use **"FOR"** procedure to realize the transformation.
+3. Iterate over **Json Path Reference** (*`"&$.catalog.foo:cd"`*).
+4. Add each "td" into the array *"%s"* using the **Array ADD Command** (*`{"%]+",[ $array, $element ]}`*)
+5. Assign the ADDED array ( *`"%s"`*) using the **Assign Step** (*`{"%s": *ADDED* }`*)
+6. Return the array ( *`"%s"`*).  
 
 
 ### Usage
