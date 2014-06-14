@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
 import java.util.Map;
 

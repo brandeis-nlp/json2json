@@ -6,6 +6,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
 import java.io.File;
 

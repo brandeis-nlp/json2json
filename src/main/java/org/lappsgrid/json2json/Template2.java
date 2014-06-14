@@ -1,15 +1,31 @@
+/**********************************************************************************************************************
+ Copyright [2014] [Chunqi SHI (chunqi.shi@hotmail.com)]
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ **********************************************************************************************************************/
 package org.lappsgrid.json2json;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.lappsgrid.json2json.JsonProxy.JsonArray;
-import org.lappsgrid.json2json.JsonProxy.JsonObject;
+import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
+import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 
 /**
  * Created by shi on 4/9/14.
@@ -91,7 +107,7 @@ public class Template2 extends Proxy implements ITemplate  {
 //        System.out.println("replace : " + obj);
         if (obj instanceof JsonObject) {
             JsonObject replacedObj = JsonProxy.newObject();
-            List<String> keys = ((JsonObject) obj).keys();
+            Collection<String> keys = ((JsonObject) obj).keys();
             for(String key: keys){
                 Object val = ((JsonObject) obj).get(key);
                 Object replacedVal = null;

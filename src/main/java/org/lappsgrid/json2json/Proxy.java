@@ -1,14 +1,31 @@
+/**********************************************************************************************************************
+ Copyright [2014] [Chunqi SHI (chunqi.shi@hotmail.com)]
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ **********************************************************************************************************************/
 package org.lappsgrid.json2json;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.lappsgrid.json2json.JsonProxy.JsonArray;
-import org.lappsgrid.json2json.JsonProxy.JsonObject;
+
+import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
+import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 
 /**
  * Created by shi on 3/31/14.
@@ -114,7 +131,7 @@ public class Proxy {
         if(obj instanceof  String) {
             String json = ((String) obj).trim();
             if (json.startsWith("{")) {
-                return JsonProxy.readObject((String)json);
+                return JsonProxy.readObject((String) json);
             } else if (json.startsWith("[")) {
                 return JsonProxy.readArray((String)json);
             }
@@ -302,7 +319,7 @@ public class Proxy {
 
     /////////////////////////////////// Map Operations ///////////////////////////////////////////////////////////
     public static JsonObject map_put (JsonObject obj, JsonObject m) {
-        List<String> keys = m.keys();
+        Collection<String> keys = m.keys();
         for (String key:keys) {
             Object val = m.get(key);
             obj.put(key,val);

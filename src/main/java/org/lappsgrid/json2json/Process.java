@@ -1,8 +1,23 @@
+/**********************************************************************************************************************
+ Copyright [2014] [Chunqi SHI (chunqi.shi@hotmail.com)]
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ **********************************************************************************************************************/
 package org.lappsgrid.json2json;
 
 
-import org.lappsgrid.json2json.JsonProxy.JsonArray;
-import org.lappsgrid.json2json.JsonProxy.JsonObject;
+import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
+import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -140,7 +155,7 @@ public class Process {
     public static boolean process (Object obj, Map<String, Object>  map) throws Json2JsonException {
 //        System.out.println("process : " + obj);
         if(obj instanceof JsonObject){
-            List<String> keys = ((JsonObject) obj).keys();
+            Collection<String> keys = ((JsonObject) obj).keys();
             for(String key: keys) {
                 Object val = ((JsonObject) obj).get(key);
 //                System.out.println("key : "  + key);
@@ -222,7 +237,7 @@ public class Process {
         boolean bool = false;
 //        System.out.println("expr : " + obj);
         if(obj instanceof JsonObject){
-            List<String> keys = ((JsonObject) obj).keys();
+            Collection<String> keys = ((JsonObject) obj).keys();
             for(String key: keys) {
                 Object val = ((JsonObject) obj).get(key);
 
@@ -354,7 +369,7 @@ public class Process {
         if (map == null)
             map = new HashMap<String, Object>();
         if(obj instanceof JsonObject) {
-            List<String> keys = ((JsonObject) obj).keys();
+            Collection<String> keys = ((JsonObject) obj).keys();
             for(String key:keys) {
                 if (key.startsWith("%!")) {
                     map.put(key.substring(2), Template2.replace(((JsonObject) obj).get(key), map, null, null));
@@ -371,7 +386,7 @@ public class Process {
                 steps(((JsonArray) obj).get(i), map);
             }
         } else if (obj instanceof JsonObject) {
-            List<String> keys = ((JsonObject) obj).keys();
+            Collection<String> keys = ((JsonObject) obj).keys();
             for(String key : keys) {
                 Object replaced = Template2.replace(((JsonObject) obj).get(key), map, null, null);
                 if (key.startsWith("%!")) {
