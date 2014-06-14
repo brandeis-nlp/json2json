@@ -169,6 +169,7 @@ regex-replace | %%/ | *%rrep*|[*str*, *sreg*, *r*]|{"%%/" : ["hello.world", ".l"
 jsonpath | %& | %path|[*jsonobject*, *path*]|{"%&" : [{"hello" : "1", "world" : "2"}, "$.hello"] }    | "1"
 
 *  Note: We note the **Single-Parameter Command** with *star* (**\***) mark.  
+
 > #### Array Commands
 
 <!--table  class="v"><tbody><tr>
