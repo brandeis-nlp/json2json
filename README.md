@@ -255,7 +255,28 @@ We design Procedure units as following:
 ```
 From the above, the Transformed Unit will be **"Return-Value"**. Once the procedure is transformed, it will be replaced by this return value. 
 
+> Each **Process** can be an array of **Step** or just one **Step**
+> #### Single-Step Process
+```
+{
+ "PROCESS-SYMBOL" : Step, 
+}
+```
+> #### Multi-Step Process
+```
+{
+ "PROCESS-SYMBOL" : [Step_1, Step_2, ..., Step_m], 
+}
+```
+> Each **Step** can be and **Command** or an **Assign Step**. 
+> #### Assign Step
+```
+{
+ "%variable" : value, 
+}
+```
 
+*  Note: Variable is noted by "%"
 
 
 <!-- -->
