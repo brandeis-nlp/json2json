@@ -19,13 +19,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
+import org.lappsgrid.json2json.template.Process;
+import org.lappsgrid.json2json.template.Proxy;
 
 /**
  * Created by shi on 4/9/14.
@@ -125,7 +126,7 @@ public class Template2 extends Proxy implements ITemplate  {
 //                        System.out.println("Proxy : " + key +" " + val +" " + replacedVal);
                         Object res = Proxy.invoke(key, replacedVal);
                         return res;
-                    } else if (Process.Definitions.containsKey(key) || Process.Symbols.containsKey(key)) {
+                    } else if (org.lappsgrid.json2json.template.Process.Definitions.containsKey(key) || Process.Symbols.containsKey(key)) {
                         Map<String, Object> map = new HashMap<String, Object>(variables);
                         return Process.invoke(key, val, map);
                     }

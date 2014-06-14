@@ -13,9 +13,12 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  **********************************************************************************************************************/
-package org.lappsgrid.json2json;
+package org.lappsgrid.json2json.template;
 
 
+import org.lappsgrid.json2json.GroovyEngine;
+import org.lappsgrid.json2json.Json2JsonException;
+import org.lappsgrid.json2json.Template2;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 import java.lang.reflect.Method;
@@ -27,11 +30,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Process {
 
-    protected static final ConcurrentHashMap<String, String> Symbols = new ConcurrentHashMap<String, String>();
+    public static final ConcurrentHashMap<String, String> Symbols = new ConcurrentHashMap<String, String>();
 
-    protected static final ConcurrentHashMap<String, String> Exprs = new ConcurrentHashMap<String, String>();
-    protected static final ConcurrentHashMap<String, String> Definitions = new ConcurrentHashMap<String, String>();
-    private static final ConcurrentHashMap<String, Method> cache = new ConcurrentHashMap<String, Method>();
+    public static final ConcurrentHashMap<String, String> Exprs = new ConcurrentHashMap<String, String>();
+    public static final ConcurrentHashMap<String, String> Definitions = new ConcurrentHashMap<String, String>();
+    public static final ConcurrentHashMap<String, Method> cache = new ConcurrentHashMap<String, Method>();
 
     public static final String Map_Iterable = "___iterable___";
     public static final String Map_Each = "___each___";
@@ -95,7 +98,7 @@ public class Process {
     protected static Process SINGLE = new Process();
 
 
-    protected static boolean section(String name, Object obj,  Map<String, Object> map) throws Json2JsonException{
+    protected static boolean section(String name, Object obj,  Map<String, Object> map) throws Json2JsonException {
          if (obj instanceof JsonObject) {
 //             System.out.println("Section " + name +" " + obj);
              Object val = null;

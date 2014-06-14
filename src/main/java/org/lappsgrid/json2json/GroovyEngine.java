@@ -18,6 +18,7 @@ package org.lappsgrid.json2json;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.lappsgrid.json2json.template.StringTemplate;
 
 /**
  * Created by shi on 4/1/14.
@@ -34,8 +35,8 @@ public class GroovyEngine {
 
     @Deprecated
     public static String stringFilter(String script) {
-        for(String key: StringProxy.Proxy.keySet()) {
-            script = StringProxy.replace(script, key,  StringProxyName + "." + StringProxy.Proxy.get(key));
+        for(String key: StringTemplate.Proxy.keySet()) {
+            script = StringTemplate.replace(script, key, StringProxyName + "." + StringTemplate.Proxy.get(key));
         }
         return script;
     }
@@ -88,7 +89,7 @@ public class GroovyEngine {
     @Deprecated
     public static String runFilter(String script) {
         Binding binding = new Binding();
-        binding.setVariable(StringProxyName, new StringProxy());
+        binding.setVariable(StringProxyName, new StringTemplate());
         script = stringFilter(script);
         script = arrayIterate(script,binding);
         GroovyShell shell = new GroovyShell(binding);
@@ -135,9 +136,9 @@ public class GroovyEngine {
                             arr[i] = jarr.get(i).toString();
                         }
                         scon = s.substring(middle1, aiEnd);
-                        scon = StringProxy.replace(scon, "%i", index);
-                        scon = StringProxy.replace(scon, "%e", each);
-                        scon = StringProxy.replace(scon, "%r", ret);
+                        scon = StringTemplate.replace(scon, "%i", index);
+                        scon = StringTemplate.replace(scon, "%e", each);
+                        scon = StringTemplate.replace(scon, "%r", ret);
                         isValid = true;
                     }
                 }

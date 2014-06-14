@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.lappsgrid.json2json.template.Process;
 
 import java.util.Map;
 
@@ -89,7 +90,7 @@ public class ProcessTest {
     public void test() throws Exception{
         Object target = null;
 
-        Map<String,Object> map = Process.variables(JsonProxy.readObject(Variables[0]), null);
+        Map<String,Object> map = org.lappsgrid.json2json.template.Process.variables(JsonProxy.readObject(Variables[0]), null);
         System.out.println("Before variables : " + map);
         for(int i = 0; i < Steps.length; i ++ ) {
             System.out.println("Step : " + i + " " + Steps[i]);

@@ -5,8 +5,9 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.lappsgrid.json2json.template.StringTemplate;
 
-public class StringProxyTest {
+public class StringTemplateTest {
 
     String [] paths = new String []{
         "$.store.book[*].author",
@@ -52,27 +53,27 @@ public class StringProxyTest {
 
     @Test
     public void test(){
-        String t = StringProxy.split("hello.world", ".");
+        String t = StringTemplate.split("hello.world", ".");
         Assert.assertEquals("[\"hello\",\"world\"]",t);
 
 
-        t = StringProxy.regex_split("hello.world", ".l");
+        t = StringTemplate.regex_split("hello.world", ".l");
         Assert.assertEquals("[\"h\",\"lo.wo\",\"d\"]",t);
 
-        t = StringProxy.join("[\"hello\",\"world\"]", ".");
+        t = StringTemplate.join("[\"hello\",\"world\"]", ".");
         Assert.assertEquals("hello.world",t);
 
-        t = StringProxy.join("[\"hello\",\"world\"]", ".");
+        t = StringTemplate.join("[\"hello\",\"world\"]", ".");
         Assert.assertEquals("hello.world",t);
 
-        t = StringProxy.regex_match("hello.world", "[a-z]+");
+        t = StringTemplate.regex_match("hello.world", "[a-z]+");
         Assert.assertEquals("[\"hello\",\"world\"]",t);
 
 
-        t = StringProxy.regex_replace("hello.world", ".l", "-");
+        t = StringTemplate.regex_replace("hello.world", ".l", "-");
         Assert.assertEquals("h-lo.wo-d",t);
 
-        t = StringProxy.jsonpath("{\"hello\" : 1,  \"world\" : 2 }", "$.hello");
+        t = StringTemplate.jsonpath("{\"hello\" : 1,  \"world\" : 2 }", "$.hello");
         Assert.assertEquals("1",t);
 
     }

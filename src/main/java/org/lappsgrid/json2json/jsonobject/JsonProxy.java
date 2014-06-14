@@ -100,24 +100,22 @@ public class JsonProxy {
     /** fill in the proxy **/
 //
 //    public static JsonArray newArray() {
-//        // FIXME: exchange proxy
+//        // FIXME: exchange other proxy
 //        return new MinimalJsonProxy.MinimalJsonArray();
 //    }
 //
 //    public static JsonObject newObject() {
-//        // FIXME: exchange proxy
+//        // FIXME: exchange other proxy
 //        return new MinimalJsonProxy.MinimalJsonObject();
 //    }
 
-
-
     public static JsonArray newArray() {
-        // FIXME: exchange proxy
+        // FIXME: exchange other proxy
         return new JacksonJsonProxy.JacksonJsonArray();
     }
 
     public static JsonObject newObject() {
-        // FIXME: exchange proxy
+        // FIXME: exchange other proxy
         return new JacksonJsonProxy.JacksonJsonObject();
     }
 }

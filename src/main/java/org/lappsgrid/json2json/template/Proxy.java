@@ -13,16 +13,18 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  **********************************************************************************************************************/
-package org.lappsgrid.json2json;
+package org.lappsgrid.json2json.template;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.lappsgrid.json2json.GroovyEngine;
+import org.lappsgrid.json2json.Json2Json;
+import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
@@ -32,8 +34,8 @@ import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
  */
 public class Proxy {
 
-    protected static final ConcurrentHashMap<String, String> Symbols = new ConcurrentHashMap<String, String>();
-    protected static final ConcurrentHashMap<String, String> Definitions = new ConcurrentHashMap<String, String>();
+    public static final ConcurrentHashMap<String, String> Symbols = new ConcurrentHashMap<String, String>();
+    public static final ConcurrentHashMap<String, String> Definitions = new ConcurrentHashMap<String, String>();
     private static final ConcurrentHashMap<String, Method> cache = new ConcurrentHashMap<String, Method>();
 
     static {

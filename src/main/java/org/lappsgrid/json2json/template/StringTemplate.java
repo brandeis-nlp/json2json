@@ -14,10 +14,12 @@
         limitations under the License.
 **********************************************************************************************************************/
 
-package org.lappsgrid.json2json;
+package org.lappsgrid.json2json.template;
 
 
 
+import org.lappsgrid.json2json.Json2Json;
+import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
 
@@ -29,7 +31,7 @@ import java.util.regex.Pattern;
 /**
  * Created by shi on 3/31/14.
  */
-public class StringProxy {
+public class StringTemplate {
     public static HashMap<String,String> Proxy = new HashMap<String, String>();
     static {
         Proxy.put("%+","concat");

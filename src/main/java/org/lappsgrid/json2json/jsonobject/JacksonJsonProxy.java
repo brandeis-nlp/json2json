@@ -56,7 +56,7 @@ public class JacksonJsonProxy {
         Map<String, Object> map = null;
 
         public JacksonJsonObject() {
-            map = new HashMap<String, Object>();
+            map = new LinkedHashMap<String, Object>();
         }
 
         public JacksonJsonObject(Map<String, Object> map) {
@@ -67,7 +67,7 @@ public class JacksonJsonProxy {
         public JsonObject read(String s) {
             ObjectMapper mapper = new ObjectMapper();
             try {
-                map = (Map)mapper.readValue(s, Map.class);
+                map = (Map)mapper.readValue(s, LinkedHashMap.class);
             } catch (IOException e) {
                 e.printStackTrace();
             }
