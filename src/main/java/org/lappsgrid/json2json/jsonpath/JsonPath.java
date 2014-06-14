@@ -12,10 +12,26 @@ public class JsonPath {
     static int InitialSize = 8;
 
     public static interface IPath {
+        /**
+         * Input a Json String, and Json Path String, return Json Object String.
+         * @param json A Json object string.
+         * @param path Json path string.
+         * @return The selected Json objects string.
+         * @throws Json2JsonException
+         */
         public String path(String json, String path) throws Json2JsonException;
+
+        /**
+         * Same as {@code public String path(String json, String path) throws Json2JsonException;}, but
+         * with JsonPath cache.
+         * @param json
+         * @param path
+         * @param cache Map-interface-based cache.
+         * @return
+         * @throws Json2JsonException
+         */
         public String path(String json, String path, Map<String, Object> cache) throws Json2JsonException;
     }
-
 
     static final LinkedBlockingQueue<IPath> cacheJsonPath = new LinkedBlockingQueue<IPath>(InitialSize);
     static {
@@ -50,6 +66,7 @@ public class JsonPath {
         }
         return ret;
     }
+
 
     public static IPath newPath() {
         //FIXME: change into other JsonPath Implementation
