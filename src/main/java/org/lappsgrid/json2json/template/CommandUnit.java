@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * Created by shi on 6/15/14.
+ * <p>Provide command transforming support. </p>
  */
 public class CommandUnit extends TemplateUnit {
 
@@ -72,50 +72,10 @@ public class CommandUnit extends TemplateUnit {
         return paras;
     }
 
-
-//    public static class SingleParameterTransform extends CommandTransform {
-//        public SingleParameterTransform(TemplateEngine.Engine engine) {
-//            super(engine);
-//        }
-//
-//        public Object transform (String command, Object obj) throws Json2JsonException {
-//            List<Method> methods = ProxyMapping.methodByCommand(command);
-//            if (methods == null || methods.size() == 0)
-//                throw new Json2JsonException("Cannot find proxy mapping for the command: " + command);
-//
-//            Object[] parameters = new Object[]{obj};
-//            return engine.invoke(methods, parameters);
-//        }
-//    }
-
-//    public static class MultipleParameterTransform extends CommandTransform {
-//        public MultipleParameterTransform(TemplateEngine.Engine engine) {
-//            super(engine);
-//        }
-//
-//        public Object transform (String command, Object obj) throws Json2JsonException {
-//            JsonProxy.JsonArray arr = (JsonProxy.JsonArray) obj;
-//
-//            List<Method> methods = ProxyMapping.methodByCommand(command);
-//            if (methods == null || methods.size() == 0)
-//                throw new Json2JsonException("Cannot find proxy mapping for the command: " + command);
-//            return engine.invoke(methods, toArray(arr));
-//        }
-//    }
-
     public CommandUnit(JsonProxy.JsonObject obj) {
         super(obj);
     }
 
-
-    public boolean isSingleParameter() {
-        if (this.unitContent() instanceof JsonProxy.JsonArray) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
     public Object transform() throws Json2JsonException {
         TemplateEngine.Engine engine = TemplateEngine.newEngine();
         if(super.isTemplate()) {
