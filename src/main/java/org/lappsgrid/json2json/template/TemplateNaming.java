@@ -27,7 +27,11 @@ public class TemplateNaming {
     public static final int Symbol = 2;
     public static final int KeyWord = 3;
     public static final int Name = 4;
-    public static final int NamingLength = 5;
+    public static final int TemplateType = 5;
+    public static final int NamingLength = 6;
+
+    public static final String ProcedureInitMark = "%!";
+    public static final String JsonPathReference = "&";
 
     public enum UnitType {
         /** json path operation**/
@@ -106,80 +110,80 @@ public class TemplateNaming {
 
     public static int UnitTypeLength = UnitType.values().length;
 
-    // [ Category, Category-Symbol, Symbol, KeyWord, Name]
+    // [ Category, Category-Symbol, Symbol, KeyWord, Name, Template-Type]
     public static final String [][] Namings = new String [][]{
 
             /** json path operation**/
-            new String []{"jsonpath", "%", "&", "jsonpath", UnitType.jsonpath.name()},
+            new String []{"jsonpath", "%", "&", "jsonpath", UnitType.jsonpath.name(), TemplateUnit.TemplateType.Command.name()},
 
             /** string operation **/
-            new String []{"string", "%", "+", "concat", UnitType.concatenation.name()},
-            new String []{"string", "%", "|", "split", UnitType.split.name()},
-            new String []{"string", "%", "*", "join", UnitType.join.name()},
-            new String []{"string", "%", "?", "idx", UnitType.index.name()},
-            new String []{"string", "%", "_", "sub", UnitType.substring.name()},
-            new String []{"string", "%", "#", "len", UnitType.length.name()},
-            new String []{"string", "%", "/", "rep", UnitType.replacement.name()},
-            new String []{"string", "%", "%", "rmatch", UnitType.match_by_regular_expression.name()},
-            new String []{"string", "%", "%/", "rrep", UnitType.replacement_by_regular_expression.name()},
-            new String []{"string", "%", "%|", "rsplit", UnitType.split_by_regular_expression.name()},
+            new String []{"string", "%", "+", "concat", UnitType.concatenation.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"string", "%", "|", "split", UnitType.split.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"string", "%", "*", "join", UnitType.join.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"string", "%", "?", "idx", UnitType.index.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"string", "%", "_", "sub", UnitType.substring.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"string", "%", "#", "len", UnitType.length.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"string", "%", "/", "rep", UnitType.replacement.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"string", "%", "%", "rmatch", UnitType.match_by_regular_expression.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"string", "%", "%/", "rrep", UnitType.replacement_by_regular_expression.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"string", "%", "%|", "rsplit", UnitType.split_by_regular_expression.name(), TemplateUnit.TemplateType.Command.name()},
 
             /** array operation **/
-            new String []{"array", "%]", "+", "arr-add", UnitType.array_add.name()},
-            new String []{"array", "%]", "/", "arr-set", UnitType.array_set.name()},
-            new String []{"array", "%]", "-", "arr-rm", UnitType.array_remove.name()},
-            new String []{"array", "%]", "$", "arr-get", UnitType.array_get.name()},
-            new String []{"array", "%]", "_", "arr-sub", UnitType.array_sub.name()},
-            new String []{"array", "%]", "?", "arr-idx", UnitType.array_index.name()},
-            new String []{"array", "%]", "#", "arr-len", UnitType.array_length.name()},
+            new String []{"array", "%]", "+", "arr-add", UnitType.array_add.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"array", "%]", "/", "arr-set", UnitType.array_set.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"array", "%]", "-", "arr-rm", UnitType.array_remove.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"array", "%]", "$", "arr-get", UnitType.array_get.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"array", "%]", "_", "arr-sub", UnitType.array_sub.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"array", "%]", "?", "arr-idx", UnitType.array_index.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"array", "%]", "#", "arr-len", UnitType.array_length.name(), TemplateUnit.TemplateType.Command.name()},
 
             /** map operation **/
-            new String []{"map", "%}", "+", "map-put", UnitType.map_put.name()},
-            new String []{"map", "%}", "$", "map-get", UnitType.map_get.name()},
-            new String []{"map", "%}", "-", "map-rm", UnitType.map_remove.name()},
-            new String []{"map", "%}", "#", "map-len", UnitType.map_length.name()},
-            new String []{"map", "%}", "*", "map-keys", UnitType.map_keys.name()},
+            new String []{"map", "%}", "+", "map-put", UnitType.map_put.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"map", "%}", "$", "map-get", UnitType.map_get.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"map", "%}", "-", "map-rm", UnitType.map_remove.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"map", "%}", "#", "map-len", UnitType.map_length.name(), TemplateUnit.TemplateType.Command.name()},
+            new String []{"map", "%}", "*", "map-keys", UnitType.map_keys.name(), TemplateUnit.TemplateType.Command.name()},
 
             /** process operation **/
-            new String []{"process", "%!", "+", "proc", UnitType.default_process.name()},
-            new String []{"process", "%!", "?", "if", UnitType.if_process.name()},
-            new String []{"process", "%!", "*", "for", UnitType.for_each_process.name()},
-            new String []{"process", "%!", "_", "while", UnitType.do_while_process.name()},
+            new String []{"process", "%!", "+", "proc", UnitType.default_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process", "%!", "?", "if", UnitType.if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process", "%!", "*", "for", UnitType.for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process", "%!", "_", "while", UnitType.do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** default process operation **/
-            new String []{"process-proc", "%", "$", "def", UnitType.definitions_of_process.name()},
-            new String []{"process-proc", "%", "{}", "steps", UnitType.steps_of_process.name()},
-            new String []{"process-proc", "%", "#", "ret", UnitType.return_of_process.name()},
+            new String []{"process-proc", "%", "$", "def", UnitType.definitions_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-proc", "%", "{}", "steps", UnitType.steps_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-proc", "%", "#", "ret", UnitType.return_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** if process operation **/
-            new String []{"process-if", "%", "$", "def", UnitType.definitions_of_if_process.name()},
-            new String []{"process-if", "%", "<>", "expr", UnitType.expression_of_if_process.name()},
-            new String []{"process-if", "%", "then", "then", UnitType.then_step_of_if_process.name()},
-            new String []{"process-if", "%", "else", "else", UnitType.else_step_of_if_process.name()},
-            new String []{"process-if", "%", "#", "ret", UnitType.return_of_if_process.name()},
+            new String []{"process-if", "%", "$", "def", UnitType.definitions_of_if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if", "%", "<>", "expr", UnitType.expression_of_if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if", "%", "then", "then", UnitType.then_step_of_if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if", "%", "else", "else", UnitType.else_step_of_if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if", "%", "#", "ret", UnitType.return_of_if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** for process operation **/
-            new String []{"process-for-each", "%", "$", "def", UnitType.definitions_of_for_each_process.name()},
-            new String []{"process-for-each", "%", "[]", "iter", UnitType.iterator_of_for_each_process.name()},
-            new String []{"process-for-each", "%", "each", "each", UnitType.each_step_of_for_each_process.name()},
-            new String []{"process-for-each", "%", "#", "ret", UnitType.return_of_for_each_process.name()},
+            new String []{"process-for-each", "%", "$", "def", UnitType.definitions_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-for-each", "%", "[]", "iter", UnitType.iterator_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-for-each", "%", "each", "each", UnitType.each_step_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-for-each", "%", "#", "ret", UnitType.return_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
 
             /** while process operation **/
-            new String []{"process-do-while", "%", "$", "def", UnitType.definitions_of_do_while_process.name()},
-            new String []{"process-do-while", "%", "<>", "expr", UnitType.expression_of_do_while_process.name()},
-            new String []{"process-do-while", "%", "do", "do", UnitType.do_step_of_do_while_process.name()},
-            new String []{"process-do-while", "%", "#", "ret", UnitType.return_of_do_while_process.name()},
+            new String []{"process-do-while", "%", "$", "def", UnitType.definitions_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%", "<>", "expr", UnitType.expression_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%", "do", "do", UnitType.do_step_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%", "#", "ret", UnitType.return_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** expression operation **/
-            new String []{"expression", "", "==", "==", UnitType.equals_expression.name()},
-            new String []{"expression", "", ">", ">", UnitType.larger_than_expression.name()},
-            new String []{"expression", "", "<", "<", UnitType.smaller_than_expression.name()},
-            new String []{"expression", "", ">=", ">=", UnitType.no_smaller_than_expression.name()},
-            new String []{"expression", "", "<=", "<=", UnitType.no_larger_than_expression.name()},
-            new String []{"expression", "", "&&", "&&", UnitType.and_boolean_expression.name()},
-            new String []{"expression", "", "||", "||", UnitType.or_boolean_expression.name()},
-            new String []{"expression", "", "!", "!", UnitType.negate_boolean_expression.name()},
+            new String []{"expression", "", "==", "==", UnitType.equals_expression.name(), TemplateUnit.TemplateType.Expression.name()},
+            new String []{"expression", "", ">", ">", UnitType.larger_than_expression.name(), TemplateUnit.TemplateType.Expression.name()},
+            new String []{"expression", "", "<", "<", UnitType.smaller_than_expression.name(), TemplateUnit.TemplateType.Expression.name()},
+            new String []{"expression", "", ">=", ">=", UnitType.no_smaller_than_expression.name(), TemplateUnit.TemplateType.Expression.name()},
+            new String []{"expression", "", "<=", "<=", UnitType.no_larger_than_expression.name(), TemplateUnit.TemplateType.Expression.name()},
+            new String []{"expression", "", "&&", "&&", UnitType.and_boolean_expression.name(), TemplateUnit.TemplateType.Expression.name()},
+            new String []{"expression", "", "||", "||", UnitType.or_boolean_expression.name(), TemplateUnit.TemplateType.Expression.name()},
+            new String []{"expression", "", "!", "!", UnitType.negate_boolean_expression.name(), TemplateUnit.TemplateType.Expression.name()},
     };
 
     public static final Map<String, String[]> [] Indexes = new LinkedHashMap[NamingLength];
@@ -280,4 +284,34 @@ public class TemplateNaming {
         }
         return keyword;
     }
+
+    public static String templateTypeBySymbol(String symbol) {
+        String ttype = null;
+        String[] naming =   Indexes[Symbol].get(symbol);
+        if (naming != null)  {
+            ttype = naming[TemplateType];
+        }
+        return ttype;
+    }
+
+    public static String templateTypeByKeyWord(String keyword) {
+        String ttype = null;
+        String[] naming =   Indexes[KeyWord].get(keyword);
+        if (naming != null)  {
+            ttype = naming[TemplateType];
+        }
+        return ttype;
+    }
+
+    public static TemplateUnit.TemplateType templateTypeByCommand(String command) {
+        String ttype = templateTypeBySymbol(command);
+        if(ttype == null) {
+            ttype = templateTypeByKeyWord(command);
+        }
+        if(ttype != null) {
+            return TemplateUnit.TemplateType.valueOf(ttype);
+        }
+        return null;
+    }
+
 }

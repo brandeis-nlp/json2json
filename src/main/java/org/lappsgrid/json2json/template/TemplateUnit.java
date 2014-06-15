@@ -16,6 +16,7 @@
 package org.lappsgrid.json2json.template;
 
 import org.lappsgrid.json2json.Json2JsonException;
+import org.lappsgrid.json2json.engine.TemplateEngine;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 
 import java.util.Collection;
@@ -23,24 +24,29 @@ import java.util.Collection;
 /**
  * <p> TemplateUnit is the class to recognize Commands and Process </p>
  */
-public abstract class TemplateUnit {
-    JsonObject obj = null;
+public class TemplateUnit extends JsonUnit{
+    TemplateEngine.Engine engine = null;
+
+    public TemplateUnit(Object obj) {
+        super(obj);
+        engine = TemplateEngine.newEngine();
+    }
+
+    public static enum TemplateType {
+        Command, Procedure, Expression
+    }
 
     public static interface Transform {
         Object transform (TemplateUnit obj) throws Json2JsonException;
     }
 
-    public TemplateUnit (JsonObject obj) {
-        this.obj = obj;
-    }
-
     public boolean isTemplate() {
-        if (obj != null) {
-            Collection<String> keys = obj.keys();
+        if (obj != null && obj instanceof JsonObject) {
+            Collection<String> keys = ((JsonObject)obj).keys();
 
             /** Only 1 key is allowed in the TemplateUnit, and the key must be a symbol or keyword 　**/
             if (keys.size() == 1) {
-                String type = unitType ();
+                String type = unitName();
                 // if find it in the symbols or keywords
                 if (TemplateNaming.hasSymbol(type) ||
                         TemplateNaming.hasKeyword(type)) {
@@ -51,13 +57,32 @@ public abstract class TemplateUnit {
         return false;
     }
 
-    public abstract Object transform () throws Json2JsonException;
+    @Override
+    public Object transform () throws Json2JsonException {
+        if(isTemplate()) {
+            if ( getTemplateType() == TemplateType.Command) {
+                CommandUnit cu = new CommandUnit(obj);
+                transformed = cu.transform();
+            } else if (getTemplateType()  == TemplateType.Procedure) {
+                ProcedureUnit pu = new ProcedureUnit(obj);
+                transformed = pu.transform();
+            } else if (getTemplateType()  == TemplateType.Expression){
+                // TODO
+            }
+        }
+        return transformed;
+    }
 
-    public String unitType(){
-        return obj.keys().iterator().next();
+    public TemplateType getTemplateType() {
+        return TemplateNaming.templateTypeByCommand(unitName());
+    }
+
+    public String unitName(){
+        return ((JsonObject)obj).keys().iterator().next();
     }
 
     public Object unitContent() {
-        return obj.get(unitType());
+        return ((JsonObject)obj).get(unitName());
     }
+
 }

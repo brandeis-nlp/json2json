@@ -36,7 +36,7 @@ public class TemplateEngine {
     }
 
 
-    public static abstract class EvalEngine implements Engine{
+    public static abstract class EvalEngine implements Engine {
         public abstract Object eval(String s) throws Json2JsonException;
         public abstract void bind(String name, Object val);
 
