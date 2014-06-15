@@ -1,3 +1,18 @@
+/**********************************************************************************************************************
+ Copyright [2014] [Chunqi SHI (chunqi.shi@hotmail.com)]
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
 
 import java.util.ArrayList;
@@ -17,80 +32,154 @@ public class TemplateNaming {
     public static final int Name = 4;
     public static final int NamingLength = 5;
 
-    // [ Category, Category-Symbol, Symbol, KeyWord, Name, Class, Function-Name]
+    public enum UnitType {
+        /** json path operation**/
+        jsonpath,
+
+        /** string operation **/
+        concatenation,
+        split,
+        join,
+        index,
+        substring,
+        length,
+        replacement,
+        match_by_regular_expression,
+        replacement_by_regular_expression,
+        split_by_regular_expression,
+
+        /** array operation **/
+        array_add,
+        array_set,
+        array_remove,
+        array_get,
+        array_sub,
+        array_index,
+        array_length,
+
+        /** map operation **/
+        map_put,
+        map_get,
+        map_remove,
+        map_length,
+        map_keys,
+
+        /** process operation **/
+        default_process,
+        if_process,
+        for_each_process,
+        do_while_process,
+
+        /** default process operation **/
+        definitions_of_process,
+        steps_of_process,
+        return_of_process,
+
+        /** if process operation **/
+        definitions_of_if_process,
+        expression_of_if_process,
+        then_step_of_if_process,
+        else_step_of_if_process,
+        return_of_if_process,
+
+        /** for process operation **/
+        definitions_of_for_each_process,
+        iterator_of_for_each_process,
+        each_step_of_for_each_process,
+        return_of_for_each_process,
+
+
+        /** while process operation **/
+        definitions_of_do_while_process,
+        expression_of_do_while_process,
+        do_step_of_do_while_process,
+        return_of_do_while_process,
+
+        /** expression operation **/
+        equals_expression,
+        larger_than_expression,
+        smaller_than_expression,
+        no_smaller_than_expression,
+        no_larger_than_expression,
+        and_boolean_expression,
+        or_boolean_expression,
+        negate_boolean_expression
+    }
+
+    // [ Category, Category-Symbol, Symbol, KeyWord, Name]
     public static final String [][] Namings = new String [][]{
 
             /** json path operation**/
-            new String []{"jsonpath", "%", "&", "jsonpath", "jsonpath"},
+            new String []{"jsonpath", "%", "&", "jsonpath", UnitType.jsonpath.name()},
 
             /** string operation **/
-            new String []{"string", "%", "+", "concat", "concatenation"},
-            new String []{"string", "%", "|", "split", "split"},
-            new String []{"string", "%", "*", "join", "join"},
-            new String []{"string", "%", "?", "idx", "index"},
-            new String []{"string", "%", "_", "sub", "substring"},
-            new String []{"string", "%", "#", "len", "length"},
-            new String []{"string", "%", "/", "rep", "replacement"},
-            new String []{"string", "%", "%", "rmatch", "match-by-regular-expression"},
-            new String []{"string", "%", "%/", "rrep", "replacement-by-regular-expression"},
-            new String []{"string", "%", "%|", "rsplit", "split-by-regular-expression"},
+            new String []{"string", "%", "+", "concat", UnitType.concatenation.name()},
+            new String []{"string", "%", "|", "split", UnitType.split.name()},
+            new String []{"string", "%", "*", "join", UnitType.join.name()},
+            new String []{"string", "%", "?", "idx", UnitType.index.name()},
+            new String []{"string", "%", "_", "sub", UnitType.substring.name()},
+            new String []{"string", "%", "#", "len", UnitType.length.name()},
+            new String []{"string", "%", "/", "rep", UnitType.replacement.name()},
+            new String []{"string", "%", "%", "rmatch", UnitType.match_by_regular_expression.name()},
+            new String []{"string", "%", "%/", "rrep", UnitType.replacement_by_regular_expression.name()},
+            new String []{"string", "%", "%|", "rsplit", UnitType.split_by_regular_expression.name()},
 
             /** array operation **/
-            new String []{"array", "%]", "+", "arr-add", "array-add"},
-            new String []{"array", "%]", "/", "arr-set", "array-set"},
-            new String []{"array", "%]", "-", "arr-rm", "array-remove"},
-            new String []{"array", "%]", "$", "arr-get", "array-get"},
-            new String []{"array", "%]", "_", "arr-sub", "array-sub"},
-            new String []{"array", "%]", "?", "arr-idx", "array-index"},
-            new String []{"array", "%]", "#", "arr-len", "array-length"},
+            new String []{"array", "%]", "+", "arr-add", UnitType.array_add.name()},
+            new String []{"array", "%]", "/", "arr-set", UnitType.array_set.name()},
+            new String []{"array", "%]", "-", "arr-rm", UnitType.array_remove.name()},
+            new String []{"array", "%]", "$", "arr-get", UnitType.array_get.name()},
+            new String []{"array", "%]", "_", "arr-sub", UnitType.array_sub.name()},
+            new String []{"array", "%]", "?", "arr-idx", UnitType.array_index.name()},
+            new String []{"array", "%]", "#", "arr-len", UnitType.array_length.name()},
 
             /** map operation **/
-            new String []{"map", "%}", "+", "map-put", "map-put"},
-            new String []{"map", "%}", "$", "map-get", "map-get"},
-            new String []{"map", "%}", "-", "map-rm", "map-remove"},
-            new String []{"map", "%}", "#", "map-len", "map-length"},
-            new String []{"map", "%}", "*", "map-keys", "map-keys"},
+            new String []{"map", "%}", "+", "map-put", UnitType.map_put.name()},
+            new String []{"map", "%}", "$", "map-get", UnitType.map_get.name()},
+            new String []{"map", "%}", "-", "map-rm", UnitType.map_remove.name()},
+            new String []{"map", "%}", "#", "map-len", UnitType.map_length.name()},
+            new String []{"map", "%}", "*", "map-keys", UnitType.map_keys.name()},
 
             /** process operation **/
-            new String []{"process", "%!", "+", "proc", "default-process"},
-            new String []{"process", "%!", "?", "if", "if-process"},
-            new String []{"process", "%!", "*", "for", "for-each-process"},
-            new String []{"process", "%!", "_", "while", "do-while-process"},
+            new String []{"process", "%!", "+", "proc", UnitType.default_process.name()},
+            new String []{"process", "%!", "?", "if", UnitType.if_process.name()},
+            new String []{"process", "%!", "*", "for", UnitType.for_each_process.name()},
+            new String []{"process", "%!", "_", "while", UnitType.do_while_process.name()},
 
             /** default process operation **/
-            new String []{"process-proc", "%", "$", "def", "definitions-of-process"},
-            new String []{"process-proc", "%", "{}", "steps", "steps-of-process"},
-            new String []{"process-proc", "%", "#", "ret", "return-of-process"},
+            new String []{"process-proc", "%", "$", "def", UnitType.definitions_of_process.name()},
+            new String []{"process-proc", "%", "{}", "steps", UnitType.steps_of_process.name()},
+            new String []{"process-proc", "%", "#", "ret", UnitType.return_of_process.name()},
 
             /** if process operation **/
-            new String []{"process-if", "%", "$", "def", "definitions-of-if-process"},
-            new String []{"process-if", "%", "<>", "expr", "expression-of-if-process"},
-            new String []{"process-if", "%", "then", "then", "then-step-of-if-process"},
-            new String []{"process-if", "%", "else", "else", "else-step-of-if-process"},
-            new String []{"process-if", "%", "#", "ret", "return-of-if-process"},
+            new String []{"process-if", "%", "$", "def", UnitType.definitions_of_if_process.name()},
+            new String []{"process-if", "%", "<>", "expr", UnitType.expression_of_if_process.name()},
+            new String []{"process-if", "%", "then", "then", UnitType.then_step_of_if_process.name()},
+            new String []{"process-if", "%", "else", "else", UnitType.else_step_of_if_process.name()},
+            new String []{"process-if", "%", "#", "ret", UnitType.return_of_if_process.name()},
 
             /** for process operation **/
-            new String []{"process-for-each", "%", "$", "def", "definitions-of-for-each-process"},
-            new String []{"process-for-each", "%", "[]", "iter", "iterator-of-for-each-process"},
-            new String []{"process-for-each", "%", "each", "each", "each-step-of-for-each-process"},
-            new String []{"process-for-each", "%", "#", "ret", "return-of-for-each-process"},
+            new String []{"process-for-each", "%", "$", "def", UnitType.definitions_of_for_each_process.name()},
+            new String []{"process-for-each", "%", "[]", "iter", UnitType.iterator_of_for_each_process.name()},
+            new String []{"process-for-each", "%", "each", "each", UnitType.each_step_of_for_each_process.name()},
+            new String []{"process-for-each", "%", "#", "ret", UnitType.return_of_for_each_process.name()},
 
 
             /** while process operation **/
-            new String []{"process-do-while", "%", "$", "def", "definitions-of-do-while-process"},
-            new String []{"process-do-while", "%", "<>", "expr", "expression-of-do-while-process"},
-            new String []{"process-do-while", "%", "do", "do", "do-step-of-do-while-process"},
-            new String []{"process-do-while", "%", "#", "ret", "return-of-do-while-process"},
+            new String []{"process-do-while", "%", "$", "def", UnitType.definitions_of_do_while_process.name()},
+            new String []{"process-do-while", "%", "<>", "expr", UnitType.expression_of_do_while_process.name()},
+            new String []{"process-do-while", "%", "do", "do", UnitType.do_step_of_do_while_process.name()},
+            new String []{"process-do-while", "%", "#", "ret", UnitType.return_of_do_while_process.name()},
 
             /** expression operation **/
-            new String []{"expression", "", "==", "==", "equals-expression"},
-            new String []{"expression", "", ">", ">", "larger-than-expression"},
-            new String []{"expression", "", "<", "<", "smaller-than-expression"},
-            new String []{"expression", "", ">=", ">=", "no-smaller-than-expression"},
-            new String []{"expression", "", "<=", "<=", "no-larger-than-expression"},
-            new String []{"expression", "", "&&", "&&", "and-boolean-expression"},
-            new String []{"expression", "", "||", "||", "or-boolean-expression"},
-            new String []{"expression", "", "!", "!", "negate-boolean-expression"},
+            new String []{"expression", "", "==", "==", UnitType.equals_expression.name()},
+            new String []{"expression", "", ">", ">", UnitType.larger_than_expression.name()},
+            new String []{"expression", "", "<", "<", UnitType.smaller_than_expression.name()},
+            new String []{"expression", "", ">=", ">=", UnitType.no_smaller_than_expression.name()},
+            new String []{"expression", "", "<=", "<=", UnitType.no_larger_than_expression.name()},
+            new String []{"expression", "", "&&", "&&", UnitType.and_boolean_expression.name()},
+            new String []{"expression", "", "||", "||", UnitType.or_boolean_expression.name()},
+            new String []{"expression", "", "!", "!", UnitType.negate_boolean_expression.name()},
     };
 
     public static final Map<String, String[]> [] Indexes = new LinkedHashMap[NamingLength];
@@ -127,6 +216,32 @@ public class TemplateNaming {
         }
     }
 
+    public static boolean hasSymbol(String symbol) {
+        return Indexes[Symbol].containsKey(symbol);
+    }
+
+    public static boolean hasKeyword(String keyword) {
+        return Indexes[KeyWord].containsKey(keyword);
+    }
+
+
+    public static String nameBySymbol (String symbol) {
+        String[] naming =   Indexes[Symbol].get(symbol);
+        String name = null;
+        if (naming != null)  {
+            name = naming[Name];
+        }
+        return name;
+    }
+
+    public static String nameByKeyword (String keyword) {
+        String[] naming =   Indexes[KeyWord].get(keyword);
+        String name = null;
+        if (naming != null)  {
+            name = naming[Name];
+        }
+        return name;
+    }
 
     public static String symbolByName (String name) {
         String[] naming =   Indexes[Name].get(name);
