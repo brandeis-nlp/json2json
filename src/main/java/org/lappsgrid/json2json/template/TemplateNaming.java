@@ -15,10 +15,7 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>Template Naming provides all the definition, symbols and expressions</p>
@@ -105,6 +102,9 @@ public class TemplateNaming {
         or_boolean_expression,
         negate_boolean_expression
     }
+
+
+    public static int UnitTypeLength = UnitType.values().length;
 
     // [ Category, Category-Symbol, Symbol, KeyWord, Name]
     public static final String [][] Namings = new String [][]{

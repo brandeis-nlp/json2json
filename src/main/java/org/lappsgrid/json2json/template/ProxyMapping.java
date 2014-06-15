@@ -19,44 +19,81 @@ import sun.management.MethodInfo;
 
 import java.lang.annotation.*;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Created by shi on 6/15/14.
+ * <p>Define Annotation MappingUnitType and index annotated methods</p>
  */
 public class ProxyMapping {
 
+    /**
+     * Use annotation MappingUnitType to map methods in proxy classes, such CommandProxy and ProcedureProxy.
+     */
     @Retention(RetentionPolicy.RUNTIME)
     @Target({ElementType.METHOD})
     public @interface MappingUnitType {
         TemplateNaming.UnitType mapping ();
     }
 
+    public static final Map<String, List<Method>> Indexes = new LinkedHashMap();
 
-    public static final void main(String [] args) {
-        index(CommandProxy.class);
+
+    static {
+        // index CommandProxy class.
+        index(CommandProxy.class, Indexes);
     }
 
+//    public static final void main(String [] args) {
+//        index(CommandProxy.class, Indexes);
+//    }
 
-    public static void index(Class cls) {
+    public static void index(Class cls, Map<String, List<Method>> indexes) {
         for (Method method : cls.getMethods()) {
-//            System.out.println(method);
+            /** Annotation found**/
             if (method.isAnnotationPresent(MappingUnitType.class)) {
-                System.out.println(method);
-                try {
-                    for (Annotation anno : method.getDeclaredAnnotations()) {
-                        System.out.println("Annotation in Method"
-                                + method + " : " + anno);
+                MappingUnitType unitType = method.getAnnotation(MappingUnitType.class);
+                if (unitType.mapping() != null) {
+                    String name = unitType.mapping().name();
+                    List<Method> methods = indexes.get(name);
+                    if(methods == null) {
+                        methods = new ArrayList<Method>();
                     }
-                    MappingUnitType methodAnno = method.getAnnotation(MappingUnitType.class);
-                    if (methodAnno.mapping() != null) {
-                        System.out.println("Method with mapping "
-                                        + method);
-                    }
-                } catch (Throwable ex) {
-                    ex.printStackTrace();
+                    methods.add(method);
+                    indexes.put(name, methods);
                 }
             }
         }
+    }
 
+    public static List<Method> methodByKeyword (String keyword) {
+        String name = TemplateNaming.nameByKeyword(keyword);
+        return Indexes.get(name);
+    }
+
+    public static List<String> methodnameByKeyword(String keyword) {
+        List<Method> methods = methodByKeyword(keyword);
+        List<String> names = new ArrayList<String>(methods.size());
+        for(Method mtd : methods) {
+            names.add(mtd.getName());
+        }
+        return names;
+    }
+
+
+    public static List<Method> methodBySymbol (String symbol) {
+        String name = TemplateNaming.nameBySymbol(symbol);
+        return Indexes.get(name);
+    }
+
+    public static List<String> methodnameBySymbol(String symbol) {
+        List<Method> methods = methodBySymbol(symbol);
+        List<String> names = new ArrayList<String>(methods.size());
+        for(Method mtd : methods) {
+            names.add(mtd.getName());
+        }
+        return names;
     }
 }
