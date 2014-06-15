@@ -31,6 +31,11 @@ public class JsonPathRefUnit extends JsonUnit {
     int index = -1;
     boolean isPath = false;
 
+
+    protected JsonPathRefUnit(JsonUnit ref) {
+        super(ref);
+    }
+
     public JsonPathRefUnit(Object obj) {
         super(obj);
         if (obj != null && obj instanceof String) {

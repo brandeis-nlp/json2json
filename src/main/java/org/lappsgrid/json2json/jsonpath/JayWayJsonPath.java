@@ -30,6 +30,7 @@ import org.lappsgrid.json2json.jsonpath.JsonPath.IPath;
  * <a href="https://github.com/jayway/JsonPath">JayWay</a>
  */
 public class JayWayJsonPath implements IPath {
+
     public String path(String json, String path) throws Json2JsonException {
         return JsonPath.read(json, path).toString();
     }

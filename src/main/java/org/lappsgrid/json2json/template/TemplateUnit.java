@@ -27,6 +27,10 @@ import java.util.Collection;
 public class TemplateUnit extends JsonUnit{
     TemplateEngine.Engine engine = null;
 
+    protected TemplateUnit(JsonUnit ref) {
+        super(ref);
+    }
+
     public TemplateUnit(Object obj) {
         super(obj);
         engine = TemplateEngine.newEngine();
@@ -61,10 +65,10 @@ public class TemplateUnit extends JsonUnit{
     public Object transform () throws Json2JsonException {
         if(isTemplate()) {
             if ( getTemplateType() == TemplateType.Command) {
-                CommandUnit cu = new CommandUnit(obj);
+                CommandUnit cu = new CommandUnit(this);
                 transformed = cu.transform();
             } else if (getTemplateType()  == TemplateType.Procedure) {
-                ProcedureUnit pu = new ProcedureUnit(obj);
+                ProcedureUnit pu = new ProcedureUnit(this);
                 transformed = pu.transform();
             } else if (getTemplateType()  == TemplateType.Expression){
                 // TODO

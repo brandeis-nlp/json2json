@@ -31,6 +31,13 @@ public class JsonUnit {
     Object transformed = null;
     Map<String, Object> map = null;
 
+    /** reference **/
+    protected JsonUnit(JsonUnit ref) {
+        this.obj = ref.obj;
+        this.map = ref.map;
+        this.jsons = ref.jsons;
+    }
+
     public JsonUnit(Object obj) {
         this.obj = obj;
         map = new LinkedHashMap<String, Object>();
@@ -38,6 +45,7 @@ public class JsonUnit {
 
     public JsonUnit(JsonUnit parent, Object obj){
         this.obj = obj;
+        this.jsons = parent.jsons;
         map = new LinkedHashMap<String, Object>();
         this.map.putAll(parent.map);
     }
@@ -45,12 +53,12 @@ public class JsonUnit {
     public Object transform () throws Json2JsonException {
         if (isJsonPathRef(obj)) {
             /** JsonPath Reference **/
-            JsonPathRefUnit unit = new JsonPathRefUnit(obj);
+            JsonPathRefUnit unit = new JsonPathRefUnit(this);
             transformed = unit.transform();
 
         } else if(isTemplate(obj)) {
             /** Template **/
-            TemplateUnit unit = new TemplateUnit(obj);
+            TemplateUnit unit = new TemplateUnit(this);
             transformed = unit.transform();
         }
         return transformed;

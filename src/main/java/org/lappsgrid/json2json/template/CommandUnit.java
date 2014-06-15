@@ -30,6 +30,10 @@ public class CommandUnit extends TemplateUnit {
         super(obj);
     }
 
+    protected CommandUnit(JsonUnit ref) {
+        super(ref);
+    }
+
     /**
      * Transform JsonArray into Parameter Object Array. In case of components is Template Unit,
      * we will do TemplateUnit.transform.

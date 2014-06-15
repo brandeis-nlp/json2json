@@ -26,6 +26,11 @@ import java.util.Map;
  */
 public class ProcedureUnit extends TemplateUnit{
 
+
+    protected ProcedureUnit(JsonUnit ref) {
+        super(ref);
+    }
+
     public ProcedureUnit(Object obj) {
         super(obj);
     }

@@ -9,7 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * Created by lapps on 6/13/2014.
  */
 public class JsonPath {
-    static int InitialSize = 8;
+    static int InitialSize = 16;
 
     public static interface IPath {
         /**
@@ -69,7 +69,7 @@ public class JsonPath {
 
 
     public static IPath newPath() {
-        //FIXME: change into other JsonPath Implementation
+        // FIXME: change into other JsonPath Implementation
         return new JayWayJsonPath();
     }
 }
