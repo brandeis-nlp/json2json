@@ -15,10 +15,12 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
 
+import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.engine.TemplateEngine;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * Created by shi on 6/15/14.
@@ -34,10 +36,10 @@ public class CommandUnit extends TemplateUnit {
             this.engine = engine;
         }
 
-        public abstract Object transform (String command, Object obj);
+        public abstract Object transform (String command, Object obj) throws Json2JsonException ;
 
         @Override
-        public Object transform(TemplateUnit obj) {
+        public Object transform(TemplateUnit obj) throws Json2JsonException  {
             Object ret = null;
             if(obj.isTemplate()) {
                 ret = transform(obj.unitType(), obj.unitContent());
@@ -46,17 +48,31 @@ public class CommandUnit extends TemplateUnit {
         }
     }
 
+    public static Object [] toArray (JsonProxy.JsonArray jarr) {
+        if (jarr == null) {
+            return null;
+        }
+        Object [] paras = new Object[jarr.length()];
+        for(int i = 0; i < jarr.length(); i ++) {
+            paras[i] = jarr.get(i);
+        }
+        return paras;
+    }
+
 
     public static class SingleParameterTransform extends CommandTransform {
         public SingleParameterTransform(Method method, TemplateEngine.Engine engine) {
             super(method, engine);
         }
 
-        public Object transform (String command, Object obj){
+        public Object transform (String command, Object obj) throws Json2JsonException {
+            List<Method> methods = ProxyMapping.methodByCommand(command);
+            if (methods == null || methods.size() == 0)
+                throw new Json2JsonException("Cannot find proxy mapping for the command: " + command);
 
-            return null;
+            Object[] parameters = new Object[]{obj};
+            return engine.invoke(methods, parameters);
         }
-
     }
 
     public static class MultipleParameterTransform extends CommandTransform {
@@ -64,9 +80,13 @@ public class CommandUnit extends TemplateUnit {
             super(method, engine);
         }
 
-        public Object transform (String command, Object obj){
+        public Object transform (String command, Object obj) throws Json2JsonException {
+            JsonProxy.JsonArray arr = (JsonProxy.JsonArray) obj;
 
-            return null;
+            List<Method> methods = ProxyMapping.methodByCommand(command);
+            if (methods == null || methods.size() == 0)
+                throw new Json2JsonException("Cannot find proxy mapping for the command: " + command);
+            return engine.invoke(methods, toArray(arr));
         }
     }
 

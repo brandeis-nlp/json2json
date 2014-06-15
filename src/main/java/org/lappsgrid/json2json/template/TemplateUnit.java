@@ -15,6 +15,7 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
 
+import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 
 import java.util.Collection;
@@ -26,7 +27,7 @@ public abstract class TemplateUnit {
     JsonObject obj = null;
 
     public static interface Transform {
-        Object transform (TemplateUnit obj);
+        Object transform (TemplateUnit obj) throws Json2JsonException;
     }
 
     public TemplateUnit (JsonObject obj) {

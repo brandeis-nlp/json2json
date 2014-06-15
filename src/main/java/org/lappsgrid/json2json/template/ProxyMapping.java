@@ -75,6 +75,8 @@ public class ProxyMapping {
 
     public static List<String> methodnameByKeyword(String keyword) {
         List<Method> methods = methodByKeyword(keyword);
+        if (methods == null)
+            return null;
         List<String> names = new ArrayList<String>(methods.size());
         for(Method mtd : methods) {
             names.add(mtd.getName());
@@ -90,10 +92,24 @@ public class ProxyMapping {
 
     public static List<String> methodnameBySymbol(String symbol) {
         List<Method> methods = methodBySymbol(symbol);
+        if (methods == null)
+            return null;
         List<String> names = new ArrayList<String>(methods.size());
         for(Method mtd : methods) {
             names.add(mtd.getName());
         }
         return names;
     }
+
+    public static List<Method> methodByCommand(String name) {
+        /** try command as symbol **/
+        List<Method> methods = methodBySymbol(name);
+
+        if (methods == null) {
+            /** try command as keyword **/
+            methods = methodByKeyword(name);
+        }
+        return methods;
+    }
+
 }

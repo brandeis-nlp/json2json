@@ -15,8 +15,12 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.engine;
 
+import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 import org.lappsgrid.json2json.template.TemplateUnit;
+
+import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * <p> Template Engine is executor of TemplateUnit. </p>
@@ -24,6 +28,8 @@ import org.lappsgrid.json2json.template.TemplateUnit;
 public class TemplateEngine {
 
     public static interface Engine {
-        public JsonObject transform (TemplateUnit templateUnit, Object proxy);
+        public Object invoke (Method method, Object[] parameters) throws Json2JsonException;
+        public Object invoke (Method[] method, Object[] parameters) throws Json2JsonException;
+        public Object invoke (List<Method> method, Object[] parameters) throws Json2JsonException;
     }
 }
