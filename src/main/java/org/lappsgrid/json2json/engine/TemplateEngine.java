@@ -28,9 +28,9 @@ import java.util.List;
 public class TemplateEngine {
 
     public static interface Engine {
-        public Object invoke (Method method, Object[] parameters) throws Json2JsonException;
-        public Object invoke (Method[] method, Object[] parameters) throws Json2JsonException;
-        public Object invoke (List<Method> method, Object[] parameters) throws Json2JsonException;
+        public Object invoke (Method method, Object[] params) throws Json2JsonException;
+        public Object invoke (Method[] methods, Object[] params) throws Json2JsonException;
+        public Object invoke (List<Method> methods, Object[] params) throws Json2JsonException;
     }
 
     public static Engine newEngine(){
