@@ -15,35 +15,44 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.engine;
 
+import org.lappsgrid.json2json.Json2Json;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.template.TemplateUnit;
 
+import javax.script.Bindings;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.lang.reflect.Method;
 import java.util.List;
 
 /**
  * Created by shi on 6/14/14.
  */
-public class ScriptEngineTemplateEngine {
+public class ScriptEngineTemplateEngine   extends TemplateEngine.EvalEngine {
 
-    public static class ScriptEngineEngine implements TemplateEngine.Engine {
+    ScriptEngineManager manager = null;
+    ScriptEngine engine = null;
+    Bindings binding = null;
 
-        @Override
-        public Object invoke(Method method, Object[] parameters) throws Json2JsonException {
-            return null;
-        }
-
-        @Override
-        public Object invoke(Method[] method, Object[] parameters) throws Json2JsonException {
-            return null;
-        }
-
-        @Override
-        public Object invoke(List<Method> method, Object[] parameters) throws Json2JsonException {
-            return null;
+    public ScriptEngineTemplateEngine (){
+        manager = new ScriptEngineManager();
+        engine = manager.getEngineByName("java");
+        binding = engine.createBindings();
+    }
+    @Override
+    public Object eval(String s) throws Json2JsonException{
+        try {
+            return engine.eval(s, binding);
+        } catch (ScriptException e) {
+            e.printStackTrace();
+            throw new Json2JsonException("Unsupported eval function", e);
         }
     }
 
-
+    @Override
+    public void bind(String name, Object val) {
+        binding.put(name, val);
+    }
 }
