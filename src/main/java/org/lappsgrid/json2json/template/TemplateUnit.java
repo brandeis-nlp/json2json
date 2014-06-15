@@ -51,7 +51,7 @@ public abstract class TemplateUnit {
         return false;
     }
 
-    public abstract Object transform ();
+    public abstract Object transform () throws Json2JsonException;
 
     public String unitType(){
         return obj.keys().iterator().next();

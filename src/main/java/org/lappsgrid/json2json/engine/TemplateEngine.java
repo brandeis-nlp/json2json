@@ -32,4 +32,8 @@ public class TemplateEngine {
         public Object invoke (Method[] method, Object[] parameters) throws Json2JsonException;
         public Object invoke (List<Method> method, Object[] parameters) throws Json2JsonException;
     }
+
+    public static Engine newEngine(){
+        return null;
+    }
 }

@@ -95,7 +95,7 @@ public class CommandProxy {
         return s.substring(start, end);
     }
 
-    @MappingUnitType(mapping = UnitType.length)
+    @MappingUnitType(mapping = UnitType.length, paramType = ProxyMapping.ParamType.SingleParam)
     public static int length (String s) {
         return s.length();
     }
@@ -222,7 +222,7 @@ public class CommandProxy {
     }
 
 
-    @MappingUnitType(mapping = UnitType.array_length)
+    @MappingUnitType(mapping = UnitType.array_length, paramType = ProxyMapping.ParamType.SingleParam)
     public static int array_size (JsonProxy.JsonArray arr) {
         return arr.length();
     }
@@ -259,7 +259,7 @@ public class CommandProxy {
     }
 
 
-    @MappingUnitType(mapping = UnitType.map_length)
+    @MappingUnitType(mapping = UnitType.map_length, paramType = ProxyMapping.ParamType.SingleParam)
     public static int map_size (JsonProxy.JsonObject obj) {
         return obj.length();
     }

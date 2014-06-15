@@ -27,16 +27,29 @@ import java.util.List;
  */
 public class CommandUnit extends TemplateUnit {
 
-    public static abstract class CommandTransform implements Transform {
-        Method method = null;
+    public static class CommandTransform implements Transform {
         TemplateEngine.Engine engine = null;
 
-        public CommandTransform(Method method, TemplateEngine.Engine engine) {
-            this.method = method;
+        public CommandTransform(TemplateEngine.Engine engine) {
             this.engine = engine;
         }
 
-        public abstract Object transform (String command, Object obj) throws Json2JsonException ;
+        public Object transform (String command, Object obj) throws Json2JsonException {
+            List<Method> methods = ProxyMapping.methodByCommand(command);
+            if (methods == null || methods.size() == 0)
+                throw new Json2JsonException("Cannot find proxy mapping for the command: " + command);
+
+
+            if(ProxyMapping.paramTypeByCommand(command) == ProxyMapping.ParamType.SingleParam) {
+                // Single Parameter Transform
+                Object[] parameters = new Object[]{obj};
+                return engine.invoke(methods, parameters);
+            } else {
+                // Multiple Parameter Transform
+                JsonProxy.JsonArray arr = (JsonProxy.JsonArray) obj;
+                return engine.invoke(methods, toArray(arr));
+            }
+        }
 
         @Override
         public Object transform(TemplateUnit obj) throws Json2JsonException  {
@@ -60,42 +73,55 @@ public class CommandUnit extends TemplateUnit {
     }
 
 
-    public static class SingleParameterTransform extends CommandTransform {
-        public SingleParameterTransform(Method method, TemplateEngine.Engine engine) {
-            super(method, engine);
-        }
+//    public static class SingleParameterTransform extends CommandTransform {
+//        public SingleParameterTransform(TemplateEngine.Engine engine) {
+//            super(engine);
+//        }
+//
+//        public Object transform (String command, Object obj) throws Json2JsonException {
+//            List<Method> methods = ProxyMapping.methodByCommand(command);
+//            if (methods == null || methods.size() == 0)
+//                throw new Json2JsonException("Cannot find proxy mapping for the command: " + command);
+//
+//            Object[] parameters = new Object[]{obj};
+//            return engine.invoke(methods, parameters);
+//        }
+//    }
 
-        public Object transform (String command, Object obj) throws Json2JsonException {
-            List<Method> methods = ProxyMapping.methodByCommand(command);
-            if (methods == null || methods.size() == 0)
-                throw new Json2JsonException("Cannot find proxy mapping for the command: " + command);
-
-            Object[] parameters = new Object[]{obj};
-            return engine.invoke(methods, parameters);
-        }
-    }
-
-    public static class MultipleParameterTransform extends CommandTransform {
-        public MultipleParameterTransform(Method method, TemplateEngine.Engine engine) {
-            super(method, engine);
-        }
-
-        public Object transform (String command, Object obj) throws Json2JsonException {
-            JsonProxy.JsonArray arr = (JsonProxy.JsonArray) obj;
-
-            List<Method> methods = ProxyMapping.methodByCommand(command);
-            if (methods == null || methods.size() == 0)
-                throw new Json2JsonException("Cannot find proxy mapping for the command: " + command);
-            return engine.invoke(methods, toArray(arr));
-        }
-    }
+//    public static class MultipleParameterTransform extends CommandTransform {
+//        public MultipleParameterTransform(TemplateEngine.Engine engine) {
+//            super(engine);
+//        }
+//
+//        public Object transform (String command, Object obj) throws Json2JsonException {
+//            JsonProxy.JsonArray arr = (JsonProxy.JsonArray) obj;
+//
+//            List<Method> methods = ProxyMapping.methodByCommand(command);
+//            if (methods == null || methods.size() == 0)
+//                throw new Json2JsonException("Cannot find proxy mapping for the command: " + command);
+//            return engine.invoke(methods, toArray(arr));
+//        }
+//    }
 
     public CommandUnit(JsonProxy.JsonObject obj) {
         super(obj);
     }
 
+
+    public boolean isSingleParameter() {
+        if (this.unitContent() instanceof JsonProxy.JsonArray) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
-    public Object transform() {
+    public Object transform() throws Json2JsonException {
+        TemplateEngine.Engine engine = TemplateEngine.newEngine();
+        if(super.isTemplate()) {
+            CommandTransform ct = new CommandTransform(engine);
+            return ct.transform(this);
+        }
         return null;
     }
 }

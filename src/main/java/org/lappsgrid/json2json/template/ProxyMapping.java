@@ -14,8 +14,6 @@
  limitations under the License.
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
-import org.lappsgrid.json2json.template.TemplateNaming.UnitType;
-import sun.management.MethodInfo;
 
 import java.lang.annotation.*;
 import java.lang.reflect.Method;
@@ -36,33 +34,42 @@ public class ProxyMapping {
     @Target({ElementType.METHOD})
     public @interface MappingUnitType {
         TemplateNaming.UnitType mapping ();
+        ParamType paramType() default ParamType.ArrayParam;
     }
 
-    public static final Map<String, List<Method>> Indexes = new LinkedHashMap();
+    public static enum ParamType {
+        ArrayParam,
+        SingleParam,
+        ObjectParam
+    }
 
+    public static final Map<String, List<Method>> IndexesOfMethods = new LinkedHashMap<String, List<Method>>();
+
+    public static final Map<String, ParamType> IndexesOfParamType = new LinkedHashMap<String, ParamType>();
 
     static {
         // index CommandProxy class.
-        index(CommandProxy.class, Indexes);
+        index(CommandProxy.class);
     }
 
 //    public static final void main(String [] args) {
-//        index(CommandProxy.class, Indexes);
+//        index(CommandProxy.class, IndexesOfMethods);
 //    }
 
-    public static void index(Class cls, Map<String, List<Method>> indexes) {
+    protected static void index(Class cls) {
         for (Method method : cls.getMethods()) {
             /** Annotation found**/
             if (method.isAnnotationPresent(MappingUnitType.class)) {
                 MappingUnitType unitType = method.getAnnotation(MappingUnitType.class);
                 if (unitType.mapping() != null) {
                     String name = unitType.mapping().name();
-                    List<Method> methods = indexes.get(name);
+                    List<Method> methods = IndexesOfMethods.get(name);
                     if(methods == null) {
                         methods = new ArrayList<Method>();
                     }
                     methods.add(method);
-                    indexes.put(name, methods);
+                    IndexesOfMethods.put(name, methods);
+                    IndexesOfParamType.put(name, unitType.paramType());
                 }
             }
         }
@@ -70,7 +77,7 @@ public class ProxyMapping {
 
     public static List<Method> methodByKeyword (String keyword) {
         String name = TemplateNaming.nameByKeyword(keyword);
-        return Indexes.get(name);
+        return IndexesOfMethods.get(name);
     }
 
     public static List<String> methodnameByKeyword(String keyword) {
@@ -87,7 +94,7 @@ public class ProxyMapping {
 
     public static List<Method> methodBySymbol (String symbol) {
         String name = TemplateNaming.nameBySymbol(symbol);
-        return Indexes.get(name);
+        return IndexesOfMethods.get(name);
     }
 
     public static List<String> methodnameBySymbol(String symbol) {
@@ -101,15 +108,25 @@ public class ProxyMapping {
         return names;
     }
 
-    public static List<Method> methodByCommand(String name) {
+    public static List<Method> methodByCommand(String command) {
         /** try command as symbol **/
-        List<Method> methods = methodBySymbol(name);
+        List<Method> methods = methodBySymbol(command);
 
         if (methods == null) {
             /** try command as keyword **/
-            methods = methodByKeyword(name);
+            methods = methodByKeyword(command);
         }
         return methods;
     }
 
+    public static ParamType paramTypeByCommand(String command) {
+        /** try command as symbol **/
+        String name = TemplateNaming.nameBySymbol(command);
+
+        if (name == null) {
+            /** try command as keyword **/
+            name = TemplateNaming.nameByKeyword(command);
+        }
+        return IndexesOfParamType.get(name);
+    }
 }
