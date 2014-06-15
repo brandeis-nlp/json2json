@@ -25,6 +25,10 @@ import java.util.Collection;
 public abstract class TemplateUnit {
     JsonObject obj = null;
 
+    public static interface Transform {
+        Object transform (TemplateUnit obj);
+    }
+
     public TemplateUnit (JsonObject obj) {
         this.obj = obj;
     }
@@ -35,10 +39,10 @@ public abstract class TemplateUnit {
 
             /** Only 1 key is allowed in the TemplateUnit, and the key must be a symbol or keyword 　**/
             if (keys.size() == 1) {
-                String key = keys.iterator().next();
+                String type = unitType ();
                 // if find it in the symbols or keywords
-                if (TemplateNaming.hasSymbol(key) ||
-                        TemplateNaming.hasKeyword(key)) {
+                if (TemplateNaming.hasSymbol(type) ||
+                        TemplateNaming.hasKeyword(type)) {
                     return true;
                 }
             }
@@ -47,4 +51,12 @@ public abstract class TemplateUnit {
     }
 
     public abstract Object transform ();
+
+    public String unitType(){
+        return obj.keys().iterator().next();
+    }
+
+    public Object unitContent() {
+        return obj.get(unitType());
+    }
 }

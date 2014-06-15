@@ -15,12 +15,60 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
 
+import org.lappsgrid.json2json.engine.TemplateEngine;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
+
+import java.lang.reflect.Method;
 
 /**
  * Created by shi on 6/15/14.
  */
 public class CommandUnit extends TemplateUnit {
+
+    public static abstract class CommandTransform implements Transform {
+        Method method = null;
+        TemplateEngine.Engine engine = null;
+
+        public CommandTransform(Method method, TemplateEngine.Engine engine) {
+            this.method = method;
+            this.engine = engine;
+        }
+
+        public abstract Object transform (String command, Object obj);
+
+        @Override
+        public Object transform(TemplateUnit obj) {
+            Object ret = null;
+            if(obj.isTemplate()) {
+                ret = transform(obj.unitType(), obj.unitContent());
+            }
+            return ret;
+        }
+    }
+
+
+    public static class SingleParameterTransform extends CommandTransform {
+        public SingleParameterTransform(Method method, TemplateEngine.Engine engine) {
+            super(method, engine);
+        }
+
+        public Object transform (String command, Object obj){
+
+            return null;
+        }
+
+    }
+
+    public static class MultipleParameterTransform extends CommandTransform {
+        public MultipleParameterTransform(Method method, TemplateEngine.Engine engine) {
+            super(method, engine);
+        }
+
+        public Object transform (String command, Object obj){
+
+            return null;
+        }
+    }
 
     public CommandUnit(JsonProxy.JsonObject obj) {
         super(obj);

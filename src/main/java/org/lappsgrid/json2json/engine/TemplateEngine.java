@@ -24,6 +24,6 @@ import org.lappsgrid.json2json.template.TemplateUnit;
 public class TemplateEngine {
 
     public static interface Engine {
-        public JsonObject invoke (TemplateUnit templateUnit, Object proxy);
+        public JsonObject transform (TemplateUnit templateUnit, Object proxy);
     }
 }
