@@ -16,6 +16,7 @@
 package org.lappsgrid.json2json.template;
 
 import org.lappsgrid.json2json.Json2JsonException;
+import org.lappsgrid.json2json.Template;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
 import java.util.LinkedHashMap;
@@ -62,6 +63,9 @@ public class JsonUnit {
             /** Template **/
             TemplateUnit unit = new TemplateUnit(this);
             transformed = unit.transform();
+        } else if(isVariable(obj)) {
+            /** Variable **/
+            transformed = map.get(ProcedureUnit.getVarName((String)obj));
         }
         return transformed;
     }
@@ -88,5 +92,14 @@ public class JsonUnit {
 
     public static boolean isTemplate(Object obj) {
         return new TemplateUnit(obj).isTemplate();
+    }
+
+    public static boolean isVariable(Object obj) {
+        if(obj instanceof String) {
+            if(((String) obj).trim().startsWith(TemplateNaming.VariableMark)){
+                return true;
+            }
+        }
+        return false;
     }
 }

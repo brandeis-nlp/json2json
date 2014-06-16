@@ -16,7 +16,6 @@
 package org.lappsgrid.json2json.template;
 
 import org.lappsgrid.json2json.Json2JsonException;
-import org.lappsgrid.json2json.Template;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
 import java.util.Map;
@@ -24,8 +23,12 @@ import java.util.Map;
 /**
  * Created by shi on 6/15/14.
  */
-public class ProcedureUnit extends TemplateUnit{
+public class ProcedureUnit extends TemplateUnit {
 
+    /**  generate from parent.  **/
+    public ProcedureUnit(JsonUnit parent, Object obj){
+        super(parent, obj);
+    }
 
     protected ProcedureUnit(JsonUnit ref) {
         super(ref);
@@ -38,7 +41,10 @@ public class ProcedureUnit extends TemplateUnit{
     public static class StepsUnit extends JsonUnit {
         StepUnit [] steps = null;
         boolean isSteps = false;
-
+        public StepsUnit(Object obj) {
+            super(obj);
+            init();
+        }
         public StepsUnit(JsonUnit parent, Object obj) {
             super(parent, obj);
             init();
@@ -71,6 +77,14 @@ public class ProcedureUnit extends TemplateUnit{
             }
             return null;
         }
+    }
+
+    public static boolean isStepUnit(Object obj) {
+        return new StepUnit(obj).isStepUnit();
+    }
+
+    public static boolean isStepsUnit(Object obj) {
+        return new StepsUnit(obj).isStepsUnit();
     }
 
     public static class StepUnit extends JsonUnit {
@@ -148,17 +162,6 @@ public class ProcedureUnit extends TemplateUnit{
             return null;
         }
 
-//        public static  Map<String, Object> init (JsonProxy.JsonObject jobj, Map<String, Object> map) throws Json2JsonException {
-//            for(String key : jobj.keys()) {
-//                Object val = jobj.get(key);
-//                /** In case of Template Unit, we will do Template.transform **/
-//                val = new JsonUnit(val).transform();
-//                String vname = getVarName(key);
-//                map.put(vname, val);
-//            }
-//            return map;
-//        }
-
         public static boolean isVarDef(String vname) {
             if(vname != null && vname.trim().startsWith(TemplateNaming.ProcedureInitMark)) {
                 return true;
@@ -174,8 +177,16 @@ public class ProcedureUnit extends TemplateUnit{
 
     }
 
-    public static class Step {
+    protected static String getVarName(String vname){
+        return vname.trim().substring(TemplateNaming.VariableMark.length());
+    }
 
+    protected Object getObject(JsonProxy.JsonObject procObj, TemplateNaming.UnitType type) {
+        Object obj = procObj.get(TemplateNaming.symbolByName(type.name()));
+        if(obj == null) {
+            obj = procObj.get(TemplateNaming.keywordByName(type.name()));
+        }
+        return obj;
     }
 
 
@@ -197,8 +208,10 @@ public class ProcedureUnit extends TemplateUnit{
 //    }
 
 
+
     @Override
-    public Object transform() {
+    public Object transform() throws Json2JsonException{
+
 
         return null;
     }

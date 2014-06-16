@@ -25,7 +25,7 @@ import java.util.Collection;
  * <p> TemplateUnit is the class to recognize Commands and Process </p>
  */
 public class TemplateUnit extends JsonUnit{
-    TemplateEngine.Engine engine = null;
+    TemplateEngine.EvalEngine engine = null;
 
     protected TemplateUnit(JsonUnit ref) {
         super(ref);

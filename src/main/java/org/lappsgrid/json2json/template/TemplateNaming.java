@@ -23,7 +23,7 @@ import java.util.*;
 public class TemplateNaming {
 
     public static final int Category = 0;
-    public static final int Category_Symbol = 1;
+    public static final int CategorySymbol = 1;
     public static final int Symbol = 2;
     public static final int KeyWord = 3;
     public static final int Name = 4;
@@ -33,6 +33,9 @@ public class TemplateNaming {
     public static final String ProcedureInitMark = "%!";
     public static final String JsonPathReference = "&";
     public static final String VariableMark = "%";
+
+    public static final String DefaultForEachIterator = "e";
+    public static final String DefaultForEachIndex = "i";
 
     public enum UnitType {
         /** json path operation**/
@@ -68,7 +71,7 @@ public class TemplateNaming {
 
         /** process operation **/
         default_process,
-        if_process,
+        if_then_else_process,
         for_each_process,
         do_while_process,
 
@@ -78,11 +81,11 @@ public class TemplateNaming {
         return_of_process,
 
         /** if process operation **/
-        definitions_of_if_process,
-        expression_of_if_process,
-        then_step_of_if_process,
-        else_step_of_if_process,
-        return_of_if_process,
+        definitions_of_if_then_else_process,
+        expression_of_if_then_else_process,
+        then_step_of_if_then_else_process,
+        else_step_of_if_then_else_process,
+        return_of_if_then_else_process,
 
         /** for process operation **/
         definitions_of_for_each_process,
@@ -147,7 +150,7 @@ public class TemplateNaming {
 
             /** process operation **/
             new String []{"process", "%!", "+", "proc", UnitType.default_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process", "%!", "?", "if", UnitType.if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process", "%!", "?", "if", UnitType.if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
             new String []{"process", "%!", "*", "for", UnitType.for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
             new String []{"process", "%!", "_", "while", UnitType.do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
@@ -157,11 +160,11 @@ public class TemplateNaming {
             new String []{"process-proc", "%", "#", "ret", UnitType.return_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** if process operation **/
-            new String []{"process-if", "%", "$", "def", UnitType.definitions_of_if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-if", "%", "<>", "expr", UnitType.expression_of_if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-if", "%", "then", "then", UnitType.then_step_of_if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-if", "%", "else", "else", UnitType.else_step_of_if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-if", "%", "#", "ret", UnitType.return_of_if_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if-then-else", "%", "$", "def", UnitType.definitions_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if-then-else", "%", "<>", "expr", UnitType.expression_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if-then-else", "%", "then", "then", UnitType.then_step_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if-then-else", "%", "else", "else", UnitType.else_step_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if-then-else", "%", "#", "ret", UnitType.return_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** for process operation **/
             new String []{"process-for-each", "%", "$", "def", UnitType.definitions_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
@@ -200,7 +203,7 @@ public class TemplateNaming {
                 String indexKey = naming[i];
                 if (i == Symbol) {
                     /** update symbol as Category symbol concatenated with individual Symbol. **/
-                    indexKey = naming[Category_Symbol] + indexKey;
+                    indexKey = naming[CategorySymbol] + indexKey;
                 }
                 if(!Indexes[i].containsKey(indexKey)){
                     Indexes[i].put(indexKey, naming);
@@ -222,16 +225,16 @@ public class TemplateNaming {
     }
 
     public static boolean hasSymbol(String symbol) {
-        return Indexes[Symbol].containsKey(symbol);
+        return Indexes[Symbol].containsKey(symbol.toLowerCase());
     }
 
     public static boolean hasKeyword(String keyword) {
-        return Indexes[KeyWord].containsKey(keyword);
+        return Indexes[KeyWord].containsKey(keyword.toLowerCase());
     }
 
 
     public static String nameBySymbol (String symbol) {
-        String[] naming =   Indexes[Symbol].get(symbol);
+        String[] naming =   Indexes[Symbol].get(symbol.toLowerCase());
         String name = null;
         if (naming != null)  {
             name = naming[Name];
@@ -240,7 +243,7 @@ public class TemplateNaming {
     }
 
     public static String nameByKeyword (String keyword) {
-        String[] naming =   Indexes[KeyWord].get(keyword);
+        String[] naming =   Indexes[KeyWord].get(keyword.toLowerCase());
         String name = null;
         if (naming != null)  {
             name = naming[Name];
@@ -249,7 +252,7 @@ public class TemplateNaming {
     }
 
     public static String symbolByName (String name) {
-        String[] naming =   Indexes[Name].get(name);
+        String[] naming =   Indexes[Name].get(name.toLowerCase());
         String symbol = null;
         if (naming != null)  {
             symbol = naming[Symbol];
@@ -258,7 +261,7 @@ public class TemplateNaming {
     }
 
     public static String keywordByName (String name) {
-        String[] naming =   Indexes[Name].get(name);
+        String[] naming =   Indexes[Name].get(name.toLowerCase());
         String keyword = null;
         if (naming != null)  {
             keyword = naming[KeyWord];
@@ -268,7 +271,7 @@ public class TemplateNaming {
 
 
     public static String symbolByKeyWord (String keyword) {
-        String[] naming =   Indexes[KeyWord].get(keyword);
+        String[] naming =   Indexes[KeyWord].get(keyword.toLowerCase());
         String symbol = null;
         if (naming != null)  {
             symbol = naming[Symbol];
@@ -278,7 +281,7 @@ public class TemplateNaming {
 
 
     public static String keywordBySymbol (String symbol) {
-        String[] naming =   Indexes[Symbol].get(symbol);
+        String[] naming =   Indexes[Symbol].get(symbol.toLowerCase());
         String keyword = null;
         if (naming != null)  {
             keyword = naming[KeyWord];
@@ -288,7 +291,7 @@ public class TemplateNaming {
 
     public static String templateTypeBySymbol(String symbol) {
         String ttype = null;
-        String[] naming =   Indexes[Symbol].get(symbol);
+        String[] naming =   Indexes[Symbol].get(symbol.toLowerCase());
         if (naming != null)  {
             ttype = naming[TemplateType];
         }
@@ -297,7 +300,7 @@ public class TemplateNaming {
 
     public static String templateTypeByKeyWord(String keyword) {
         String ttype = null;
-        String[] naming =   Indexes[KeyWord].get(keyword);
+        String[] naming =   Indexes[KeyWord].get(keyword.toLowerCase());
         if (naming != null)  {
             ttype = naming[TemplateType];
         }
@@ -305,9 +308,9 @@ public class TemplateNaming {
     }
 
     public static TemplateUnit.TemplateType templateTypeByCommand(String command) {
-        String ttype = templateTypeBySymbol(command);
+        String ttype = templateTypeBySymbol(command.toLowerCase());
         if(ttype == null) {
-            ttype = templateTypeByKeyWord(command);
+            ttype = templateTypeByKeyWord(command.toLowerCase());
         }
         if(ttype != null) {
             return TemplateUnit.TemplateType.valueOf(ttype);

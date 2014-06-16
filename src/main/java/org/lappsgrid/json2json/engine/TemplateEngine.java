@@ -96,7 +96,7 @@ public class TemplateEngine {
 
     }
 
-    public static Engine newEngine(){
+    public static EvalEngine newEngine(){
         // FIXME:  exchange other engine
         return new GroovyTemplateEngine();
     }
