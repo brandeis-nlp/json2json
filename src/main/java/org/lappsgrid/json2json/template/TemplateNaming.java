@@ -304,7 +304,6 @@ public class TemplateNaming {
     public static String templateTypeBySymbol(String symbol) {
         String ttype = null;
         String[] naming =   Indexes[Symbol].get(symbol.toLowerCase());
-        System.out.println(Arrays.toString(naming));
         if (naming != null)  {
             ttype = naming[TemplateType];
         }

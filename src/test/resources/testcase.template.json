@@ -76,5 +76,41 @@
                                       }
                      }  ,
 
-    "hello_world": { "json2json" : {"%|": ["&$.json", " "]}}
+    "hello_world": { "json2json" : {"%|": ["&$.json", " "]}},
+
+    "CD_list" : {
+                  "html": {
+                    "-xmlns:bar": "http://www.bar.org",
+                    "-xmlns:foo": "http://www.foo.org/",
+                    "body": {
+                      "h2": "My CD Collection",
+                      "table": {
+                        "-border": "1",
+                        "tr": { "%!FOR"  : {
+                                 "%$"    : {"%!arr":[ { "-bgcolor": "#9acd32",
+                                                    "th": [
+                                                      "Title",
+                                                      "Artist",
+                                                      "Country",
+                                                      "Company",
+                                                      "Price",
+                                                      "Year" ]
+                                                  } ]
+                                          },
+                                "%[]"   : ["&$.catalog.foo:cd", "%i", "%e"],
+                                "%EACH" : {"%arr": {"%]+": ["%arr", {"td": [
+                                                                        {"%&":["%e", "$.title"]} ,
+                                                                        {"%&":["%e", "$.artist"]},
+                                                                        {"%&":["%e", "$.country"]},
+                                                                        {"%&":["%e", "$.company"]},
+                                                                        {"%&":["%e", "$.price"]},
+                                                                        {"%&":["%e", "$.bar:year"]}
+                                                                       ]}]}},
+                               "%#"    : "%arr"
+                              }
+                        }
+                      }
+                    }
+                  }
+                }
 }

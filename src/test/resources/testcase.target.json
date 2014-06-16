@@ -35,5 +35,62 @@
     "do_while" : { "duplicated" : "go!go!go!go!" },
     "do_while_alt" : { "duplicated" : "go!go!go!go!" },
 
-    "hello_world": { "json2json" : ["hello", "world"] }
+    "hello_world": { "json2json" : ["hello", "world"] },
+
+
+    "CD_list" : {
+                  "html": {
+                    "-xmlns:bar": "http://www.bar.org",
+                    "-xmlns:foo": "http://www.foo.org/",
+                    "body": {
+                      "h2": "My CD Collection",
+                      "table": {
+                        "-border": "1",
+                        "tr": [
+                          {
+                            "-bgcolor": "#9acd32",
+                            "th": [
+                              "Title",
+                              "Artist",
+                              "Country",
+                              "Company",
+                              "Price",
+                              "Year"
+                            ]
+                          },
+                          {
+                            "td": [
+                              "Empire Burlesque",
+                              "Bob Dylan",
+                              "USA",
+                              "Columbia",
+                              "10.90",
+                              "1985"
+                            ]
+                          },
+                          {
+                            "td": [
+                              "Hide your heart",
+                              "Bonnie Tyler",
+                              "UK",
+                              "CBS Records",
+                              "9.90",
+                              "1988"
+                            ]
+                          },
+                          {
+                            "td": [
+                              "Greatest Hits",
+                              "Dolly Parton",
+                              "USA",
+                              "RCA",
+                              "9.90",
+                              "1982"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
 }
