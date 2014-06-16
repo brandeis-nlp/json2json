@@ -78,7 +78,8 @@ public class TemplateUnit extends JsonUnit{
                 ProcedureUnit pu = new ProcedureUnit(this);
                 transformed = pu.transform();
             } else if (getTemplateType()  == TemplateType.Expression){
-                // TODO
+                ExpressionUnit eu = new ExpressionUnit(this);
+                transformed = eu.transform();
             }
         }
         return transformed;

@@ -50,6 +50,7 @@ public class JsonUnit {
     public JsonUnit(JsonUnit parent, Object obj){
         this(obj);
         this.jsons = parent.jsons;
+        /** variable saving **/
         this.map.putAll(parent.map);
     }
 
@@ -64,7 +65,7 @@ public class JsonUnit {
             TemplateUnit unit = new TemplateUnit(this);
             transformed = unit.transform();
         } else if(isVariable(obj)) {
-            /** Variable **/
+            /** Variable is loaded from map **/
             transformed = map.get(ProcedureUnit.getVarName((String)obj));
         }
         return transformed;

@@ -189,30 +189,26 @@ public class ProcedureUnit extends TemplateUnit {
         return obj;
     }
 
-
-//
-//
-//    public static class ProcedureTransform implements Transform {
-//
-//
-//        public Object transform (String command, Object obj, Map<String, Object> map) throws Json2JsonException {
-//            return null;
-//        }
-//
-//        @Override
-//        public Object transform(TemplateUnit obj) throws Json2JsonException {
-//
-//
-//            return null;
-//        }
-//    }
-
-
-
     @Override
     public Object transform() throws Json2JsonException{
+        if(isIfThenElse(obj)) {
+            transformed = new IfThenElseUnit(this).transform();
+        } else if(isForEach(obj)) {
+            transformed = new ForEachUnit(this).transform();
+        } else if(isDoWhile(obj)) {
+            transformed = new DoWhileUnit(this).transform();
+        }
+        return transformed;
+    }
 
+    public static boolean isIfThenElse(Object obj) {
+        return new IfThenElseUnit(obj).isIfThenElse();
+    }
 
-        return null;
+    public static boolean isForEach(Object obj) {
+        return new ForEachUnit(obj).isForEach();
+    }
+    public static boolean isDoWhile(Object obj) {
+        return new DoWhileUnit(obj).isDoWhile();
     }
 }
