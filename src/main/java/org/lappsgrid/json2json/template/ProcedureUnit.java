@@ -48,15 +48,12 @@ public class ProcedureUnit extends TemplateUnit{
             return isSteps;
         }
 
-
         protected void init() {
             if(obj != null && obj instanceof JsonProxy.JsonArray) {
                 JsonProxy.JsonArray jobj = (JsonProxy.JsonArray) obj;
-                steps = new StepUnit[jobj.length()];
                 isSteps = true;
                 for(int i = 0; i < jobj.length(); i ++) {
-                    steps[i] = new StepUnit(jobj.get(i));
-                    isSteps = isSteps && steps[i].isStepUnit();
+                    isSteps = isSteps && new StepUnit(jobj.get(i)).isStepUnit();
                 }
             }
         }
@@ -75,8 +72,6 @@ public class ProcedureUnit extends TemplateUnit{
             return null;
         }
     }
-
-
 
     public static class StepUnit extends JsonUnit {
         String varName = null;
