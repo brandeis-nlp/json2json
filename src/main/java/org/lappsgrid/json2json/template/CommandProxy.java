@@ -17,7 +17,6 @@
 package org.lappsgrid.json2json.template;
 
 import com.eclipsesource.json.JsonObject;
-import edu.cs.brandeis.edu.json2json.Json2Json;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
@@ -26,6 +25,7 @@ import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.lappsgrid.json2json.jsonpath.JsonPath;
 import org.lappsgrid.json2json.template.TemplateNaming.UnitType;
 import org.lappsgrid.json2json.template.ProxyMapping.MappingUnitType;
 /**
@@ -158,7 +158,7 @@ public class CommandProxy {
     @MappingUnitType(mapping = UnitType.jsonpath)
     public static String jsonpath(JsonProxy.JsonObject json, String jsonpath) {
         try {
-            return Json2Json.path(json.toString(), jsonpath);
+            return JsonPath.path(json.toString(), jsonpath);
         } catch (Json2JsonException e) {
             throw new RuntimeException(e);
         }
@@ -167,7 +167,7 @@ public class CommandProxy {
     @MappingUnitType(mapping = UnitType.jsonpath)
     public static String jsonpath(String json, String jsonpath) {
         try {
-            return Json2Json.path(json, jsonpath);
+            return JsonPath.path(json, jsonpath);
         } catch (Json2JsonException e) {
             throw new RuntimeException(e);
         }
@@ -176,7 +176,7 @@ public class CommandProxy {
     @MappingUnitType(mapping = UnitType.jsonpath)
     public static Object jsonpath(JsonObject json, String jsonpath) {
         try {
-            return Json2Json.path(json, jsonpath);
+            return JsonPath.path(json, jsonpath);
         } catch (Json2JsonException e) {
             throw new RuntimeException(e);
         }

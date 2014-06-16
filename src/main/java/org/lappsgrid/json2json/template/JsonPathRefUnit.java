@@ -15,9 +15,10 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
 
-import edu.cs.brandeis.edu.json2json.Json2Json;
+
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.lappsgrid.json2json.jsonpath.JsonPath;
 
 /**
  * Created by shi on 6/15/14.
@@ -61,7 +62,7 @@ public class JsonPathRefUnit extends JsonUnit {
 
     public Object transform () throws Json2JsonException {
         if(isJsonPathRef()) {
-            String ret =  Json2Json.path(jsons.get(index), path).trim();
+            String ret =  JsonPath.path(jsons.get(index), path).trim();
             transformed = JsonProxy.str2json(ret);
         }
         return transformed;

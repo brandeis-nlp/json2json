@@ -15,7 +15,6 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json;
 
-import edu.cs.brandeis.edu.json2json.Template;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.jsonpath.JsonPath;
 import org.lappsgrid.json2json.template.JsonTemplate;
