@@ -19,6 +19,7 @@ import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.Template;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,8 +68,35 @@ public class JsonUnit {
         } else if(isVariable(obj)) {
             /** Variable is loaded from map **/
             transformed = map.get(ProcedureUnit.getVarName((String)obj));
+        } else if(obj instanceof JsonProxy.JsonObject) {
+            JsonProxy.JsonObject trans = JsonProxy.newObject();
+            for(String key : ((JsonProxy.JsonObject) obj).keys()) {
+                trans.put(key, new JsonUnit(this, obj).transform());
+            }
+            transformed = trans;
+        } else if(obj instanceof JsonProxy.JsonArray) {
+            JsonProxy.JsonArray trans = JsonProxy.newArray();
+            for(int i = 0; i < ((JsonProxy.JsonArray) obj).length(); i ++) {
+                trans.add(new JsonUnit(this, obj).transform());
+            }
+            transformed = trans;
         }
         return transformed;
+    }
+
+    public JsonUnit setJsons(String ... jsons) {
+        this.jsons = new ArrayList<String>(jsons.length);
+        for(String json:jsons)
+            this.jsons.add(json);
+        return this;
+    }
+
+
+    public JsonUnit setJsons(List<String> jsons) {
+        this.jsons = new ArrayList<String>(jsons.size());
+        for(String json:jsons)
+            this.jsons.add(json);
+        return this;
     }
 
     public JsonUnit childUnit(Object obj) {
