@@ -1,0 +1,28 @@
+{
+
+    "jsonpath": "1",
+    "concatenation": "helloworld",
+    "split": ["hello", "world"],
+    "join": "hello.world",
+    "index": 0,
+    "substring": "hello",
+    "length": 11,
+    "replacement": "hello world",
+    "match_by_regular_expression": ["hello", "world"],
+    "replacement_by_regular_expression": "h-lo.wo-d",
+    "split_by_regular_expression": ["h", "lo.wo", "d"],
+    "array_add": ["hello","world", "!"],
+    "array_set": ["hi","world"],
+    "array_remove": ["world"],
+    "array_get": "hello",
+    "array_sub": ["hello"],
+    "array_index": 0,
+    "array_length": 2,
+    "map_put": {"hello": "world"},
+    "map_get": "world",
+    "map_remove": {},
+    "map_length": 1,
+    "map_keys": ["hello"]
+
+
+}

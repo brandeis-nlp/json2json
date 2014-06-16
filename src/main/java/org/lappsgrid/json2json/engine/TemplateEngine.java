@@ -33,13 +33,12 @@ public class TemplateEngine {
         public Object invoke (Method method, Object[] params) throws Json2JsonException;
         public Object invoke (Method[] methods, Object[] params) throws Json2JsonException;
         public Object invoke (List<Method> methods, Object[] params) throws Json2JsonException;
+        public Object eval(String s) throws Json2JsonException;
+        public void bind(String name, Object val);
     }
 
 
     public static abstract class EvalEngine implements Engine {
-        public abstract Object eval(String s) throws Json2JsonException;
-        public abstract void bind(String name, Object val);
-
         @Override
         public Object invoke(Method method, Object[] params) throws Json2JsonException {
             Object obj = null;

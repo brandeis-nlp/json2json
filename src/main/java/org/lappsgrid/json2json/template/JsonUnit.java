@@ -18,6 +18,8 @@ package org.lappsgrid.json2json.template;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.Template;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -28,6 +30,7 @@ import java.util.Map;
  * Created by shi on 6/15/14.
  */
 public class JsonUnit {
+    Logger logger = LoggerFactory.getLogger(JsonUnit.class);
     List<String> jsons = null;
     Object obj = null;
     Object transformed = null;
@@ -71,13 +74,13 @@ public class JsonUnit {
         } else if(obj instanceof JsonProxy.JsonObject) {
             JsonProxy.JsonObject trans = JsonProxy.newObject();
             for(String key : ((JsonProxy.JsonObject) obj).keys()) {
-                trans.put(key, new JsonUnit(this, obj).transform());
+                trans.put(key, new JsonUnit(this, ((JsonProxy.JsonObject) obj).get(key)).transform());
             }
             transformed = trans;
         } else if(obj instanceof JsonProxy.JsonArray) {
             JsonProxy.JsonArray trans = JsonProxy.newArray();
             for(int i = 0; i < ((JsonProxy.JsonArray) obj).length(); i ++) {
-                trans.add(new JsonUnit(this, obj).transform());
+                trans.add(new JsonUnit(this, ((JsonProxy.JsonArray) obj).get(i)).transform());
             }
             transformed = trans;
         }

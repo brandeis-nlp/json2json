@@ -194,12 +194,10 @@ public class TemplateNaming {
 
     static {
         /** if index is group information, all the Names in this group will be put in the Indexes **/
-        final Map<String, List<String>> GroupHelper = new LinkedHashMap<String, List<String>>();
-
         for(int i = 0; i < NamingLength; i ++) {
             Indexes[i] = new LinkedHashMap<String, String[]>();
+            Map<String, List<String>> GroupHelper = new LinkedHashMap<String, List<String>>();
             for(String [] naming: Namings) {
-
                 String indexKey = naming[i];
                 if (i == Symbol) {
                     /** update symbol as Category symbol concatenated with individual Symbol. **/
@@ -212,13 +210,11 @@ public class TemplateNaming {
                     if(groupNamings == null) {
                         groupNamings = new ArrayList<String>();
                         groupNamings.add(Indexes[i].get(indexKey)[Name]);
-                        GroupHelper.put(indexKey, groupNamings);
-                    } else {
-                        groupNamings.add(Indexes[i].get(indexKey)[Name]);
-                        GroupHelper.put(indexKey, groupNamings);
-                        /** all the namings in this group will be indexed. **/
-                        Indexes[i].put(indexKey, groupNamings.toArray(new String[groupNamings.size()]));
                     }
+                    groupNamings.add(naming[Name]);
+                    GroupHelper.put(indexKey, groupNamings);
+                    /** all the namings in this group will be indexed. **/
+                    Indexes[i].put(indexKey, groupNamings.toArray(new String[groupNamings.size()]));
                 }
             }
         }
