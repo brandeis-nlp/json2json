@@ -6,9 +6,20 @@
     <artifactId>json2json</artifactId>
     <version>0.2.0-SNAPSHOT</version>
 
-    <name>Json2Json: Template Based Json Transform</name>
-    <description />
+    <name>Json2Json: JsonPath Based Json Transform</name>
+    <description>
+        Json2Json is Json transformation Java library, which use template transformation design.
+    </description>
     <packaging>jar</packaging>
+
+    <url>http://chunqishi.github.io/json2json</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <issueManagement>
         <url>https://github.com/chunqishi/json2json/issues</url>
@@ -20,20 +31,10 @@
         <developerConnection>scm:git:https://github.com/chunqishi/json2json.git</developerConnection>
         <tag>v0.1</tag>
     </scm>
-    <distributionManagement>
-        <repository>
-            <id>anc-releases</id>
-            <url>http://www.anc.org:8080/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>anc-snapshots</id>
-            <url>http://www.anc.org:8080/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <developers>
         <developer>
-            <email>shicq@cs.brandeis.edu</email>
+            <email>chunqi.shi@hotmail.com</email>
             <name>Chunqi SHI</name>
             <url>https://github.com/chunqishi/</url>
             <id>chunqishi</id>
