@@ -172,7 +172,6 @@ public class TemplateNaming {
             new String []{"process-for-each", "%", "each", "each", UnitType.each_step_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
             new String []{"process-for-each", "%", "#", "ret", UnitType.return_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
-
             /** while process operation **/
             new String []{"process-do-while", "%", "$", "def", UnitType.definitions_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
             new String []{"process-do-while", "%", "<>", "expr", UnitType.expression_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
@@ -288,6 +287,7 @@ public class TemplateNaming {
     public static String templateTypeBySymbol(String symbol) {
         String ttype = null;
         String[] naming =   Indexes[Symbol].get(symbol.toLowerCase());
+        System.out.println(Arrays.toString(naming));
         if (naming != null)  {
             ttype = naming[TemplateType];
         }

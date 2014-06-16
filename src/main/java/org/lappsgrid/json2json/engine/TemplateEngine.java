@@ -42,11 +42,12 @@ public class TemplateEngine {
         @Override
         public Object invoke(Method method, Object[] params) throws Json2JsonException {
             Object obj = null;
+            Class<?> cls = null;
             try {
-                obj = method.getClass().newInstance();
+                cls = method.getDeclaringClass();
+                obj = cls.newInstance();
             } catch (Exception e) {
-                e.printStackTrace();
-                throw new Json2JsonException("Failure in creating default instance.");
+                throw new Json2JsonException("Failure in creating default instance ( " + cls + " ).", e);
             }
             long id = System.currentTimeMillis();
             StringBuilder  sb = new StringBuilder("__v__" + id);

@@ -46,17 +46,16 @@ public class JsonPathRefUnit extends JsonUnit {
             String fullpath = ((String)obj).trim();
             if(fullpath.startsWith(TemplateNaming.JsonPathReference) && fullpath.contains("$.")) {
                 isPath = true;
+                int pathBegin = fullpath.indexOf("$.");
+                if (pathBegin > 0) {
+                    // default put "0"
+                    index = 0;
+                    // other sequence "1"
+                    if (pathBegin > 1)
+                        index = Integer.parseInt(fullpath.substring(1, pathBegin));
+                }
+                path = fullpath.substring(pathBegin);
             }
-
-            int pathBegin = fullpath.indexOf("$.");
-            if (pathBegin > 0) {
-                // default put "0"
-                index = 0;
-                // other sequence "1"
-                if (pathBegin > 1)
-                    index = Integer.parseInt(fullpath.substring(1, pathBegin));
-            }
-            path = fullpath.substring(pathBegin);
         }
     }
 
