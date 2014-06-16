@@ -16,12 +16,14 @@
 
 package org.lappsgrid.json2json.template;
 
+import com.eclipsesource.json.JsonObject;
 import org.lappsgrid.json2json.Json2Json;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +41,7 @@ public class CommandProxy {
 
 
     @MappingUnitType(mapping = UnitType.split)
-    public static String split(String s, String sep) {
+    public static JsonProxy.JsonArray split(String s, String sep) {
         String t = s;
         int end = s.indexOf(sep);
         int start = 0;
@@ -55,7 +57,7 @@ public class CommandProxy {
             list.add(s.substring(start));
         }
         String [] arr = list.toArray(new String[list.size()]);
-        return JsonProxy.convertArray(arr).toString();
+        return JsonProxy.convertArray(arr);
     }
 
     @MappingUnitType(mapping = UnitType.join)
@@ -125,7 +127,7 @@ public class CommandProxy {
 
 
     @MappingUnitType(mapping = UnitType.match_by_regular_expression)
-    public static String regex_match(String s, String regex) {
+    public static JsonProxy.JsonArray regex_match(String s, String regex) {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(s);
         ArrayList<String> arr = new ArrayList<String>();
@@ -133,14 +135,14 @@ public class CommandProxy {
             arr.add(m.group());
         }
 //        System.out.println(arr);
-        return JsonProxy.convertArray(arr).toString();
+        return JsonProxy.convertArray(arr);
     }
 
 
     @MappingUnitType(mapping = UnitType.split_by_regular_expression)
-    public static String regex_split(String s, String sep) {
+    public static JsonProxy.JsonArray regex_split(String s, String sep) {
         String [] arr = s.split(sep);
-        return JsonProxy.convertArray(arr).toString();
+        return JsonProxy.convertArray(arr);
     }
 
     public static boolean regex_contains(String s, String regex) {
@@ -171,6 +173,16 @@ public class CommandProxy {
             throw new RuntimeException(e);
         }
     }
+
+    @MappingUnitType(mapping = UnitType.jsonpath)
+    public static Object jsonpath(JsonObject json, String jsonpath) {
+        try {
+            return Json2Json.path(json, jsonpath);
+        } catch (Json2JsonException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     /////////////////////////////////// Array Operations ///////////////////////////////////////////////////////////

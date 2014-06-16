@@ -25,5 +25,5 @@
 
 
 
-    "hello_world": { "json2json" : {"%|": ["&$.json", " "]}} 
+    "hello_world": { "json2json" : {"%|": ["&$.json", " "]}}
 }

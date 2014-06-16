@@ -106,17 +106,7 @@ public class JsonUnit {
         return new JsonUnit(this, obj);
     }
 
-    public static Object str2json(String json) {
-        if (json == null)
-            return null;
-        if (json.startsWith("{")) {
-            return JsonProxy.readObject(json);
-        } else if (json.startsWith("[")) {
-            return JsonProxy.readArray(json);
-        } else {
-            return json;
-        }
-    }
+
 
     public static boolean isJsonPathRef(Object obj) {
         return new JsonPathRefUnit(obj).isJsonPathRef();

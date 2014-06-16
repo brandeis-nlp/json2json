@@ -23,6 +23,25 @@ import java.util.Collection;
  */
 public class JsonProxy {
 
+
+    /**
+     * Json util read string as Json object
+     * @param json
+     * @return
+     */
+    public static Object str2json(String json) {
+        if (json == null)
+            return null;
+        json = json.trim();
+        if (json.startsWith("{")) {
+            return JsonProxy.readObject(json);
+        } else if (json.startsWith("[")) {
+            return JsonProxy.readArray(json);
+        } else {
+            return json;
+        }
+    }
+
     /**
      *
      */
@@ -128,4 +147,10 @@ public class JsonProxy {
         // FIXME: exchange other proxy
         return new JacksonJsonProxy();
     }
+
+
+
+
+
+
 }

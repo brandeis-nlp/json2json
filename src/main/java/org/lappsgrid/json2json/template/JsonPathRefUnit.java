@@ -66,7 +66,7 @@ public class JsonPathRefUnit extends JsonUnit {
     public Object transform () throws Json2JsonException {
         if(isJsonPathRef()) {
             String ret =  Json2Json.path(jsons.get(index), path).trim();
-            transformed = str2json(ret);
+            transformed = JsonProxy.str2json(ret);
         }
         return transformed;
     }

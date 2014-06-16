@@ -1,6 +1,8 @@
 package org.lappsgrid.json2json.jsonpath;
 
+import com.eclipsesource.json.JsonObject;
 import org.lappsgrid.json2json.Json2JsonException;
+import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -41,6 +43,10 @@ public class JsonPath {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+    }
+
+    public static Object path(JsonObject json, String path)  throws Json2JsonException {
+        return JsonProxy.str2json(path(json.toString(), path));
     }
 
     public static String path(String json, String path) throws Json2JsonException {
