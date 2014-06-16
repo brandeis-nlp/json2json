@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Json2json : JSON to JSON transform tool" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Json2json</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/chunqishi/json2json">View on GitHub</a>
+
+          <h1 id="project_title">Json2json</h1>
+          <h2 id="project_tagline">JSON to JSON transform tool</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/chunqishi/json2json/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/chunqishi/json2json/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        
+
+<h1>
+<a name="json2json-java-package" class="anchor" href="#json2json-java-package"><span class="octicon octicon-link"></span></a>Json2Json Java Package</h1>
+
+<p>Json2Json is <strong>Template</strong> based transformation design. </p>
+
+<h2>
+<a name="how-json2json-works" class="anchor" href="#how-json2json-works"><span class="octicon octicon-link"></span></a>How Json2Json Works?</h2>
+
+<p>Just like the <a href="http://www.freeformatter.com/xsl-transformer.html">XSLT</a> design, we want design a <strong>Json Template</strong>.</p>
+
+<hr><p><strong><code>Template</code></strong> + <code>Source Json</code> ===&gt; <code>Target Json</code></p>
+
+<hr><h2>
+<a name="json-entities" class="anchor" href="#json-entities"><span class="octicon octicon-link"></span></a>Json Entities</h2>
+
+<blockquote>
+<h4>
+<a name="source-json" class="anchor" href="#source-json"><span class="octicon octicon-link"></span></a>Source Json</h4>
+
+<ul>
+<li>Source Json is the entity from which Json we get the information; e.g. source.json:</li>
+</ul>
+<pre><code>{ "json" : "hello world" }
+</code></pre>
+
+
+
+<h4>
+<a name="template-json" class="anchor" href="#template-json"><span class="octicon octicon-link"></span></a>Template Json</h4>
+
+<ul>
+<li>Template is also a Json, which guides how tranform from the source Json to the target Josn; e.g. template.json:</li>
+</ul>
+<pre><code>{ "json2json" : {"%|": ["&amp;$.json", " "]}} 
+</code></pre>
+
+
+
+<ul>
+<li>Note: Template must be a valid Json ( <a href="http://eldrad.cs-i.brandeis.edu:8484/jld/json.html">online Json validation</a> ). </li>
+</ul>
+<h4>
+<a name="target-json" class="anchor" href="#target-json"><span class="octicon octicon-link"></span></a>Target Json</h4>
+
+<ul>
+<li>Target Json is the entity to which Json we want informtion to be; e.g. target.json:</li>
+</ul>
+<pre><code>{ "json2json" : ["hello", "world"] }
+</code></pre>
+
+
+
+<ul>
+<li>Note: You can <strong>test</strong> this json2json with the example at <a href="http://eldrad.cs-i.brandeis.edu:8484/jld/json.html">online test</a>.</li>
+</ul>
+</blockquote>
+
+
+
+<h2>
+<a name="how-template-works" class="anchor" href="#how-template-works"><span class="octicon octicon-link"></span></a>How Template Works?</h2>
+
+<p>We design <strong>Template Unit</strong> to make transformation. </p>
+
+<blockquote>
+<h4>
+<a name="what-is-template-and-target-json" class="anchor" href="#what-is-template-and-target-json"><span class="octicon octicon-link"></span></a>What is Template and Target Json?</h4>
+
+<p><strong>Template Json</strong> is Json comprised of <em>Tempalte Units</em>; e.g.  </p>
+
+<pre><code>{ "json2json" :  *Template Unit* } 
+::
+Template Unit == {"%*":["&amp;$.json", " "]}
+</code></pre>
+
+<p><strong>Target Json</strong> is Template Json replaced the <em>Tempalte Units</em> by the <em>Transformed Unit</em>; e.g.  </p>
+
+<pre><code>{ "json2json" :  *Transformed Unit* } 
+::
+Transformed Unit == "hello world"
+</code></pre>
+
+
+
+<h4>
+<a name="template-unit" class="anchor" href="#template-unit"><span class="octicon octicon-link"></span></a>Template Unit</h4>
+
+<ul>
+<li>Template Unit is a <strong>Json Object</strong>, which <strong>genetates</strong> the Transformed Unit, and will be <strong>replaced</strong> by this Transformed Unit in the Target Json. e.g. </li>
+</ul>
+<pre><code>                     -------- generate -----&gt;
+                    |                         \.
+{"%|": ["&amp;$.json", " "]}  &lt;-- replace -- "hello world"
+</code></pre>
+
+<p><a name="template-unit"></a>
+<strong>Template Unit</strong> is designed as the following:</p>
+
+<pre><code>{ "SYMBOL/KEYWORKS" : PARAMETERS / PROCESSES }
+</code></pre>
+
+<p>Thus, Template Unit is Json Format "Procedural Programming" design. It is just transforming by the execution of pieces of <strong>commands</strong> / <strong>procedures</strong>. It will be replaced by the transformed Json finally. </p>
+</blockquote>
+
+
+
+<blockquote>
+<h4>
+<a name="transformed-unit" class="anchor" href="#transformed-unit"><span class="octicon octicon-link"></span></a>Transformed Unit</h4>
+
+<p>To do the transformation, we need process each Template Unit into Transformed Unit. How it works? We use the procedure language</p>
+</blockquote>
+
+<pre><code>Input Json Unit + Command/Procedue --&gt; Output Json Unit. 
+</code></pre>
+
+<h2>
+<a name="how-to-read-input-json-unit" class="anchor" href="#how-to-read-input-json-unit"><span class="octicon octicon-link"></span></a>How to Read Input Json Unit?</h2>
+
+<p>We use JsonPath to read Input Json Unit from the source. <a name="json-path-reference"></a></p>
+
+<blockquote>
+<h4>
+<a name="json-path-reference" class="anchor" href="#json-path-reference"><span class="octicon octicon-link"></span></a>Json Path Reference</h4>
+
+<p>To read json unit from the Source Json, we design the following reference. </p>
+
+<pre><code>" &amp;JSONPATH " , e.g. "&amp;$.json"
+</code></pre>
+
+<p>To understand how JsonPath works, you could read online <a href="http://goessner.net/articles/JsonPath/index.html#e2">JsonPath Design</a>, and you can <a href="http://jsonpath.curiousconcept.com/">test / evaluate</a> online. </p>
+</blockquote>
+
+<ul>
+<li>Note: DO NOT forget the <em>reference</em> ( <strong>&amp;</strong> ) mark.</li>
+</ul><h2>
+<a name="what-commands-and-procedures" class="anchor" href="#what-commands-and-procedures"><span class="octicon octicon-link"></span></a>What Commands and Procedures?</h2>
+
+<p>How to design commands and procedure under the <a href="#template-unit">Template Unit</a> framework?</p>
+
+<p><a name="command"></a></p>
+
+<h3>
+<a name="command-units" class="anchor" href="#command-units"><span class="octicon octicon-link"></span></a>Command Units</h3>
+
+<p>Since Json Objects include <strong>String</strong>, <strong>JsonArray</strong>, <strong>JsonObject</strong>, and others (e.g. boolean, numbers). We design <strong>String</strong>, <strong>Array</strong>, <strong>Map</strong>, and <strong>Expression</strong> commands. </p>
+
+<p>Generally, we design command units as following:</p>
+
+<blockquote>
+<h4>
+<a name="single-parameter-command-unit" class="anchor" href="#single-parameter-command-unit"><span class="octicon octicon-link"></span></a>Single-Parameter Command Unit</h4>
+
+<pre><code>{"COMMAND-SYMBOL" : PARAMETER }
+</code></pre>
+
+<h4>
+<a name="multi-parameter-command-unit" class="anchor" href="#multi-parameter-command-unit"><span class="octicon octicon-link"></span></a>Multi-Parameter Command Unit</h4>
+
+<pre><code>{"COMMAND-SYMBOL" : [PARAMETER_1, PARAMETER_2, ..., PARAMETER_m ] }
+</code></pre>
+</blockquote>
+
+<p><a name="string"></a></p>
+
+
+
+<blockquote>
+<h4>
+<a name="string-commands" class="anchor" href="#string-commands"><span class="octicon octicon-link"></span></a>String Commands</h4>
+</blockquote>
+
+<table>
+<thead><tr>
+<th align="left">Command</th>
+<th align="center">Symbol</th>
+<th align="center">Keyword</th>
+<th align="center">Parameter</th>
+<th align="left">Example</th>
+<th align="right">Output</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="center">%<em>symbol</em>
+</td>
+<td align="center">%<em>keyword</em>
+</td>
+<td align="center">[ <em>para_1,..., para_n</em> ]</td>
+<td align="left">{ "%<em>symbol</em>" : [ <em>para_1,..., para_n</em> ] }</td>
+<td align="right">output</td>
+</tr>
+<tr>
+<td align="left">concatenate</td>
+<td align="center">%+</td>
+<td align="center"><em>%concat</em></td>
+<td align="center">[<em>str_1</em>,<em>str_2</em>]</td>
+<td align="left">{ "%+" : ["hello","world"] }</td>
+<td align="right">"helloworld"</td>
+</tr>
+<tr>
+<td align="left">split</td>
+<td align="center">%|</td>
+<td align="center"><em>%split</em></td>
+<td align="center">[<em>str</em>, <em>sep</em>]</td>
+<td align="left">{ "%|" : ["hello.world","."] }</td>
+<td align="right">["hello", "world"]</td>
+</tr>
+<tr>
+<td align="left">join</td>
+<td align="center">%*</td>
+<td align="center"><em>%join</em></td>
+<td align="center">[ [<em>str_1,..., str_n</em>] , <em>sep</em>]</td>
+<td align="left">{ "%*" :   [ ["hello", "world"],"."] }</td>
+<td align="right">"hello.world"</td>
+</tr>
+<tr>
+<td align="left">index</td>
+<td align="center">%?</td>
+<td align="center"><em>%idx</em></td>
+<td align="center">[<em>str_1</em>, <em>str_2</em>]</td>
+<td align="left">{"%?" : ["hello.world", "hello"] }</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">substring</td>
+<td align="center">%_</td>
+<td align="center"><em>%sub</em></td>
+<td align="center">[<em>str</em>, <em>start</em>, <em>end</em>]</td>
+<td align="left">{"%_" : ["hello.world", 0, 5] }</td>
+<td align="right">"hello"</td>
+</tr>
+<tr>
+<td align="left">*length</td>
+<td align="center">%#</td>
+<td align="center"><em>%len</em></td>
+<td align="center"><em>str</em></td>
+<td align="left">{"%#" : "hello world"}</td>
+<td align="right">11</td>
+</tr>
+<tr>
+<td align="left">replace</td>
+<td align="center">%/</td>
+<td align="center"><em>%rep</em></td>
+<td align="center">[<em>str</em>, <em>s</em>, <em>r</em>]</td>
+<td align="left">{"%/" : ["hello.world", ".", " "]}</td>
+<td align="right">"hello world"</td>
+</tr>
+<tr>
+<td align="left">regex-match</td>
+<td align="center">%%</td>
+<td align="center"><em>%rmatch</em></td>
+<td align="center">[<em>str</em>, <em>reg</em>]</td>
+<td align="left">{"%%" : ["hello.world", "[a-z]+"]}</td>
+<td align="right">["hello", "world"]</td>
+</tr>
+<tr>
+<td align="left">regex-split</td>
+<td align="center">%%|</td>
+<td align="center"><em>%rsplit</em></td>
+<td align="center">[<em>str</em>, <em>rsep</em>]</td>
+<td align="left">{"%%|" : ["hello.world", ".l"]}</td>
+<td align="right">["h", "lo.wo", "d"]</td>
+</tr>
+<tr>
+<td align="left">regex-replace</td>
+<td align="center">%%/</td>
+<td align="center"><em>%rrep</em></td>
+<td align="center">[<em>str</em>, <em>sreg</em>, <em>r</em>]</td>
+<td align="left">{"%%/" : ["hello.world", ".l", "-"]}</td>
+<td align="right">"h-lo.wo-d"</td>
+</tr>
+<tr>
+<td align="left">jsonpath</td>
+<td align="center">%&amp;</td>
+<td align="center">%path</td>
+<td align="center">[<em>jsonobject</em>, <em>path</em>]</td>
+<td align="left">{"%&amp;" : [{"hello" : "1", "world" : "2"}, "$.hello"] }</td>
+<td align="right">"1"</td>
+</tr>
+</tbody>
+</table><ul>
+<li> Note: We note the <strong>Single-Parameter Command</strong> with <em>star</em> (<strong>*</strong>) mark.<br>
+</li>
+</ul><p><a name="array"></a></p>
+
+<blockquote>
+<h4>
+<a name="array-commands" class="anchor" href="#array-commands"><span class="octicon octicon-link"></span></a>Array Commands</h4>
+</blockquote>
+
+<table>
+<thead><tr>
+<th align="left">Command</th>
+<th align="center">Symbol</th>
+<th align="center">Keyword</th>
+<th align="center">Parameter</th>
+<th align="left">Example</th>
+<th align="right">Output</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="center">%]<em>symbol</em>
+</td>
+<td align="center">%]<em>keyword</em>
+</td>
+<td align="center">[ <em>para_1,..., para_n</em> ]</td>
+<td align="left">{ "%<em>symbol</em>" : [ <em>para_1,..., para_n</em> ] }</td>
+<td align="right">output</td>
+</tr>
+<tr>
+<td align="left">add</td>
+<td align="center">%]+</td>
+<td align="center">%array-add</td>
+<td align="center">[ [<em>arr_1,..., arr_m</em>], <em>new</em>]</td>
+<td align="left">{"%]+" : [ ["hello","world"], "!" ] }</td>
+<td align="right">["hello","world", "!"]</td>
+</tr>
+<tr>
+<td align="left">get</td>
+<td align="center">%]$</td>
+<td align="center">%array-get</td>
+<td align="center">[ [<em>arr_1,..., arr_m</em>], <em>index</em>]</td>
+<td align="left">{"%]$" : [ ["hello", "world"], 0]}</td>
+<td align="right">"hello"</td>
+</tr>
+<tr>
+<td align="left">set</td>
+<td align="center">%]/</td>
+<td align="center">%array-set</td>
+<td align="center">[ [<em>arr_1,..., arr_m</em>], <em>index</em>, <em>new</em>]</td>
+<td align="left">{"%]/" : [ ["hello", "world"], 0, "hi"]}</td>
+<td align="right">["hi","world"]</td>
+</tr>
+<tr>
+<td align="left">remove</td>
+<td align="center">%]-</td>
+<td align="center">%array-rm</td>
+<td align="center">[ [<em>arr_1,..., arr_m</em>], <em>index</em>]</td>
+<td align="left">{"%]-" : [ ["hello","world"], 0] }</td>
+<td align="right">["world"]</td>
+</tr>
+<tr>
+<td align="left">*length</td>
+<td align="center">%]#</td>
+<td align="center">%array-len</td>
+<td align="center">[<em>arr_1,..., arr_m</em>]</td>
+<td align="left">{"%]#" : ["hello", "world"]}</td>
+<td align="right">2</td>
+</tr>
+<tr>
+<td align="left">index</td>
+<td align="center">%]?</td>
+<td align="center">%array-idx</td>
+<td align="center">[[<em>arr_1,..., arr_m</em>], <em>arr_x</em>]</td>
+<td align="left">{"%]?" : [ ["hello", "world"],"hello"]}</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="left">sublist</td>
+<td align="center">%]_</td>
+<td align="center">%array-sub</td>
+<td align="center">[[<em>arr_1,..., arr_m</em>], <em>start</em>, <em>end</em>]</td>
+<td align="left">{"%]_" : [ ["hello", "world"], 0, 1]}</td>
+<td align="right">["hello"]</td>
+</tr>
+</tbody>
+</table><ul>
+<li> Note: We note the <strong>Single-Parameter Command</strong> with <em>star</em> (<strong>*</strong>) mark.<br>
+</li>
+</ul><blockquote>
+<h4>
+<a name="map-commands" class="anchor" href="#map-commands"><span class="octicon octicon-link"></span></a>Map Commands</h4>
+</blockquote>
+
+<table>
+<thead><tr>
+<th align="left">Command</th>
+<th align="center">Symbol</th>
+<th align="center">Keyword</th>
+<th align="center">Parameter</th>
+<th align="left">Example</th>
+<th align="right">Output</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="center">%}<em>symbol</em>
+</td>
+<td align="center">%}<em>keyword</em>
+</td>
+<td align="center">[ <em>para_1,..., para_n</em> ]</td>
+<td align="left">{ "%<em>symbol</em>" : [ <em>para_1,..., para_n</em> ] }</td>
+<td align="right">output</td>
+</tr>
+<tr>
+<td align="left">put</td>
+<td align="center">%}+</td>
+<td align="center">%map-put</td>
+<td align="center">[ <em>jsonobject</em>, <em>key</em>, <em>value</em>]</td>
+<td align="left">{"%}+" : [{}, {"hello":"world"}] }</td>
+<td align="right">{"hello":"world"}</td>
+</tr>
+<tr>
+<td align="left">get</td>
+<td align="center">%}$</td>
+<td align="center">%map-get</td>
+<td align="center">[ <em>jsonobject</em>, <em>key</em>]</td>
+<td align="left">{"%}$" : [{"hello":"world"},"hello"]}</td>
+<td align="right">"world"</td>
+</tr>
+<tr>
+<td align="left">*length</td>
+<td align="center">%}#</td>
+<td align="center">%map-len</td>
+<td align="center"><em>jsonobject</em></td>
+<td align="left">{"%}#" : {"hello":"world"}}</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left">remove</td>
+<td align="center">%}-</td>
+<td align="center">%map-rm</td>
+<td align="center"><em>jsonobject</em></td>
+<td align="left">{"%}-" : [{"hello" : "world"}, "hello"]}</td>
+<td align="right">{}</td>
+</tr>
+<tr>
+<td align="left">*keys</td>
+<td align="center">%}*</td>
+<td align="center">%map-keys</td>
+<td align="center"><em>jsonobject</em></td>
+<td align="left">{"%}*" : {"hello":"world"}}</td>
+<td align="right">["hello"]</td>
+</tr>
+</tbody>
+</table><ul>
+<li> Note: We note the <strong>Single-Parameter Command</strong> with <em>star</em> (<strong>*</strong>) mark.<br>
+</li>
+</ul><blockquote>
+<h4>
+<a name="expression-commands" class="anchor" href="#expression-commands"><span class="octicon octicon-link"></span></a>Expression Commands</h4>
+</blockquote>
+
+<table>
+<thead><tr>
+<th align="left">Command</th>
+<th align="center">Symbol</th>
+<th align="center">Parameter</th>
+<th align="left">Example</th>
+<th align="right">Output</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="center"><em>symbol</em></td>
+<td align="center">[ <em>para_1, para_2</em> ]</td>
+<td align="left">{ "<em>symbol</em>" : [ <em>para_1, para_2</em> ] }</td>
+<td align="right">output</td>
+</tr>
+<tr>
+<td align="left">add , subtract , times , divide</td>
+<td align="center">+ , - , * , /</td>
+<td align="center">[<em>num_1</em>, <em>num_2</em>]</td>
+<td align="left">{ "+": [1, 2] }</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td align="left">equal , not equal , greater than , less than</td>
+<td align="center">== , != , &gt; , &lt;</td>
+<td align="center">[<em>num_1</em>, <em>num_2</em>]</td>
+<td align="left">{ "&gt;": [1, 2] }</td>
+<td align="right">false</td>
+</tr>
+<tr>
+<td align="left">and , or</td>
+<td align="center">&amp;&amp; , ||</td>
+<td align="center">[<em>bool_1</em>, <em>bool_2</em>]</td>
+<td align="left">{ "&amp;&amp;": [true, false] }</td>
+<td align="right">false</td>
+</tr>
+<tr>
+<td align="left">*negative</td>
+<td align="center">!</td>
+<td align="center"><em>bool</em></td>
+<td align="left">{ "!": true }</td>
+<td align="right">false</td>
+</tr>
+</tbody>
+</table><ul>
+<li> Note: We note the <strong>Single-Parameter Command</strong> with <em>star</em> (<strong>*</strong>) mark.<br>
+</li>
+</ul><blockquote>
+<h4>
+<a name="composition-commands" class="anchor" href="#composition-commands"><span class="octicon octicon-link"></span></a>Composition Commands</h4>
+
+<p>We are allowed to compose the above commands to make complex commands; e.g. </p>
+
+<p><strong>String Composition</strong></p>
+
+<p>Example: find all words from string, concat and regex-replace ".l" into "-".  </p>
+
+<pre><code>{ "%%/" : [ 
+           {"%+" : 
+                  {"%%" : ["hello.world", "[a-z]+"]}            ==  ["hello", "world"]
+                                                   }            ==  "helloworld"
+                                  , ".l", "-" ]    }            ==  "h-lowo-d"
+</code></pre>
+
+<p><strong>Boolean Composition</strong></p>
+
+<pre><code>{"!": { "&amp;&amp;": [ { "&gt;": [ 2, 3 ]}, { "==": [ 1, 1 ]} ]} }        ==  false
+</code></pre>
+</blockquote>
+
+<ul>
+<li> Note: We note there are <strong>Limits</strong> of composition. It will very hard to make correct composition, since we have to guess output format (object, array, string, boolean) to prepare correct parameters. Thus, complex composition is NOT suggested. To prevent complex composition, using <strong>Json Path Reference Command</strong> and <strong>Jsonpath String Commmand</strong> can be helpful.<br>
+</li>
+</ul><h3>
+<a name="procedure-units" class="anchor" href="#procedure-units"><span class="octicon octicon-link"></span></a>Procedure Units</h3>
+
+<p>The most important about procedure is that it allows <strong>Variable</strong>.
+We design Procedure units as following:</p>
+
+<blockquote>
+<h4>
+<a name="procedure-unit" class="anchor" href="#procedure-unit"><span class="octicon octicon-link"></span></a>Procedure Unit</h4>
+
+<p><strong>Procedue Unit</strong> comprises 3 paramters :  <strong>Initialization</strong>, <strong>Processes</strong>, <strong>Return-Value</strong>. We provide 2 procedure definition format. </p>
+
+<pre><code>{
+    "PROCEDURE-SYMBOL": [ { Initialization }, 
+                          { 
+                            "PROCESS-SYMBOL_1" : Process_1, 
+                            "PROCESS-SYMBOL_2" : Process_2,
+                            ...,
+                            "PROCESS-SYMBOL_n" : Process_n, 
+                          } ,
+                          Return-Value
+                        ] 
+}
+</code></pre>
+
+<p>Or you can also define it as following </p>
+
+<pre><code>{
+    "PROCEDURE-SYMBOL": {   "INIT-SYMBOL" : { Initialization },
+                            "PROCESS-SYMBOL_1" : Process_1, 
+                            "PROCESS-SYMBOL_2" : Process_2,
+                            ...,
+                            "PROCESS-SYMBOL_n" : Process_n, 
+                            "RETURN-SYMBOL" : Return-Value
+                        } 
+}
+</code></pre>
+
+<p>From the above, the Transformed Unit will be <strong>"Return-Value"</strong>. Once the procedure is transformed, it will be replaced by this return value. </p>
+
+<p>Each <strong>Process</strong> can be an array of <strong>Step</strong> or just one <strong>Step</strong></p>
+
+<h4>
+<a name="single-step-process" class="anchor" href="#single-step-process"><span class="octicon octicon-link"></span></a>Single-Step Process</h4>
+
+<pre><code>{
+ "PROCESS-SYMBOL" : Step, 
+}
+</code></pre>
+
+<h4>
+<a name="multi-step-process" class="anchor" href="#multi-step-process"><span class="octicon octicon-link"></span></a>Multi-Step Process</h4>
+
+<pre><code>{
+ "PROCESS-SYMBOL" : [Step_1, Step_2, ..., Step_m], 
+}
+</code></pre>
+
+<p>Each <strong>Step</strong> can be a <a href="#command"><strong>Command</strong></a> or an <strong>Assign Step</strong>. </p>
+
+<h4>
+<a name="assign-step" class="anchor" href="#assign-step"><span class="octicon octicon-link"></span></a>Assign Step</h4>
+
+<p><a name="assign-step"></a></p>
+
+<pre><code>{
+ "%variable" : value, 
+}
+</code></pre>
+</blockquote>
+
+<ul>
+<li> Note: Variable is noted by "%"</li>
+</ul><p><a name="initialization"></a></p>
+
+<blockquote>
+<h4>
+<a name="initialization" class="anchor" href="#initialization"><span class="octicon octicon-link"></span></a>Initialization</h4>
+
+<p>Variables must be declared and initialized in this sub-unit. </p>
+
+<pre><code>{  
+   "%!variable_1" : value_1, 
+   "%!variable_2" : value_2, 
+   ..., 
+   "%!variable_k" : value_k, 
+}
+</code></pre>
+</blockquote>
+
+<ul>
+<li> Note: Variable is declared by "%!"</li>
+</ul><p><a name="return-value"></a></p>
+
+<blockquote>
+<h4>
+<a name="return-value" class="anchor" href="#return-value"><span class="octicon octicon-link"></span></a>Return-Value</h4>
+
+<p>Return value can be a constant value, or a variable defined in the initialization. </p>
+</blockquote>
+
+
+
+<p><a name="process"></a></p>
+
+<blockquote>
+<h4>
+<a name="processes" class="anchor" href="#processes"><span class="octicon octicon-link"></span></a>Processes</h4>
+
+<p>There are 3 typical procedures: <strong><a href="#if-then-else">IF-TEHN-ELSE</a></strong>, <strong><a href="#for-each">FOR-EACH</a></strong>, and <strong><a href="#do-while">DO-WHILE</a></strong>.</p>
+</blockquote>
+
+<p><a name="if-then-else"></a></p>
+
+<blockquote>
+<h4>
+<a name="if-tehn-else" class="anchor" href="#if-tehn-else"><span class="octicon octicon-link"></span></a>IF-TEHN-ELSE</h4>
+</blockquote>
+
+<pre><code>{"%!IF" : {
+    "%$"    : {   "%!variable_1" : value_1, 
+                   "%!variable_2" : value_2, 
+                   ..., 
+                   "%!variable_k" : value_k  
+               },
+    "%&lt;&gt;"   : Expression,
+    "%THEN" : [Step_1, Step_2, ..., Step_l] ,
+    "%ELSE" : [Step_1, Step_2, ..., Step_m],
+    "%#"    : $return-object }  
+}
+</code></pre>
+
+<p>Or the other format:</p>
+
+<pre><code>{"%!IF" : [  {   "%!variable_1" : value_1, 
+                  "%!variable_2" : value_2, 
+                  ..., 
+                  "%!variable_k" : value_k  
+             },
+             {   "%&lt;&gt;" : Expression,
+                 "%THEN" : [Step_1, Step_2, ..., Step_l] ,
+                 "%ELSE" : [Step_1, Step_2, ..., Step_m]
+             },  
+             $return-object ]  
+}
+</code></pre>
+
+<table>
+<thead><tr>
+<th align="left">Name</th>
+<th align="center">Keyword</th>
+<th align="right">Symbol</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left">Initialization</td>
+<td align="center">%DEF</td>
+<td align="right">%$</td>
+</tr>
+<tr>
+<td align="left">Return-Value</td>
+<td align="center">%RET</td>
+<td align="right">%#</td>
+</tr>
+<tr>
+<td align="left">Expression</td>
+<td align="center">%EXP</td>
+<td align="right">%&lt;&gt;</td>
+</tr>
+</tbody>
+</table><p>We provide an example that choosing a URL according to name. </p>
+
+<pre><code>{ "uri" :  { "%!IF": [   {   "%!uri": "" },
+                         {   "%&lt;&gt;"     : { "==": [ "&amp;$.name", "OpenNLP" ]},
+                             "%THEN"   : { "%uri": "http://www.opennlp.org"},
+                             "%ELSE"   : { "%uri": "http://unknown.org" }
+                         },
+                         "%uri" ] 
+            } 
+}          
+</code></pre>
+
+<p>Or it can also be:</p>
+
+<pre><code>{ "uri" :  { "%!IF": {
+                          "%$"      :  {   "%!uri": "" },
+                          "%&lt;&gt;"     :  { "==": [ "&amp;$.name", "OpenNLP" ]},
+                          "%THEN"   :  { "%uri": "http://www.opennlp.org"},
+                          "%ELSE"   :  { "%uri": "http://unknown.org" },
+                          "%#"      :  "%uri"    } 
+           } 
+}          
+</code></pre>
+
+<p>The Target Json will be:</p>
+
+<pre><code>{ "uri" : "http://www.opennlp.org" }
+</code></pre>
+
+<p><a name="for-each"></a></p>
+
+<blockquote>
+<h4>
+<a name="for-each" class="anchor" href="#for-each"><span class="octicon octicon-link"></span></a>FOR-EACH</h4>
+</blockquote>
+
+<pre><code>{"%!FOR" : {
+    "%$"    :  {   "%!variable_1" : value_1, 
+                   "%!variable_2" : value_2, 
+                   ..., 
+                   "%!variable_k" : value_k  
+               },
+    "%[]"   : [[iterator_1, iterator_2, ..., iterator_l], "%i", "%e"],
+    "%EACH" : [Step_1, Step_2, ..., Step_m] ,
+    "%#"    : $return-object }  
+}
+</code></pre>
+
+<p>Or the other format:</p>
+
+<pre><code>{"%!FOR" : [  {   "%!variable_1" : value_1, 
+                  "%!variable_2" : value_2, 
+                  ..., 
+                  "%!variable_k" : value_k  
+             },
+             {   "%[]"   : [[iterator_1, iterator_2, ..., iterator_l], "%i", "%e"],
+                 "%EACH" : [Step_1, Step_2, ..., Step_m]
+             },  
+             $return-object ]  
+}
+</code></pre>
+
+<table>
+<thead><tr>
+<th align="left">Name</th>
+<th align="center">Keyword</th>
+<th align="right">Symbol</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left">Initialization</td>
+<td align="center">%DEF</td>
+<td align="right">%$</td>
+</tr>
+<tr>
+<td align="left">Return-Value</td>
+<td align="center">%RET</td>
+<td align="right">%#</td>
+</tr>
+<tr>
+<td align="left">Iteration</td>
+<td align="center">%ITER</td>
+<td align="right">%[]</td>
+</tr>
+</tbody>
+</table><p>We provide an example that iterating a string array and concating all of them. </p>
+
+<pre><code>{ "letters" :  { "%!FOR": {
+                          "%$"      :  {   "%!str": "" },
+                          "%[]"     :  [ ["hello", "world"], "%i", "%e"],
+                          "%EACH"   :  {"%str": {"%+": ["%str", "%e"]} },
+                          "%#"      :  "%str"    } 
+               } 
+}          
+</code></pre>
+
+<p>Or it can also be:</p>
+
+<pre><code>{ "letters" :  { "%!FOR": [   {   "%!str" : "" },
+                              {   "%[]"   : [ ["hello", "world"], "%i", "%e"],                             
+                                  "%EACH" : {"%str": {"%+": ["%str", "%e"]}                     
+                              } 
+                         },
+                         "%str" ] 
+               } 
+}          
+</code></pre>
+
+<p>The Target Json will be:</p>
+
+<pre><code>{ "letters" : "helloworld" }
+</code></pre>
+
+<p><a name="do-while"></a></p>
+
+<blockquote>
+<h4>
+<a name="do-while" class="anchor" href="#do-while"><span class="octicon octicon-link"></span></a>DO-WHILE</h4>
+</blockquote>
+
+<pre><code>{"%!WHILE"  : {
+    "%$"    : {   "%!variable_1" : value_1, 
+                   "%!variable_2" : value_2, 
+                   ..., 
+                   "%!variable_k" : value_k  
+               },
+    "%&lt;&gt;"   : Expression,
+    "%DO"   : [Step_1, Step_2, ..., Step_l] ,
+    "%#"    : $return-object }  
+}
+</code></pre>
+
+<p>Or the other format:</p>
+
+<pre><code>{"%!WHILE" : [  {   "%!variable_1" : value_1, 
+                  "%!variable_2" : value_2, 
+                  ..., 
+                  "%!variable_k" : value_k  
+                },
+                {   "%&lt;&gt;" : Expression,
+                    "%DO" : [Step_1, Step_2, ..., Step_l]
+                },  
+                $return-object ]  
+}
+</code></pre>
+
+<table>
+<thead><tr>
+<th align="left">Name</th>
+<th align="center">Keyword</th>
+<th align="right">Symbol</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left">Initialization</td>
+<td align="center">%DEF</td>
+<td align="right">%$</td>
+</tr>
+<tr>
+<td align="left">Return-Value</td>
+<td align="center">%RET</td>
+<td align="right">%#</td>
+</tr>
+<tr>
+<td align="left">Expression</td>
+<td align="center">%EXP</td>
+<td align="right">%&lt;&gt;</td>
+</tr>
+</tbody>
+</table><p>We provide an example that repeating text of "go!" until its length not greater than 10. </p>
+
+<pre><code>{ "duplicated" :  { "%!WHILE": {
+                          "%$"      :  {   "%!str": "" },
+                          "%&lt;&gt;"     :  { "&lt;": [ {"%#": "%str"}, 10] },
+                          "%DO"     :  {"%str": {"%+": ["%str", " go!"]}},
+                          "%#"      :  "%str"    } 
+                  } 
+}          
+</code></pre>
+
+<p>Or it can also be:</p>
+
+<pre><code>{ "duplicated" :  { "%!WHILE": [   {   "%!str": "" },
+                                   {   "%&lt;&gt;"     :  { "&lt;": [ {"%#": "%str"}, 10] },
+                                       "%DO"     :  {"%str": {"%+": ["%str", " go!"]}}
+                                   },
+                                   "%str" ]
+                 } 
+}          
+</code></pre>
+
+<p>The Target Json will be:</p>
+
+<pre><code>{ "duplicated" : "go!go!go!go!" }
+</code></pre>
+
+
+
+<h3>
+<a name="more-examples" class="anchor" href="#more-examples"><span class="octicon octicon-link"></span></a>More Examples</h3>
+
+<p>We have a Source Json. It is records of CDs.  </p>
+
+<pre><code>{
+  "catalog": {
+    "-xmlns:foo": "http://www.foo.org/",
+    "-xmlns:bar": "http://www.bar.org",
+    "foo:cd": [
+      {
+        "title": "Empire Burlesque",
+        "artist": "Bob Dylan",
+        "country": "USA",
+        "company": "Columbia",
+        "price": "10.90",
+        "bar:year": "1985"
+      },
+      {
+        "title": "Hide your heart",
+        "artist": "Bonnie Tyler",
+        "country": "UK",
+        "company": "CBS Records",
+        "price": "9.90",
+        "bar:year": "1988"
+      },
+      {
+        "title": "Greatest Hits",
+        "artist": "Dolly Parton",
+        "country": "USA",
+        "company": "RCA",
+        "price": "9.90",
+        "bar:year": "1982"
+      }
+    ]
+  }
+}
+</code></pre>
+
+<p>If we want to organize it into the table. </p>
+
+<pre><code>{
+  "html": {
+    "-xmlns:bar": "http://www.bar.org",
+    "-xmlns:foo": "http://www.foo.org/",
+    "body": {
+      "h2": "My CD Collection",
+      "table": {
+        "-border": "1",
+        "tr": [
+          {
+            "-bgcolor": "#9acd32",
+            "th": [
+              "Title",
+              "Artist",
+              "Country",
+              "Company",
+              "Price",
+              "Year"
+            ]
+          },
+          {
+            "td": [
+              "Empire Burlesque",
+              "Bob Dylan",
+              "USA",
+              "Columbia",
+              "10.90",
+              "1985"
+            ]
+          },
+          {
+            "td": [
+              "Hide your heart",
+              "Bonnie Tyler",
+              "UK",
+              "CBS Records",
+              "9.90",
+              "1988"
+            ]
+          },
+          {
+            "td": [
+              "Greatest Hits",
+              "Dolly Parton",
+              "USA",
+              "RCA",
+              "9.90",
+              "1982"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
+</code></pre>
+
+<p>How can we realize this transformation?</p>
+
+<p>We implement a Template. </p>
+
+<pre><code>{
+  "html": {
+    "-xmlns:bar": "http://www.bar.org",
+    "-xmlns:foo": "http://www.foo.org/",
+    "body": {
+      "h2": "My CD Collection",
+      "table": {
+        "-border": "1",
+        "tr": { "%!FOR"  : {
+                 "%$"    : {"%!arr":[ { "-bgcolor": "#9acd32",
+                                    "th": [
+                                      "Title",
+                                      "Artist",
+                                      "Country",
+                                      "Company",
+                                      "Price",
+                                      "Year" ]
+                                  } ]
+                          },
+                "%[]"   : ["&amp;$.catalog.foo:cd", "%i", "%e"],
+                "%EACH" : {"%arr": {"%]+": ["%arr", {"td": [
+                                                        {"%&amp;":["%e", "$.title"]} ,
+                                                        {"%&amp;":["%e", "$.artist"]},
+                                                        {"%&amp;":["%e", "$.country"]},
+                                                        {"%&amp;":["%e", "$.company"]},
+                                                        {"%&amp;":["%e", "$.price"]},
+                                                        {"%&amp;":["%e", "$.bar:year"]}
+                                                       ]}]}},
+               "%#"    : "%arr"
+              }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+
+<ol>
+<li>Define <em><code>"%!arr"</code></em> as an array with one element "th".</li>
+<li>Use <strong>"<a href="#for-each">FOR-EACH</a>"</strong> procedure to realize the transformation.</li>
+<li>Iterate over <strong><a href="#json-path-reference">Json Path Reference</a></strong> (<em><code>"&amp;$.catalog.foo:cd"</code></em>).</li>
+<li>Add each "td" into the array <em>"%arr"</em> using the <strong><a href="#array">Array ADD Command</a></strong> (<em><code>{"%]+",[ $array, $element ]}</code></em>)</li>
+<li>Assign the ADDED array ( <em><code>"%arr"</code></em>) using the <strong><a href="#assign-step">Assign Step</a></strong> (<em>`{"%arr": *ADDED</em> }`*)</li>
+<li>Return the array ( <em><code>"%arr"</code></em>).<br>
+</li>
+</ol><h3>
+<a name="next" class="anchor" href="#next"><span class="octicon octicon-link"></span></a>Next</h3>
+
+<p>What we want to support next. A TODO list can be as following:</p>
+
+<ol>
+<li>Multiple Json Sources Support</li>
+<li>URI import Json Support. </li>
+<li>Remove dependence of Groovy engine. </li>
+</ol><h3>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<p>Maven dependency is like this.</p>
+
+<pre><code>&lt;dependencies&gt; 
+&lt;dependency&gt; 
+&lt;groupId&gt;org.lappsgrid&lt;/groupId&gt; 
+&lt;artifactId&gt;json2json&lt;/artifactId&gt; 
+&lt;version&gt;0.2.1&lt;/version&gt; 
+&lt;/dependency&gt; 
+&lt;dependencies&gt;
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Json2json maintained by <a href="https://github.com/chunqishi">chunqishi</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
