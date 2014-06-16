@@ -30,7 +30,9 @@ import java.util.Map;
  * Created by shi on 6/15/14.
  */
 public class JsonUnit {
+    //    http://www.slf4j.org/manual.html
     Logger logger = LoggerFactory.getLogger(JsonUnit.class);
+
     List<String> jsons = null;
     Object obj = null;
     Object transformed = null;
@@ -59,6 +61,10 @@ public class JsonUnit {
     }
 
     public Object transform () throws Json2JsonException {
+//        logger.info("isJsonPathRef " + isJsonPathRef(obj));
+//        logger.info("isTemplate " + isTemplate(obj));
+//        logger.info("isVariable " + isVariable(obj));
+//        logger.info("isJsonPathRef " + isJsonPathRef(obj));
         if (isJsonPathRef(obj)) {
             /** JsonPath Reference **/
             JsonPathRefUnit unit = new JsonPathRefUnit(this);
@@ -123,5 +129,11 @@ public class JsonUnit {
             }
         }
         return false;
+    }
+
+
+    public static void main(String[] args) {
+        Logger logger = LoggerFactory.getLogger(JsonUnit.class);
+        logger.info("Hello World");
     }
 }

@@ -17,6 +17,8 @@ package org.lappsgrid.json2json.template;
 
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -24,7 +26,7 @@ import java.util.Map;
  * Created by shi on 6/15/14.
  */
 public class ProcedureUnit extends TemplateUnit {
-
+    Logger logger = LoggerFactory.getLogger(ProcedureUnit.class);
     /**  generate from parent.  **/
     public ProcedureUnit(JsonUnit parent, Object obj){
         super(parent, obj);

@@ -24,6 +24,28 @@
     "map_keys":{"%}*" : {"hello":"world"}},
 
 
+    "if_then_else" : { "uri" :  { "%!IF": {
+                                               "%$"      :  {   "%!uri": "" },
+                                               "%<>"     :  { "==": [ "&$.name", "OpenNLP" ]},
+                                               "%THEN"   :  { "%uri": "http://www.opennlp.org"},
+                                               "%ELSE"   :  { "%uri": "http://unknown.org" },
+                                               "%#"      :  "%uri"    }
+                                }
+                     },
 
+    "if_then_else_alt" : { "uri" :  { "%!IF": [   {   "%!uri": "" },
+                                              {   "%<>"     : { "==": [ "&$.name", "OpenNLP" ]},
+                                                  "%THEN"   : { "%uri": "http://www.opennlp.org"},
+                                                  "%ELSE"   : { "%uri": "http://unknown.org" }
+                                              },
+                                              "%uri" ]
+                                 }
+                     },
+
+
+
+    "for_each" : {},
+    "for_each_alt" : {},
+    
     "hello_world": { "json2json" : {"%|": ["&$.json", " "]}}
 }

@@ -18,12 +18,14 @@ package org.lappsgrid.json2json.template;
 import org.lappsgrid.json2json.Json2Json;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by shi on 6/15/14.
  */
 public class IfThenElseUnit extends ProcedureUnit {
-
+    Logger logger = LoggerFactory.getLogger(IfThenElseUnit.class);
     /**  generate from parent.  **/
     public IfThenElseUnit(JsonUnit parent, Object obj){
         super(parent, obj);
@@ -38,7 +40,7 @@ public class IfThenElseUnit extends ProcedureUnit {
     }
 
     public boolean isIfThenElse(){
-       return TemplateNaming.templateTypeByCommand(this.unitName()).equals(TemplateNaming.UnitType.if_then_else_process);
+        return TemplateNaming.unitTypeByCommand(this.unitName()).equals(TemplateNaming.UnitType.if_then_else_process);
     }
 
     @Override
@@ -54,17 +56,35 @@ public class IfThenElseUnit extends ProcedureUnit {
 
             if(this.unitContent() instanceof JsonProxy.JsonObject) {
                 JsonProxy.JsonObject jobj = (JsonProxy.JsonObject)this.unitContent();
-                initObj = getObject(jobj, TemplateNaming.UnitType.definitions_of_if_then_else_process);
-                exprObj = getObject(jobj, TemplateNaming.UnitType.expression_of_if_then_else_process);
-                thenObj = getObject(jobj, TemplateNaming.UnitType.then_step_of_if_then_else_process);
-                elseObj = getObject(jobj, TemplateNaming.UnitType.else_step_of_if_then_else_process);
-                retObj =  getObject(jobj, TemplateNaming.UnitType.return_of_if_then_else_process);
+                for(String key: jobj.keys()) {
+                    TemplateNaming.UnitType unitType = TemplateNaming.unitTypeByCommand(this.unitName(),key);
+                    if(unitType.equals(TemplateNaming.UnitType.definitions_of_if_then_else_process)) {
+                        initObj = jobj.get(key);
+                    } else if(unitType.equals(TemplateNaming.UnitType.expression_of_if_then_else_process)) {
+                        exprObj = jobj.get(key);
+                    } else if(unitType.equals(TemplateNaming.UnitType.then_step_of_if_then_else_process)) {
+                        thenObj = jobj.get(key);
+                    } else if(unitType.equals(TemplateNaming.UnitType.else_step_of_if_then_else_process)) {
+                        elseObj = jobj.get(key);
+                    } else if(unitType.equals(TemplateNaming.UnitType.return_of_if_then_else_process)) {
+                        retObj = jobj.get(key);
+                    }
+                }
             } else if(this.unitContent() instanceof JsonProxy.JsonArray) {
                 JsonProxy.JsonArray jobj = (JsonProxy.JsonArray)this.unitContent();
                 initObj = jobj.get(0);
-                exprObj = getObject((JsonProxy.JsonObject)jobj.get(1), TemplateNaming.UnitType.expression_of_if_then_else_process);
-                thenObj = getObject((JsonProxy.JsonObject)jobj.get(1), TemplateNaming.UnitType.then_step_of_if_then_else_process);
-                elseObj = getObject((JsonProxy.JsonObject)jobj.get(1), TemplateNaming.UnitType.else_step_of_if_then_else_process);
+
+                JsonProxy.JsonObject jsubobj = (JsonProxy.JsonObject)jobj.get(1);
+                for(String key: jsubobj.keys()) {
+                    TemplateNaming.UnitType unitType = TemplateNaming.unitTypeByCommand(this.unitName(),key);
+                    if(unitType.equals(TemplateNaming.UnitType.expression_of_if_then_else_process)) {
+                        exprObj = jsubobj.get(key);
+                    } else if(unitType.equals(TemplateNaming.UnitType.then_step_of_if_then_else_process)) {
+                        thenObj = jsubobj.get(key);
+                    } else if(unitType.equals(TemplateNaming.UnitType.else_step_of_if_then_else_process)) {
+                        elseObj = jsubobj.get(key);
+                    }
+                }
                 retObj = jobj.get(2);
             }
 

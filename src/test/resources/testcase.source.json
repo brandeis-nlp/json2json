@@ -24,5 +24,11 @@
     "map_keys": {},
 
 
+    "if_then_else" : {"name":"OpenNLP"},
+    "if_then_else_alt" : {"name":"OpenNLP"},
+
+    "for_each" : {},
+    "for_each_alt" : {},
+
     "hello_world":{ "json" : "hello world" }
 }

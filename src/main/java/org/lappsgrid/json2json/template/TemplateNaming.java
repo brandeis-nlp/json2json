@@ -149,10 +149,10 @@ public class TemplateNaming {
             new String []{"map", "%}", "*", "map-keys", UnitType.map_keys.name(), TemplateUnit.TemplateType.Command.name()},
 
             /** process operation **/
-            new String []{"process", "%!", "+", "proc", UnitType.default_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process", "%!", "?", "if", UnitType.if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process", "%!", "*", "for", UnitType.for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process", "%!", "_", "while", UnitType.do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process", "%!", "proc", "proc", UnitType.default_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process", "%!", "if", "if", UnitType.if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process", "%!", "for", "for", UnitType.for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process", "%!", "while", "while", UnitType.do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** default process operation **/
             new String []{"process-proc", "%!proc.%", "$", "def", UnitType.definitions_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
@@ -198,7 +198,7 @@ public class TemplateNaming {
             Map<String, List<String>> GroupHelper = new LinkedHashMap<String, List<String>>();
             for(String [] naming: Namings) {
                 String indexKey = naming[i];
-                if (i == Symbol) {
+                if (i == Symbol || i == KeyWord) {
                     /** update symbol as Category symbol concatenated with individual Symbol. **/
                     indexKey = naming[CategorySymbol] + indexKey;
                 }
@@ -244,6 +244,23 @@ public class TemplateNaming {
             name = naming[Name];
         }
         return name;
+    }
+
+    public static UnitType unitTypeByCommand(String command) {
+        String ttype = nameBySymbol(command.toLowerCase());
+        if(ttype == null) {
+            ttype = nameByKeyword(command.toLowerCase());
+        }
+        if(ttype != null) {
+            return UnitType.valueOf(ttype);
+        }
+        return null;
+    }
+
+
+    public static UnitType unitTypeByCommand(String maincommand, String subcommand) {
+        String command = maincommand + "." + subcommand;
+        return unitTypeByCommand(command);
     }
 
     public static String symbolByName (String name) {

@@ -38,7 +38,7 @@ public class ForEachUnit extends ProcedureUnit {
     }
 
     public boolean isForEach(){
-        return TemplateNaming.templateTypeByCommand(this.unitName()).equals(TemplateNaming.UnitType.for_each_process);
+        return TemplateNaming.unitTypeByCommand(this.unitName()).equals(TemplateNaming.UnitType.for_each_process);
     }
 
 
@@ -98,15 +98,32 @@ public class ForEachUnit extends ProcedureUnit {
 
             if(this.unitContent() instanceof JsonProxy.JsonObject) {
                 JsonProxy.JsonObject jobj = (JsonProxy.JsonObject)this.unitContent();
-                initObj = getObject(jobj, TemplateNaming.UnitType.definitions_of_for_each_process);
-                iterObj = getObject(jobj, TemplateNaming.UnitType.iterator_of_for_each_process);
-                eachObj = getObject(jobj, TemplateNaming.UnitType.each_step_of_for_each_process);
-                retObj =  getObject(jobj, TemplateNaming.UnitType.return_of_if_then_else_process);
+                for(String key: jobj.keys()) {
+                    TemplateNaming.UnitType unitType = TemplateNaming.unitTypeByCommand(this.unitName(),key);
+                    if(unitType.equals(TemplateNaming.UnitType.definitions_of_for_each_process)) {
+                        initObj = jobj.get(key);
+                    } else if(unitType.equals(TemplateNaming.UnitType.iterator_of_for_each_process)) {
+                        iterObj = jobj.get(key);
+                    } else if(unitType.equals(TemplateNaming.UnitType.each_step_of_for_each_process)) {
+                        eachObj = jobj.get(key);
+                    } else if(unitType.equals(TemplateNaming.UnitType.return_of_for_each_process)) {
+                        retObj = jobj.get(key);
+                    }
+                }
+
             } else if(this.unitContent() instanceof JsonProxy.JsonArray) {
                 JsonProxy.JsonArray jobj = (JsonProxy.JsonArray)this.unitContent();
                 initObj = jobj.get(0);
-                iterObj = getObject((JsonProxy.JsonObject)jobj.get(1), TemplateNaming.UnitType.iterator_of_for_each_process);
-                eachObj = getObject((JsonProxy.JsonObject)jobj.get(1), TemplateNaming.UnitType.each_step_of_for_each_process);
+
+                JsonProxy.JsonObject jsubobj = (JsonProxy.JsonObject)jobj.get(1);
+                for(String key: jsubobj.keys()) {
+                    TemplateNaming.UnitType unitType = TemplateNaming.unitTypeByCommand(this.unitName(),key);
+                    if(unitType.equals(TemplateNaming.UnitType.iterator_of_for_each_process)) {
+                        iterObj = jsubobj.get(key);
+                    } else if(unitType.equals(TemplateNaming.UnitType.each_step_of_for_each_process)) {
+                        eachObj = jsubobj.get(key);
+                    }
+                }
                 retObj = jobj.get(2);
             }
 

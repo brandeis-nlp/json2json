@@ -24,5 +24,13 @@
     "map_length": 1,
     "map_keys": ["hello"],
 
+
+
+    "if_then_else" :{ "uri" : "http://www.opennlp.org" },
+    "if_then_else_alt" : { "uri" : "http://www.opennlp.org" },
+
+    "for_each" : {},
+    "for_each_alt" : {},
+
     "hello_world": { "json2json" : ["hello", "world"] }
 }

@@ -370,7 +370,7 @@ Or it can also be:
                           "%$"      :  {   "%!uri": "" },
                           "%<>"     :  { "==": [ "&$.name", "OpenNLP" ]},
                           "%THEN"   :  { "%uri": "http://www.opennlp.org"},
-                          "%ELSE"   :  { "%uri": "http://unknown.org" }
+                          "%ELSE"   :  { "%uri": "http://unknown.org" },
                           "%#"      :  "%uri"    } 
            } 
 }          
@@ -427,7 +427,7 @@ We provide an example that iterating a string array and concating all of them.
 { "letters" :  { "%!FOR": {
                           "%$"      :  {   "%!str": "" },
                           "%[]"     :  [ ["hello", "world"], "%i", "%e"],
-                          "%EACH"   :  {"%str": {"%+": ["%str", "%e"]} } 
+                          "%EACH"   :  {"%str": {"%+": ["%str", "%e"]} },
                           "%#"      :  "%str"    } 
                } 
 }          

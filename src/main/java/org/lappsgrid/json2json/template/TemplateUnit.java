@@ -58,6 +58,7 @@ public class TemplateUnit extends JsonUnit{
             /** Only 1 key is allowed in the TemplateUnit, and the key must be a symbol or keyword 　**/
             if (keys.size() == 1) {
                 String type = unitName();
+//                logger.info(type + " " +TemplateNaming.hasSymbol(type)+ " " + TemplateNaming.hasKeyword(type));
                 // if find it in the symbols or keywords
                 if (TemplateNaming.hasSymbol(type) ||
                         TemplateNaming.hasKeyword(type)) {
