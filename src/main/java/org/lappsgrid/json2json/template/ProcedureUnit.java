@@ -35,20 +35,134 @@ public class ProcedureUnit extends TemplateUnit{
         super(obj);
     }
 
+    public static class StepsUnit extends JsonUnit {
+        StepUnit [] steps = null;
+        boolean isSteps = false;
+
+        public StepsUnit(JsonUnit parent, Object obj) {
+            super(parent, obj);
+            init();
+        }
+
+        public boolean isStepsUnit() {
+            return isSteps;
+        }
+
+
+        protected void init() {
+            if(obj != null && obj instanceof JsonProxy.JsonArray) {
+                JsonProxy.JsonArray jobj = (JsonProxy.JsonArray) obj;
+                steps = new StepUnit[jobj.length()];
+                isSteps = true;
+                for(int i = 0; i < jobj.length(); i ++) {
+                    steps[i] = new StepUnit(jobj.get(i));
+                    isSteps = isSteps && steps[i].isStepUnit();
+                }
+            }
+        }
+
+        @Override
+        public Object transform () throws Json2JsonException {
+            if(isStepsUnit()){
+                JsonProxy.JsonArray jobj = (JsonProxy.JsonArray) obj;
+                steps = new StepUnit[jobj.length()];
+                for(int i = 0; i < jobj.length(); i ++) {
+                    steps[i] = new StepUnit(this, jobj.get(i));
+                    steps[i].transform();
+                    this.map.put(steps[i].varName, steps[i].map.get(steps[i].varName));
+                }
+            }
+            return null;
+        }
+    }
+
+
+
+    public static class StepUnit extends JsonUnit {
+        String varName = null;
+        boolean isStep = false;
+
+        public StepUnit(Object obj) {
+            super(obj);
+            init();
+        }
+
+        public StepUnit(JsonUnit parent, Object obj) {
+            super(parent, obj);
+            init();
+        }
+
+        public String getVarName() {
+            return varName;
+        }
+
+        @Override
+        public Object transform () throws Json2JsonException {
+            if(isStepUnit()) {
+                JsonProxy.JsonObject jobj = (JsonProxy.JsonObject) obj;
+                String key = jobj.keys().iterator().next().trim();
+                this.map.put(varName, new JsonUnit(this, jobj.get(key)).transform());
+            }
+            return null;
+        }
+
+        protected void init() {
+            if(obj != null && obj instanceof JsonProxy.JsonObject) {
+                JsonProxy.JsonObject jobj = (JsonProxy.JsonObject) obj;
+                if(jobj.length() == 1) {
+                    String key = jobj.keys().iterator().next().trim();
+                    if(key.startsWith(TemplateNaming.VariableMark)) {
+                        varName = key.substring(TemplateNaming.VariableMark.length());
+                        isStep = true;
+                    }
+                }
+            }
+        }
+
+        public boolean isStepUnit() {
+            return isStep;
+        }
+    }
+
     /**
      * Initialization Unit Process all the initialization into Map.
      */
-    public static class InitUnit {
-        public static  Map<String, Object> init (JsonProxy.JsonObject jobj, Map<String, Object> map) throws Json2JsonException {
-            for(String key : jobj.keys()) {
-                Object val = jobj.get(key);
-                /** In case of Template Unit, we will do Template.transform **/
-                val = new JsonUnit(val).transform();
-                String vname = getVarName(key);
-                map.put(vname, val);
-            }
-            return map;
+    public static class InitUnit extends JsonUnit {
+        public InitUnit(JsonUnit parent, Object obj) {
+            super(parent, obj);
         }
+
+        public boolean isInitUnit(){
+            if(obj != null && obj instanceof JsonProxy.JsonObject) {
+                return true;
+            }
+            return false;
+        }
+
+        public Object transform () throws Json2JsonException {
+            if(isInitUnit()){
+                JsonProxy.JsonObject jobj = (JsonProxy.JsonObject)obj;
+                for(String key : jobj.keys()) {
+                    Object val = jobj.get(key);
+                    /** In case of Template Unit, we will do Template.transform **/
+                    val = new JsonUnit(this, val).transform();
+                    String vname = getVarName(key);
+                    map.put(vname, val);
+                }
+            }
+            return null;
+        }
+
+//        public static  Map<String, Object> init (JsonProxy.JsonObject jobj, Map<String, Object> map) throws Json2JsonException {
+//            for(String key : jobj.keys()) {
+//                Object val = jobj.get(key);
+//                /** In case of Template Unit, we will do Template.transform **/
+//                val = new JsonUnit(val).transform();
+//                String vname = getVarName(key);
+//                map.put(vname, val);
+//            }
+//            return map;
+//        }
 
         public static boolean isVarDef(String vname) {
             if(vname != null && vname.trim().startsWith(TemplateNaming.ProcedureInitMark)) {
@@ -70,26 +184,27 @@ public class ProcedureUnit extends TemplateUnit{
     }
 
 
-
-
-    public static class ProcedureTransform implements Transform {
-
-
-        public Object transform (String command, Object obj, Map<String, Object> map) throws Json2JsonException {
-            return null;
-        }
-
-        @Override
-        public Object transform(TemplateUnit obj) throws Json2JsonException {
-
-
-            return null;
-        }
-    }
+//
+//
+//    public static class ProcedureTransform implements Transform {
+//
+//
+//        public Object transform (String command, Object obj, Map<String, Object> map) throws Json2JsonException {
+//            return null;
+//        }
+//
+//        @Override
+//        public Object transform(TemplateUnit obj) throws Json2JsonException {
+//
+//
+//            return null;
+//        }
+//    }
 
 
     @Override
     public Object transform() {
+
         return null;
     }
 }

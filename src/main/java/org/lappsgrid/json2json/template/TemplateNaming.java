@@ -32,6 +32,7 @@ public class TemplateNaming {
 
     public static final String ProcedureInitMark = "%!";
     public static final String JsonPathReference = "&";
+    public static final String VariableMark = "%";
 
     public enum UnitType {
         /** json path operation**/

@@ -36,17 +36,19 @@ public class JsonUnit {
         this.obj = ref.obj;
         this.map = ref.map;
         this.jsons = ref.jsons;
+        this.transformed = ref.transformed;
     }
 
     public JsonUnit(Object obj) {
         this.obj = obj;
+        this.transformed = this.obj;
         map = new LinkedHashMap<String, Object>();
     }
 
+    /**  generate from parent.  **/
     public JsonUnit(JsonUnit parent, Object obj){
-        this.obj = obj;
+        this(obj);
         this.jsons = parent.jsons;
-        map = new LinkedHashMap<String, Object>();
         this.map.putAll(parent.map);
     }
 

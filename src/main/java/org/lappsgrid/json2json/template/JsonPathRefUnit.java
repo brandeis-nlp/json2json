@@ -31,13 +31,17 @@ public class JsonPathRefUnit extends JsonUnit {
     int index = -1;
     boolean isPath = false;
 
-
     protected JsonPathRefUnit(JsonUnit ref) {
         super(ref);
+        init();
     }
 
     public JsonPathRefUnit(Object obj) {
         super(obj);
+        init();
+    }
+
+    protected void init(){
         if (obj != null && obj instanceof String) {
             String fullpath = ((String)obj).trim();
             if(fullpath.startsWith(TemplateNaming.JsonPathReference) && fullpath.contains("$.")) {

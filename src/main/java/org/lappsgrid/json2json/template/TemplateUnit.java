@@ -29,10 +29,17 @@ public class TemplateUnit extends JsonUnit{
 
     protected TemplateUnit(JsonUnit ref) {
         super(ref);
+        engine = TemplateEngine.newEngine();
     }
 
     public TemplateUnit(Object obj) {
         super(obj);
+        engine = TemplateEngine.newEngine();
+    }
+
+    /**  generate from parent.  **/
+    public TemplateUnit(JsonUnit parent, Object obj){
+        super(parent, obj);
         engine = TemplateEngine.newEngine();
     }
 
@@ -82,7 +89,7 @@ public class TemplateUnit extends JsonUnit{
     }
 
     public String unitName(){
-        return ((JsonObject)obj).keys().iterator().next();
+        return ((JsonObject)obj).keys().iterator().next().trim();
     }
 
     public Object unitContent() {
