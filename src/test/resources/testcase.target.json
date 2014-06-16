@@ -29,8 +29,11 @@
     "if_then_else" :{ "uri" : "http://www.opennlp.org" },
     "if_then_else_alt" : { "uri" : "http://www.opennlp.org" },
 
-    "for_each" : {},
-    "for_each_alt" : {},
+    "for_each" : { "letters" : "helloworld" },
+    "for_each_alt" : { "letters" : "helloworld" },
+
+    "do_while" : { "duplicated" : "go!go!go!go!" },
+    "do_while_alt" : { "duplicated" : "go!go!go!go!" },
 
     "hello_world": { "json2json" : ["hello", "world"] }
 }

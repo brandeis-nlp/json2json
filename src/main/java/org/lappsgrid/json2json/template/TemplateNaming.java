@@ -173,10 +173,10 @@ public class TemplateNaming {
             new String []{"process-for-each", "%!for.%", "#", "ret", UnitType.return_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** while process operation **/
-            new String []{"process-do-while", "%!do.%", "$", "def", UnitType.definitions_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-do-while", "%!do.%", "<>", "expr", UnitType.expression_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-do-while", "%!do.%", "do", "do", UnitType.do_step_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-do-while", "%!do.%", "#", "ret", UnitType.return_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%!while.%", "$", "def", UnitType.definitions_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%!while.%", "<>", "expr", UnitType.expression_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%!while.%", "do", "do", UnitType.do_step_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%!while.%", "#", "ret", UnitType.return_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** expression operation **/
             new String []{"expression", "", "==", "==", UnitType.equals_expression.name(), TemplateUnit.TemplateType.Expression.name()},

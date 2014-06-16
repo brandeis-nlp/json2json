@@ -44,8 +44,37 @@
 
 
 
-    "for_each" : {},
-    "for_each_alt" : {},
-    
+    "for_each" : { "letters" :  { "%!FOR": {
+                                           "%$"      :  {   "%!str": "" },
+                                           "%[]"     :  [ ["hello", "world"], "%i", "%e"],
+                                           "%EACH"   :  {"%str": {"%+": ["%str", "%e"]} },
+                                           "%#"      :  "%str"    }
+                                }
+                 } ,
+    "for_each_alt" : { "letters" :  { "%!FOR": [   {   "%!str" : "" },
+                                                   {   "%[]"   : [ ["hello", "world"], "%i", "%e"],
+                                                       "%EACH" : {"%str": {"%+": ["%str", "%e"]}
+                                                   }
+                                              },
+                                              "%str" ]
+                                    }
+                     } ,
+
+
+    "do_while" : { "duplicated" :  { "%!WHILE": {
+                                           "%$"      :  {   "%!str": "" },
+                                           "%<>"     :  { "<": [ {"%#": "%str"}, 10] },
+                                           "%DO"     :  {"%str": {"%+": ["%str", "go!"]}},
+                                           "%#"      :  "%str"    }
+                                   }
+                 } ,
+    "do_while_alt" : { "duplicated" :  { "%!WHILE": [   {   "%!str": "" },
+                                                        {   "%<>"     :  { "<": [ {"%#": "%str"}, 10] },
+                                                            "%DO"     :  {"%str": {"%+": ["%str", "go!"]}}
+                                                        },
+                                                        "%str" ]
+                                      }
+                     }  ,
+
     "hello_world": { "json2json" : {"%|": ["&$.json", " "]}}
 }

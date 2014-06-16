@@ -19,11 +19,15 @@ import org.lappsgrid.json2json.Json2Json;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.Template;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by shi on 6/15/14.
  */
 public class ForEachUnit extends ProcedureUnit {
+    Logger logger = LoggerFactory.getLogger(ProcedureUnit.class);
+
     /**  generate from parent.  **/
     public ForEachUnit(JsonUnit parent, Object obj){
         super(parent, obj);
@@ -137,8 +141,11 @@ public class ForEachUnit extends ProcedureUnit {
             initUnit.transform();
             iterUnit = new IteratorUnit(initUnit,iterObj);
             JsonProxy.JsonArray iterator = (JsonProxy.JsonArray) iterUnit.transform();
+
             procUnit = initUnit;
             for (int i = 0; i < iterator.length(); i++) {
+                procUnit.map.put(iterUnit.varNameIndex, i);
+                procUnit.map.put(iterUnit.varNameEach, iterator.get(i));
                 if (isStepUnit(obj)) {
                     procUnit = new StepUnit(procUnit, eachObj);
                 } else if(isStepsUnit(obj)) {

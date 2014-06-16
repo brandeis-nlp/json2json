@@ -183,13 +183,13 @@ public class ProcedureUnit extends TemplateUnit {
         return vname.trim().substring(TemplateNaming.VariableMark.length());
     }
 
-    protected Object getObject(JsonProxy.JsonObject procObj, TemplateNaming.UnitType type) {
-        Object obj = procObj.get(TemplateNaming.symbolByName(type.name()));
-        if(obj == null) {
-            obj = procObj.get(TemplateNaming.keywordByName(type.name()));
-        }
-        return obj;
-    }
+//    protected Object getObject(JsonProxy.JsonObject procObj, TemplateNaming.UnitType type) {
+//        Object obj = procObj.get(TemplateNaming.symbolByName(type.name()));
+//        if(obj == null) {
+//            obj = procObj.get(TemplateNaming.keywordByName(type.name()));
+//        }
+//        return obj;
+//    }
 
     @Override
     public Object transform() throws Json2JsonException{

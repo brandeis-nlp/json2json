@@ -30,5 +30,8 @@
     "for_each" : {},
     "for_each_alt" : {},
 
+    "do_while" : {},
+    "do_while_alt" : {},
+
     "hello_world":{ "json" : "hello world" }
 }

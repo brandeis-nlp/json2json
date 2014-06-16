@@ -508,14 +508,14 @@ Or it can also be:
                                    {   "%<>"     :  { "<": [ {"%#": "%str"}, 10] },
                                        "%DO"     :  {"%str": {"%+": ["%str", " go!"]}}
                                    },
-                                   "%uri" ] 
+                                   "%str" ]
                  } 
 }          
 ```
 The Target Json will be:
 
 ```
-{ "duplicated" : "go!go!go!" }
+{ "duplicated" : "go!go!go!go!" }
 ```
 <!--
 <table  class="v"><tbody><tr>
