@@ -13,13 +13,11 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  **********************************************************************************************************************/
-package org.lappsgrid.json2json;
+package edu.cs.brandeis.edu.json2json;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
-import org.lappsgrid.json2json.template.Proxy;
-import org.lappsgrid.json2json.template.StringTemplate;
 
 /**
  * Created by shi on 4/1/14.

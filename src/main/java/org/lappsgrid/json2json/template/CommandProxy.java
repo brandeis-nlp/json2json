@@ -17,13 +17,12 @@
 package org.lappsgrid.json2json.template;
 
 import com.eclipsesource.json.JsonObject;
-import org.lappsgrid.json2json.Json2Json;
+import edu.cs.brandeis.edu.json2json.Json2Json;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

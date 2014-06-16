@@ -16,7 +16,6 @@
 package org.lappsgrid.json2json.template;
 
 import org.lappsgrid.json2json.Json2JsonException;
-import org.lappsgrid.json2json.Template;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

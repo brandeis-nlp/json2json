@@ -15,34 +15,37 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json;
 
-
+import edu.cs.brandeis.edu.json2json.Template;
+import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.jsonpath.JsonPath;
-import java.util.concurrent.LinkedBlockingQueue;
+import org.lappsgrid.json2json.template.JsonTemplate;
 
-
-
+/**
+ * Created by lapps on 6/16/2014.
+ */
 public class Json2Json extends JsonPath {
-    static int InitialSize = 8;
-    static final LinkedBlockingQueue<ITemplate> cacheJsonTemplate = new LinkedBlockingQueue<ITemplate>(InitialSize);
-    static {
-        for (int i = 0; i < InitialSize; i ++)
-            try {
-                cacheJsonTemplate.put(new Template());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
+    public static interface Template {
+        public String transform(String template, String... jsons) throws Json2JsonException;
+        public Object transform(JsonProxy.JsonObject template, JsonProxy.JsonObject ...jsons) throws Json2JsonException;
     }
 
 
-    public static String transform (String template, String ...jsons) throws Json2JsonException {
-        String ret = null;
-        try {
-            ITemplate json2json = cacheJsonTemplate.take();
-            ret = json2json.transform(template, jsons);
-            cacheJsonTemplate.put(json2json);
-        } catch (InterruptedException e) {
-            throw new Json2JsonException(e);
-        }
-        return ret;
+    public static String transform(String template, String... jsons) throws Json2JsonException {
+        return newTemplate().transform(template, jsons);
     }
+
+    public static Object transform(JsonProxy.JsonObject template, JsonProxy.JsonObject ...jsons)
+            throws Json2JsonException{
+        return newTemplate().transform(template, jsons);
+    }
+
+    public static Template newTemplate() {
+        return new JsonTemplate();
+    }
+
+
+//    public static Template newTemplate() {
+//        return new edu.cs.brandeis.edu.json2json.Template();
+//    }
 }

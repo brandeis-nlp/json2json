@@ -1,11 +1,11 @@
-package org.lappsgrid.json2json;
+package edu.cs.brandeis.json2json;
 
 
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.lappsgrid.json2json.template.StringTemplate;
+import edu.cs.brandeis.edu.json2json.StringTemplate;
 
 public class StringTemplateTest {
 

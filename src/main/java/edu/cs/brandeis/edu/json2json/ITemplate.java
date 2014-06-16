@@ -13,9 +13,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  **********************************************************************************************************************/
-package org.lappsgrid.json2json;
+package edu.cs.brandeis.edu.json2json;
 
-
+import org.lappsgrid.json2json.Json2JsonException;
 
 public interface ITemplate {
     public String transform(String template, String... jsons) throws Json2JsonException;

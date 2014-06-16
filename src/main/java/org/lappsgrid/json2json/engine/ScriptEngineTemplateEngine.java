@@ -15,17 +15,12 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.engine;
 
-import org.lappsgrid.json2json.Json2Json;
 import org.lappsgrid.json2json.Json2JsonException;
-import org.lappsgrid.json2json.jsonobject.JsonProxy;
-import org.lappsgrid.json2json.template.TemplateUnit;
 
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * Created by shi on 6/14/14.

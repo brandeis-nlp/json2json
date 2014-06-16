@@ -13,7 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  **********************************************************************************************************************/
-package org.lappsgrid.json2json;
+package edu.cs.brandeis.edu.json2json;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,16 +22,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
-import org.lappsgrid.json2json.template.Process;
-import org.lappsgrid.json2json.template.Proxy;
+import org.lappsgrid.json2json.template.JsonUnit;
 
 /**
  * Created by shi on 4/9/14.
  */
-public class Template extends Proxy implements ITemplate  {
+public class Template extends Proxy implements org.lappsgrid.json2json.Json2Json.Template, ITemplate {
 
 
     public static final String Map_JSONs = "____json____";
@@ -52,6 +52,16 @@ public class Template extends Proxy implements ITemplate  {
 //        System.out.println(functions);
 //        System.out.println(cache);
         return res.toString();
+    }
+
+    @Override
+    public Object transform(JsonObject template, JsonObject... jsons) throws Json2JsonException {
+        String [] sources = new String [jsons.length];
+        for (int i = 0; i < jsons.length; i++) {
+            sources[i] = jsons[i].toString();
+        }
+        String res = transform(template.toString(), sources);
+        return JsonProxy.str2json(res);
     }
 
     private static final ConcurrentHashMap<String, Method> cache = new ConcurrentHashMap<String, Method>();
@@ -76,7 +86,7 @@ public class Template extends Proxy implements ITemplate  {
                 if (cache == null) {
                     cache = new ConcurrentHashMap<String, Object>();
                 }
-                String res =  Json2Json.path((String)variables.get(Map_JSONs + sequence), jsonpath.substring(pathBegin), cache).trim();
+                String res =  Json2Json.path((String) variables.get(Map_JSONs + sequence), jsonpath.substring(pathBegin), cache).trim();
 //                System.out.println("Template2.read : " + jsonpath);
 //                System.out.println("Template2.read : " + res);
                 // return different result.
@@ -126,7 +136,7 @@ public class Template extends Proxy implements ITemplate  {
 //                        System.out.println("Proxy : " + key +" " + val +" " + replacedVal);
                         Object res = Proxy.invoke(key, replacedVal);
                         return res;
-                    } else if (org.lappsgrid.json2json.template.Process.Definitions.containsKey(key) || Process.Symbols.containsKey(key)) {
+                    } else if (Process.Definitions.containsKey(key) || Process.Symbols.containsKey(key)) {
                         Map<String, Object> map = new HashMap<String, Object>(variables);
                         return Process.invoke(key, val, map);
                     }

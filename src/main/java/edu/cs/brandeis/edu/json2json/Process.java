@@ -13,12 +13,10 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  **********************************************************************************************************************/
-package org.lappsgrid.json2json.template;
+package edu.cs.brandeis.edu.json2json;
 
 
-import org.lappsgrid.json2json.GroovyEngine;
 import org.lappsgrid.json2json.Json2JsonException;
-import org.lappsgrid.json2json.Template;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 import java.lang.reflect.Method;

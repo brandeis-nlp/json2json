@@ -15,13 +15,9 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
 
-import org.lappsgrid.json2json.Json2Json;
+import edu.cs.brandeis.edu.json2json.Json2Json;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
-
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by shi on 6/15/14.

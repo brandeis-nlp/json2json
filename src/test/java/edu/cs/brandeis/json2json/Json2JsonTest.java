@@ -1,4 +1,4 @@
-package org.lappsgrid.json2json;
+package edu.cs.brandeis.json2json;
 
 
 import org.apache.commons.io.FileUtils;

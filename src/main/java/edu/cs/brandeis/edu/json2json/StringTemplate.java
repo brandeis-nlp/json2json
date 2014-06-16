@@ -14,17 +14,13 @@
         limitations under the License.
 **********************************************************************************************************************/
 
-package org.lappsgrid.json2json.template;
+package edu.cs.brandeis.edu.json2json;
 
-
-
-import org.lappsgrid.json2json.Json2Json;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

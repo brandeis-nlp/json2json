@@ -1,6 +1,7 @@
-package org.lappsgrid.json2json;
+package edu.cs.brandeis.json2json;
 
 
+import edu.cs.brandeis.edu.json2json.GroovyEngine;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;

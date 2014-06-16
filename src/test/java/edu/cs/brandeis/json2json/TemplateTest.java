@@ -1,6 +1,7 @@
-package org.lappsgrid.json2json;
+package edu.cs.brandeis.json2json;
 
 
+import edu.cs.brandeis.edu.json2json.Template;
 import junit.framework.Assert;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;

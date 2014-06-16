@@ -8,10 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
-import org.lappsgrid.json2json.jsonpath.JayWayJsonPath;
+import org.lappsgrid.json2json.template.JsonTemplate;
 
 import java.io.File;
-import java.net.URISyntaxException;
 
 public class JsonTemplateTest {
     public static String readResource(String filename) throws Exception {
@@ -28,14 +27,14 @@ public class JsonTemplateTest {
     JsonObject sources = null;
     JsonObject templates = null;
     JsonObject targets = null;
-    JsonTemplate.Json2Json json2json = null;
+    Json2Json json2json = null;
 
     @Before
     public void setup() throws Exception {
         sources = readJsonObject("testcase.source.json");
         templates = readJsonObject("testcase.template.json");
         targets = readJsonObject("testcase.target.json");
-        json2json = new JsonTemplate.Json2Json();
+        json2json = new Json2Json();
     }
 
     @After
