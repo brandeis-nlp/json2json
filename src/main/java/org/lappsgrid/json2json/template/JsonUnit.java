@@ -15,11 +15,14 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
 
+import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,37 +62,48 @@ public class JsonUnit {
         this.map.putAll(parent.map);
     }
 
-    public Object transform () throws Json2JsonException {
-//        logger.info("isJsonPathRef " + isJsonPathRef(obj));
-//        logger.info("isTemplate " + isTemplate(obj));
-//        logger.info("isVariable " + isVariable(obj));
-//        logger.info("isJsonPathRef " + isJsonPathRef(obj));
-        if (isJsonPathRef(obj)) {
-            /** JsonPath Reference **/
-            JsonPathRefUnit unit = new JsonPathRefUnit(this);
-            transformed = unit.transform();
+    public Object transform () throws Json2JsonException{
+        try {
+            if (isJsonPathRef(obj)) {
+                /** JsonPath Reference **/
+                JsonPathRefUnit unit = new JsonPathRefUnit(this);
+                transformed = unit.transform();
 
-        } else if(isTemplate(obj)) {
-            /** Template **/
-            TemplateUnit unit = new TemplateUnit(this);
-            transformed = unit.transform();
-        } else if(isVariable(obj)) {
-            /** Variable is loaded from map **/
-            transformed = map.get(ProcedureUnit.getVarName((String)obj));
-        } else if(obj instanceof JsonProxy.JsonObject) {
-            JsonProxy.JsonObject trans = JsonProxy.newObject();
-            for(String key : ((JsonProxy.JsonObject) obj).keys()) {
-                trans.put(key, new JsonUnit(this, ((JsonProxy.JsonObject) obj).get(key)).transform());
+            } else if (isTemplate(obj)) {
+                /** Template **/
+                TemplateUnit unit = new TemplateUnit(this);
+                transformed = unit.transform();
+            } else if (isVariable(obj)) {
+                /** Variable is loaded from map **/
+                transformed = map.get(ProcedureUnit.getVarName((String) obj));
+            } else if (obj instanceof JsonProxy.JsonObject) {
+                JsonProxy.JsonObject trans = JsonProxy.newObject();
+                for (String key : ((JsonProxy.JsonObject) obj).keys()) {
+                    trans.put(key, new JsonUnit(this, ((JsonProxy.JsonObject) obj).get(key)).transform());
+                }
+                transformed = trans;
+            } else if (obj instanceof JsonProxy.JsonArray) {
+                JsonProxy.JsonArray trans = JsonProxy.newArray();
+                for (int i = 0; i < ((JsonProxy.JsonArray) obj).length(); i++) {
+                    trans.add(new JsonUnit(this, ((JsonProxy.JsonArray) obj).get(i)).transform());
+                }
+                transformed = trans;
             }
-            transformed = trans;
-        } else if(obj instanceof JsonProxy.JsonArray) {
-            JsonProxy.JsonArray trans = JsonProxy.newArray();
-            for(int i = 0; i < ((JsonProxy.JsonArray) obj).length(); i ++) {
-                trans.add(new JsonUnit(this, ((JsonProxy.JsonArray) obj).get(i)).transform());
-            }
-            transformed = trans;
+
+        }catch (Throwable th) {
+            th.printStackTrace();
+            transformed = exp2json(th);
         }
         return transformed;
+    }
+
+    public static JsonObject exp2json(Throwable th) {
+        JsonObject obj = JsonProxy.newObject();
+        StringWriter sw = new StringWriter();
+        th.printStackTrace(new PrintWriter(sw));
+        String exceptionAsString = sw.toString();
+        obj.put("Exception", exceptionAsString);
+        return obj;
     }
 
     public JsonUnit setJsons(String ... jsons) {

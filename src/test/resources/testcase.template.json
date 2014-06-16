@@ -112,5 +112,17 @@
                       }
                     }
                   }
-                }
+                },
+
+    "if_then_no_else" :{ "uri" :  { "%!IF": {
+                                                                      "%$"      :  {   "%!uri": "" },
+                                                                      "%<>"     :  { "==": [ "&$.name", "OpenNLP" ]},
+                                                                      "%THEN"   :  { "%uri": "http://www.opennlp.org"},
+                                                                      "%#"      :  "%uri"    }
+                                                       }
+                                            },
+
+    "error_wrong_jsonpath" : {"hi" : "&$.."},
+
+    "End":{}
 }

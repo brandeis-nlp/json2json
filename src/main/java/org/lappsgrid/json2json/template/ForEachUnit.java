@@ -15,6 +15,7 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
 
+import com.fasterxml.jackson.databind.JsonSerializable;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.slf4j.Logger;
@@ -89,6 +90,7 @@ public class ForEachUnit extends ProcedureUnit {
 
     @Override
     public Object transform() throws Json2JsonException {
+        transformed = null;
         if (isForEach()) {
             Object initObj = null;
             Object iterObj = null;
@@ -115,8 +117,11 @@ public class ForEachUnit extends ProcedureUnit {
 
             } else if(this.unitContent() instanceof JsonProxy.JsonArray) {
                 JsonProxy.JsonArray jobj = (JsonProxy.JsonArray)this.unitContent();
-                initObj = jobj.get(0);
+                if(jobj.length() != 3) {
+                    throw new Json2JsonException("Illegal procedure Json : " + jobj);
+                }
 
+                initObj = jobj.get(0);
                 JsonProxy.JsonObject jsubobj = (JsonProxy.JsonObject)jobj.get(1);
                 for(String key: jsubobj.keys()) {
                     TemplateNaming.UnitType unitType = TemplateNaming.unitTypeByCommand(this.unitName(),key);
@@ -148,6 +153,8 @@ public class ForEachUnit extends ProcedureUnit {
                     procUnit = new StepUnit(procUnit, eachObj);
                 } else if(isStepsUnit(obj)) {
                     procUnit = new StepsUnit(procUnit, eachObj);
+                } else {
+                    throw new Json2JsonException("Illegal \"Each (%EACH)\" process : " + obj);
                 }
                 procUnit.transform();
             }

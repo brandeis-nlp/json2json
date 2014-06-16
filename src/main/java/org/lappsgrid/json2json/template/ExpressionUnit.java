@@ -35,6 +35,7 @@ public class ExpressionUnit extends TemplateUnit {
 
     @Override
     public Object transform () throws Json2JsonException {
+        transformed = null;
         if(isExpression ()) {
             Object[] params = null;
             if(unitContent() instanceof JsonProxy.JsonObject) {

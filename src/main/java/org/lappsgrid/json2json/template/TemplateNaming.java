@@ -37,6 +37,16 @@ public class TemplateNaming {
     public static final String DefaultForEachIterator = "e";
     public static final String DefaultForEachIndex = "i";
 
+
+    public static final String JsonPathRefRegex = "&\\d*\\$\\.[^\\s\"\'\\\\,]+";
+
+    public static boolean isJsonPathRef(String path) {
+        if(path != null) {
+            return path.matches(JsonPathRefRegex);
+        }
+        return false;
+    }
+
     public enum UnitType {
         /** json path operation**/
         jsonpath,

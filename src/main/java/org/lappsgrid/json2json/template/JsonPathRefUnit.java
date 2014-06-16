@@ -41,7 +41,7 @@ public class JsonPathRefUnit extends JsonUnit {
     protected void init(){
         if (obj != null && obj instanceof String) {
             String fullpath = ((String)obj).trim();
-            if(fullpath.startsWith(TemplateNaming.JsonPathReference) && fullpath.contains("$.")) {
+            if(TemplateNaming.isJsonPathRef(fullpath)) {
                 isPath = true;
                 int pathBegin = fullpath.indexOf("$.");
                 if (pathBegin > 0) {
@@ -61,9 +61,17 @@ public class JsonPathRefUnit extends JsonUnit {
     }
 
     public Object transform () throws Json2JsonException {
+        transformed = null;
         if(isJsonPathRef()) {
-            String ret =  JsonPath.path(jsons.get(index), path).trim();
-            transformed = JsonProxy.str2json(ret);
+            String json = jsons.get(index);
+            if(json == null) {
+                throw new Json2JsonException("Wrong Index ( " + index + " )");
+            }
+            String res = JsonPath.path(json, path);
+            if(res == null) {
+                throw new Json2JsonException("Unknown JsonPath ( " + path +" )");
+            }
+            transformed = JsonProxy.str2json(res.trim());
         }
         return transformed;
     }

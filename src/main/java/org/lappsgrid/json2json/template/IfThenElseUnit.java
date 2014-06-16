@@ -15,6 +15,7 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.template;
 
+import org.lappsgrid.json2json.Json2Json;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.slf4j.Logger;
@@ -44,6 +45,7 @@ public class IfThenElseUnit extends ProcedureUnit {
 
     @Override
     public Object transform() throws Json2JsonException{
+        transformed = null;
         if (isIfThenElse()) {
             Object initObj = null;
             Object exprObj = null;
@@ -71,6 +73,9 @@ public class IfThenElseUnit extends ProcedureUnit {
                 }
             } else if(this.unitContent() instanceof JsonProxy.JsonArray) {
                 JsonProxy.JsonArray jobj = (JsonProxy.JsonArray)this.unitContent();
+                if(jobj.length() != 3) {
+                    throw new Json2JsonException("Illegal procedure Json : " + jobj);
+                }
                 initObj = jobj.get(0);
 
                 JsonProxy.JsonObject jsubobj = (JsonProxy.JsonObject)jobj.get(1);
@@ -88,10 +93,10 @@ public class IfThenElseUnit extends ProcedureUnit {
             }
 
             if(exprObj == null) {
-                throw new Json2JsonException("Expression unit missing. ");
+                throw new Json2JsonException("Unit \"Expression (%<>)\" missing. ");
             }
             if(thenObj == null) {
-                throw new Json2JsonException("Then unit missing. ");
+                throw new Json2JsonException("Unit \"Then (%THEN)\" missing. ");
             }
             initUnit = new InitUnit(this, initObj);
             initUnit.transform();
@@ -108,8 +113,10 @@ public class IfThenElseUnit extends ProcedureUnit {
                     procUnit = new StepsUnit(initUnit, elseObj);
                 }
             }
-            procUnit.transform();
-            this.transformed = procUnit.map.get(getVarName((String)retObj));
+            if(procUnit != null) {
+                procUnit.transform();
+                this.transformed = procUnit.map.get(getVarName((String)retObj));
+            }
         }
         return this.transformed;
     }

@@ -111,8 +111,13 @@ public class ProcedureUnit extends TemplateUnit {
         public Object transform () throws Json2JsonException {
             if(isStepUnit()) {
                 JsonProxy.JsonObject jobj = (JsonProxy.JsonObject) obj;
-                String key = jobj.keys().iterator().next().trim();
-                this.map.put(varName, new JsonUnit(this, jobj.get(key)).transform());
+                String key = jobj.keys().iterator().next();
+                if (key == null) {
+                    throw new Json2JsonException("Illegal process format : " + obj);
+                }
+                Object varVal = new JsonUnit(this, jobj.get(key)).transform();
+                if(varVal != null)
+                    this.map.put(varName, varVal);
             }
             return null;
         }
@@ -158,7 +163,8 @@ public class ProcedureUnit extends TemplateUnit {
                     /** In case of Template Unit, we will do Template.transform **/
                     val = new JsonUnit(this, val).transform();
                     String vname = getVarName(key);
-                    map.put(vname, val);
+                    if(val != null)
+                        map.put(vname, val);
                 }
             }
             return null;

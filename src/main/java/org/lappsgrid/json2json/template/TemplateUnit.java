@@ -71,6 +71,7 @@ public class TemplateUnit extends JsonUnit{
 
     @Override
     public Object transform () throws Json2JsonException {
+        transformed = null;
         if(isTemplate()) {
             if ( getTemplateType() == TemplateType.Command) {
                 CommandUnit cu = new CommandUnit(this);
@@ -91,7 +92,10 @@ public class TemplateUnit extends JsonUnit{
     }
 
     public String unitName(){
-        return ((JsonObject)obj).keys().iterator().next().trim();
+        String name =  ((JsonObject)obj).keys().iterator().next();
+        if(name == null)
+            return null;
+        return name.trim();
     }
 
     public Object unitContent() {

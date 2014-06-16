@@ -53,6 +53,7 @@ public class CommandUnit extends TemplateUnit {
     }
 
     public Object transform() throws Json2JsonException {
+        transformed = null;
         if(super.isTemplate()) {
             String command = unitName();
             Object params = unitContent();

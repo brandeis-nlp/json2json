@@ -92,5 +92,11 @@
                       }
                     }
                   }
-                }
+                },
+
+    "if_then_no_else" : { "uri" : null},
+
+    "error_wrong_jsonpath" : {"hi":[{}]},
+
+    "End":{}
 }

@@ -67,5 +67,12 @@
                }
              ]
            }
-         }
+         },
+
+    "if_then_no_else" :  {"name":"Open"},
+
+    "error_wrong_jsonpath" : {},
+
+
+    "End":{}
 }

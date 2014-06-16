@@ -42,6 +42,7 @@ public class DoWhileUnit extends ProcedureUnit {
 
     @Override
     public Object transform() throws Json2JsonException {
+        transformed = null;
         if (isDoWhile()) {
             Object initObj = null;
             Object exprobj = null;
@@ -67,6 +68,10 @@ public class DoWhileUnit extends ProcedureUnit {
                 }
             } else if(this.unitContent() instanceof JsonProxy.JsonArray) {
                 JsonProxy.JsonArray jobj = (JsonProxy.JsonArray)this.unitContent();
+                if(jobj.length() != 3) {
+                    throw new Json2JsonException("Illegal procedure Json : " + jobj);
+                }
+
                 initObj = jobj.get(0);
                 JsonProxy.JsonObject jsubobj = (JsonProxy.JsonObject)jobj.get(1);
                 for(String key: jsubobj.keys()) {

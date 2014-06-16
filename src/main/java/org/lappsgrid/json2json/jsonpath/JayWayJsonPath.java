@@ -32,7 +32,11 @@ import org.lappsgrid.json2json.jsonpath.JsonPath.IPath;
 public class JayWayJsonPath implements IPath {
 
     public String path(String json, String path) throws Json2JsonException {
-        return JsonPath.read(json, path).toString();
+        Object obj = JsonPath.read(json, path);
+        if (obj == null) {
+            return null;
+        }
+        return obj.toString();
     }
 
     // cache path.
@@ -50,6 +54,10 @@ public class JayWayJsonPath implements IPath {
             cache.put(path, val);
         }
         JsonPath jsonpath = (JsonPath)val;
-        return reader.read(jsonpath).toString();
+        Object obj = reader.read(jsonpath);
+        if (obj == null) {
+            return null;
+        }
+        return obj.toString();
     }
 }
