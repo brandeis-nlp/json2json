@@ -193,6 +193,10 @@ public class CommandProxy {
         return arr.get(i);
     }
 
+    @MappingUnitType(mapping = UnitType.array_set)
+    public static Object array_set (JsonProxy.JsonArray arr, int i, Object obj ) {
+        return arr.set(i, obj);
+    }
 
     @MappingUnitType(mapping = UnitType.array_sub)
     public static JsonProxy.JsonArray array_sub (JsonProxy.JsonArray arr, int start, int end) {
@@ -253,7 +257,7 @@ public class CommandProxy {
     }
 
 
-    @MappingUnitType(mapping = UnitType.map_keys)
+    @MappingUnitType(mapping = UnitType.map_keys, paramType = ProxyMapping.ParamType.SingleParam)
     public static JsonProxy.JsonArray map_keys(JsonProxy.JsonObject obj) {
         return JsonProxy.convertArray(obj.keys());
     }

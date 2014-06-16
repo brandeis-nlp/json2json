@@ -48,14 +48,14 @@ public class JsonTemplateTest {
             JsonObject source = (JsonObject)sources.get(name);
             Object target = targets.get(name);
 
-            System.out.println("----------------" + name +"------------------");
+            System.out.println("----------------  " + name +"  ------------------");
             System.out.println("Template : " + template.toString());
             System.out.println("Source : " + source.toString());
             System.out.println("Expected : " + target.toString());
             String result = json2json.transform(template.toString(), source.toString());
             System.out.println("Result : " + result.toString());
             Assert.assertEquals(target.toString(), result);
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
     }
     

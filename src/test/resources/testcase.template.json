@@ -14,7 +14,7 @@
     "array_set":{"%]/" : [ ["hello", "world"], 0, "hi"]},
     "array_remove":{"%]-" : [ ["hello","world"], 0] },
     "array_get":{"%]$" : [ ["hello", "world"], 0]},
-    "array_sub":{"%]_" : [ ["hello", "world"], 0, 0]},
+    "array_sub":{"%]_" : [ ["hello", "world"], 0, 1]},
     "array_index":{"%]?" : [ ["hello", "world"],"hello"]},
     "array_length":{"%]#" : ["hello", "world"]},
     "map_put":{"%}+" : [{}, {"hello":"world"}] },

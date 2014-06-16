@@ -155,28 +155,28 @@ public class TemplateNaming {
             new String []{"process", "%!", "_", "while", UnitType.do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** default process operation **/
-            new String []{"process-proc", "%", "$", "def", UnitType.definitions_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-proc", "%", "{}", "steps", UnitType.steps_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-proc", "%", "#", "ret", UnitType.return_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-proc", "%!proc.%", "$", "def", UnitType.definitions_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-proc", "%!proc.%", "{}", "steps", UnitType.steps_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-proc", "%!proc.%", "#", "ret", UnitType.return_of_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** if process operation **/
-            new String []{"process-if-then-else", "%", "$", "def", UnitType.definitions_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-if-then-else", "%", "<>", "expr", UnitType.expression_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-if-then-else", "%", "then", "then", UnitType.then_step_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-if-then-else", "%", "else", "else", UnitType.else_step_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-if-then-else", "%", "#", "ret", UnitType.return_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if-then-else", "%!if.%", "$", "def", UnitType.definitions_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if-then-else", "%!if.%", "<>", "expr", UnitType.expression_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if-then-else", "%!if.%", "then", "then", UnitType.then_step_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if-then-else", "%!if.%", "else", "else", UnitType.else_step_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-if-then-else", "%!if.%", "#", "ret", UnitType.return_of_if_then_else_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** for process operation **/
-            new String []{"process-for-each", "%", "$", "def", UnitType.definitions_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-for-each", "%", "[]", "iter", UnitType.iterator_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-for-each", "%", "each", "each", UnitType.each_step_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-for-each", "%", "#", "ret", UnitType.return_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-for-each", "%!for.%", "$", "def", UnitType.definitions_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-for-each", "%!for.%", "[]", "iter", UnitType.iterator_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-for-each", "%!for.%", "each", "each", UnitType.each_step_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-for-each", "%!for.%", "#", "ret", UnitType.return_of_for_each_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** while process operation **/
-            new String []{"process-do-while", "%", "$", "def", UnitType.definitions_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-do-while", "%", "<>", "expr", UnitType.expression_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-do-while", "%", "do", "do", UnitType.do_step_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
-            new String []{"process-do-while", "%", "#", "ret", UnitType.return_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%!do.%", "$", "def", UnitType.definitions_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%!do.%", "<>", "expr", UnitType.expression_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%!do.%", "do", "do", UnitType.do_step_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
+            new String []{"process-do-while", "%!do.%", "#", "ret", UnitType.return_of_do_while_process.name(), TemplateUnit.TemplateType.Procedure.name()},
 
             /** expression operation **/
             new String []{"expression", "", "==", "==", UnitType.equals_expression.name(), TemplateUnit.TemplateType.Expression.name()},

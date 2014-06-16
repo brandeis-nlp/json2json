@@ -167,7 +167,7 @@ set | %]/ | %array-set | [ [*arr_1,..., arr_m*], *index*, *new*] | {"%]/" : [ ["
 remove | %]- | %array-rm | [ [*arr_1,..., arr_m*], *index*] | {"%]-" : [ ["hello","world"], 0] }   | ["world"]
 *length |%]# | %array-len | [*arr_1,..., arr_m*]| {"%]#" : ["hello", "world"]} | 2
 index |%]? | %array-idx | [[*arr_1,..., arr_m*], *arr_x*]| {"%]?" : [ ["hello", "world"],"hello"]}  | 0
-sublist |%]_ | %array-sub | [[*arr_1,..., arr_m*], *start*, *end*]| {"%]_" : [ ["hello", "world"], 0, 0]}  | ["hello"]
+sublist |%]_ | %array-sub | [[*arr_1,..., arr_m*], *start*, *end*]| {"%]_" : [ ["hello", "world"], 0, 1]}  | ["hello"]
 
 
 *  Note: We note the **Single-Parameter Command** with *star* (**\***) mark.  
