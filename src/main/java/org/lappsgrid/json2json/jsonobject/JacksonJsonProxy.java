@@ -120,6 +120,11 @@ public class JacksonJsonProxy implements JsonProxy.NewProxy {
             return map;
         }
 
+//        @Override
+//        public JsonObject clone() {
+//            return new JacksonJsonObject(new LinkedHashMap<String, Object>(map));
+//        }
+
         @Override
         public String toString() {
             ObjectMapper mapper = new ObjectMapper();
@@ -198,6 +203,11 @@ public class JacksonJsonProxy implements JsonProxy.NewProxy {
             }
             return this;
         }
+
+//        @Override
+//        public JsonArray clone() {
+//            return new JacksonJsonArray(new ArrayList<Object>(list));
+//        }
 
         @Override
         public Object original() {

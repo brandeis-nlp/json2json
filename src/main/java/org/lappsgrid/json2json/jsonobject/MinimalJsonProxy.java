@@ -48,6 +48,11 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             return jsonObject;
         }
 
+//        @Override
+//        public JsonObject clone() {
+//            return new MinimalJsonObject(new com.eclipsesource.json.JsonObject(jsonObject));
+//        }
+
         protected MinimalJsonObject() {
             jsonObject = new com.eclipsesource.json.JsonObject();
         }
@@ -216,6 +221,12 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             }
             return this;
         }
+
+//        @Override
+//        public JsonArray clone() {
+//            return new MinimalJsonArray(new com.eclipsesource.json.JsonArray(jsonArray));
+//        }
+
         public Object add(String s) {
             jsonArray.add(s);
             return this;

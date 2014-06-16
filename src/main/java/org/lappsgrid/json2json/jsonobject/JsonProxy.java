@@ -44,6 +44,9 @@ public class JsonProxy {
 
         /** if has original mapping **/
         public Object original();
+
+        /** clone a Json Object **/
+//        public JsonObject clone();
     }
 
     public static interface JsonArray {
@@ -62,6 +65,9 @@ public class JsonProxy {
         /** directly read string array as Json Array object. **/
         public JsonArray convert(String [] arr);
         public JsonArray convert(Collection<String> arr);
+
+        /** clone a Json array **/
+//        public JsonArray clone();
 
         /** if has original mapping **/
         public Object original();
