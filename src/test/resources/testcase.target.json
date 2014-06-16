@@ -22,7 +22,7 @@
     "map_get": "world",
     "map_remove": {},
     "map_length": 1,
-    "map_keys": ["hello"]
+    "map_keys": ["hello"],
 
-
+    "hello_world": { "json2json" : ["hello", "world"] }
 }

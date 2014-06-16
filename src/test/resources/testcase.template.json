@@ -21,5 +21,9 @@
     "map_get":{"%}$" : [{"hello":"world"},"hello"]},
     "map_remove":{"%}-" : [{"hello" : "world"}, "hello"]},
     "map_length":{"%}#" : {"hello":"world"}},
-    "map_keys":{"%}*" : {"hello":"world"}}
+    "map_keys":{"%}*" : {"hello":"world"}},
+
+
+
+    "hello_world": { "json2json" : {"%|": ["&$.json", " "]}} 
 }

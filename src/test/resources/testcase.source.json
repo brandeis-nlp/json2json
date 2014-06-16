@@ -21,5 +21,8 @@
     "map_get": {},
     "map_remove": {},
     "map_length": {},
-    "map_keys": {}
+    "map_keys": {},
+
+
+    "hello_world":{ "json" : "hello world" }
 }
