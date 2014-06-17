@@ -732,7 +732,7 @@ Maven dependency is like this.
 <dependency> 
 <groupId>org.lappsgrid</groupId> 
 <artifactId>json2json</artifactId> 
-<version>0.1.6</version> 
+<version>0.2.0</version>
 </dependency> 
 <dependencies>
 ```
