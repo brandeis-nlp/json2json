@@ -4,7 +4,7 @@
 
     <groupId>org.lappsgrid</groupId>
     <artifactId>json2json</artifactId>
-    <version>0.2.2-SNAPSHOT</version>
+    <version>0.2.2</version>
 
     <name>Json2Json: JsonPath Based Json Transform</name>
     <description>
@@ -29,7 +29,7 @@
         <url>https://github.com/chunqishi/json2json</url>
         <connection>scm:git:https://github.com/chunqishi/json2json.git</connection>
         <developerConnection>scm:git:https://github.com/chunqishi/json2json.git</developerConnection>
-        <tag>v0.2.1</tag>
+        <tag>v0.2.2</tag>
     </scm>
 
     <distributionManagement>
