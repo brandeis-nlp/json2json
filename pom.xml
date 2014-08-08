@@ -125,7 +125,7 @@
 
     <build>
 		<plugins>
-		  <plugin>
+		  <!--plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-gpg-plugin</artifactId>
 			<executions>
@@ -137,7 +137,7 @@
 				</goals>
 			  </execution>
 			</executions>
-		  </plugin>
+		  </plugin-->
 		</plugins>
         <resources>
             <resource>
