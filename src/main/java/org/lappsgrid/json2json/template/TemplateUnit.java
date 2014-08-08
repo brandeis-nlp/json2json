@@ -55,7 +55,7 @@ public class TemplateUnit extends JsonUnit{
         if (obj != null && obj instanceof JsonObject) {
             Collection<String> keys = ((JsonObject)obj).keys();
 
-            /** Only 1 key is allowed in the TemplateUnit, and the key must be a symbol or keyword**/
+            // Only 1 key is allowed in the TemplateUnit, and the key must be a symbol or keyword
             if (keys.size() == 1) {
                 String type = unitName();
 //                logger.info(type + " " +TemplateNaming.hasSymbol(type)+ " " + TemplateNaming.hasKeyword(type));
