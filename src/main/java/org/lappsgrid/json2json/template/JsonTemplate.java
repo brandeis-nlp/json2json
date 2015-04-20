@@ -24,13 +24,13 @@ import org.lappsgrid.json2json.template.JsonUnit;
  * Created by shi on 6/16/14.
  */
 public class JsonTemplate implements org.lappsgrid.json2json.Json2Json.Template {
-    @Override
+    
     public String transform(String template, String... jsons) throws Json2JsonException {
         JsonUnit junit = new JsonUnit(JsonProxy.readObject(template));
         junit.setJsons(jsons);
         return junit.transform().toString();
     }
-    @Override
+    
     public Object transform(JsonProxy.JsonObject template, JsonProxy.JsonObject... jsons) throws Json2JsonException {
         String [] sources = new String [jsons.length];
         for (int i = 0; i < jsons.length; i++) {

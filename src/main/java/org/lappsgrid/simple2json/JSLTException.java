@@ -13,35 +13,27 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  **********************************************************************************************************************/
-package org.lappsgrid.json2json.engine;
+package org.lappsgrid.simple2json;
 
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
-import org.lappsgrid.json2json.Json2JsonException;
-import org.lappsgrid.json2json.jsonobject.JsonProxy;
-import org.lappsgrid.json2json.template.TemplateUnit;
 
-import java.lang.reflect.Method;
-import java.util.List;
+public class JSLTException extends Exception {
 
-/**
- * Created by shi on 6/14/14.
- */
-public class GroovyTemplateEngine  extends TemplateEngine.EvalEngine {
-    Binding binding = null;
-
-    public GroovyTemplateEngine(){
-        binding = new Binding();
+    public JSLTException(Throwable cause) {
+        super(cause);
     }
 
-    public Object eval(String s) throws Json2JsonException{
-        GroovyShell shell = new GroovyShell(binding);
-        Object res = shell.evaluate(s);
-        return res;
+    public JSLTException() {
+        super();
     }
 
 
-    public void bind(String name, Object val) {
-        binding.setVariable(name, val);
+
+    public JSLTException(String message, Throwable cause) {
+        super(message, cause);
     }
+
+    public JSLTException(String s) {
+        super(s);
+    }
+
 }

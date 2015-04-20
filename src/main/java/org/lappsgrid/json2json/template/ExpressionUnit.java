@@ -1,6 +1,5 @@
 package org.lappsgrid.json2json.template;
 
-import com.sun.corba.se.impl.ior.OldJIDLObjectKeyTemplate;
 import org.lappsgrid.json2json.Json2JsonException;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 

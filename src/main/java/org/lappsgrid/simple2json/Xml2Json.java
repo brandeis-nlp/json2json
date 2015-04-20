@@ -1,30 +1,19 @@
 package org.lappsgrid.simple2json;
 
-import com.sun.org.apache.xerces.internal.parsers.DOMParser;
-import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
+//import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
-import org.lappsgrid.json2json.template.ExpressionUnit;
-import org.w3c.dom.*;
-import org.xml.sax.Attributes;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.Collection;
-import java.util.Stack;
 
 /**
  * Created by lapps on 4/16/2015.
@@ -45,9 +34,11 @@ public class Xml2Json{
     public static String json2xml(String json) throws Exception {
         XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
         StringWriter sw = new StringWriter();
-//        XMLStreamWriter xmlStreamWriter = xmlOutputFactory.createXMLStreamWriter(sw);
-        XMLStreamWriter xmlStreamWriter = new IndentingXMLStreamWriter(xmlOutputFactory.createXMLStreamWriter(sw));
+        XMLStreamWriter xmlStreamWriter = xmlOutputFactory.createXMLStreamWriter(sw);
+//        XMLStreamWriter xmlStreamWriter = new IndentingXMLStreamWriter(xmlOutputFactory.createXMLStreamWriter(sw));
         xmlStreamWriter.writeStartDocument();
+        // support #text and #tail
+        json = json.replaceAll("#text", "__text__").replaceAll("#tail", "__tail__");
         json2node(JsonProxy.newObject().read(json), xmlStreamWriter);
         xmlStreamWriter.writeEndDocument();
         xmlStreamWriter.flush();
@@ -57,15 +48,15 @@ public class Xml2Json{
 
 
 
-    public static void main(String[] args) throws Exception {
-        DocumentBuilder dBuilder = dbf.newDocumentBuilder();
-        Document doc = dBuilder.parse(new File("in.xml"));
-        doc.getDocumentElement().normalize();
-        printNode(doc);
-        JsonProxy.JsonObject json = node2json(doc, JsonProxy.newObject());
-        System.out.println(json);
-        System.out.println(json2xml(json.toString()));
-    }
+//    public static void main(String[] args) throws Exception {
+//        DocumentBuilder dBuilder = dbf.newDocumentBuilder();
+//        Document doc = dBuilder.parse(new File("in.xml"));
+//        doc.getDocumentElement().normalize();
+//        printNode(doc);
+//        JsonProxy.JsonObject json = node2json(doc, JsonProxy.newObject());
+//        System.out.println(json);
+//        System.out.println(json2xml(json.toString()));
+//    }
 
     public static void json2node(JsonProxy.JsonObject jsonObj, XMLStreamWriter xmlStreamWriter) throws Exception {
         for (String key : jsonObj.keys()){
@@ -132,8 +123,9 @@ public class Xml2Json{
             String val = node.getNodeValue();
             if( val != null) {
                 val = val.trim();
-                if(val.length() > 0)
+                if(val.length() > 0) {
                     jsonObj.put("__text__", val);
+                }
             }
 
             NodeList list = node.getChildNodes();
@@ -185,6 +177,12 @@ public class Xml2Json{
             throw new RuntimeException("Unexpected Node Type.");
         }
         return jsonObj;
+    }
+
+
+    public static String xml2jsonml (String json) {
+
+        return null;
     }
 
     public static void printNode(Node cur) {

@@ -53,18 +53,19 @@
     </developers>
 
     <properties>
-        <jayway.version>0.9.1</jayway.version>
+        <jayway.version>2.0.0</jayway.version>
         <minimal-json.version>0.9.1</minimal-json.version>
         <jackson2.version>2.3.3</jackson2.version>
-        <groovy.version>2.2.2</groovy.version>
+        <groovy.version>2.4.3</groovy.version>
     </properties>
 
     <dependencies>
 
+        <!-- ^^^^^^^^^^^^^^ JSON Object ^^^^^^^^^^^^^^^^^^^^^ -->
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>x2js</artifactId>
-            <version>1.1.5</version>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20140107</version>
         </dependency>
 
 

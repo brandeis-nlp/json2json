@@ -8,13 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
-import org.lappsgrid.json2json.template.JsonTemplate;
 
 import java.io.File;
 
-public class JsonTemplateTest {
+public class TestJsonTemplate {
     public static String readResource(String filename) throws Exception {
-        File objFile = new File(JsonTemplateTest.class.getResource("/" + filename).toURI());
+        File objFile = new File(TestJsonTemplate.class.getResource("/" + filename).toURI());
         return FileUtils.readFileToString(objFile);
     }
 
@@ -53,7 +52,11 @@ public class JsonTemplateTest {
             System.out.println("Expected : " + target.toString());
             String result = json2json.transform(template.toString(), source.toString());
             System.out.println("Result : " + result.toString());
-            Assert.assertEquals(target.toString(), result);
+            if(name.equals("error_wrong_jsonpath")) {
+                Assert.assertTrue(result.contains("Exception"));
+            } else {
+                Assert.assertEquals(target.toString(), result);
+            }
             System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
     }

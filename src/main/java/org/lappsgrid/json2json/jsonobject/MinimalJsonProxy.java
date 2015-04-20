@@ -26,12 +26,12 @@ import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
  *
  */
 public class MinimalJsonProxy implements JsonProxy.NewProxy{
-    @Override
+    
     public JsonArray newArray() {
         return new MinimalJsonArray();
     }
 
-    @Override
+    
     public JsonObject newObject() {
         return new MinimalJsonObject();
     }
@@ -48,7 +48,7 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             return jsonObject;
         }
 
-//        @Override
+//        
 //        public JsonObject clone() {
 //            return new MinimalJsonObject(new com.eclipsesource.json.JsonObject(jsonObject));
 //        }
@@ -61,7 +61,7 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             jsonObject = obj;
         }
 
-        @Override
+        
         public Object get(String key) {
             com.eclipsesource.json.JsonValue obj = jsonObject.get(key);
             return value2object(obj);
@@ -79,7 +79,7 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             return this;
         }
 
-        @Override
+        
         public List<String> keys() {
             return jsonObject.names();
         }
@@ -176,13 +176,13 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             jsonArray = arr;
         }
 
-        @Override
+        
         public Object get(int i) {
             com.eclipsesource.json.JsonValue obj = jsonArray.get(i);
             return value2object(obj);
         }
 
-        @Override
+        
         public JsonArray add(Object obj) {
             if(obj != null) {
                 jsonArray.add(valueOf(obj));
@@ -190,19 +190,19 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             return this;
         }
 
-        @Override
+        
         public JsonArray remove(int i) {
             jsonArray.remove(i);
             return this;
         }
 
-        @Override
+        
         public JsonArray set(int i, Object s) {
             jsonArray.set(i, valueOf(s));
             return this;
         }
 
-        @Override
+        
         public int length() {
             return jsonArray.size();
         }
@@ -222,7 +222,7 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             return this;
         }
 
-//        @Override
+//        
 //        public JsonArray clone() {
 //            return new MinimalJsonArray(new com.eclipsesource.json.JsonArray(jsonArray));
 //        }
