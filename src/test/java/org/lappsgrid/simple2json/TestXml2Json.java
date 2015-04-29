@@ -1,5 +1,6 @@
 package org.lappsgrid.simple2json;
 
+import junit.framework.Assert;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONML;
 import org.junit.Test;
@@ -14,6 +15,10 @@ import java.io.File;
  * Created by lapps on 4/18/2015.
  */
 public class TestXml2Json {
+    public static String readResource(String filename) throws Exception {
+        File objFile = new File(TestXml2Json.class.getResource("/" + filename).toURI());
+        return FileUtils.readFileToString(objFile);
+    }
     Xml2Json xml2json = new Xml2Json();
 
     @Test
@@ -24,7 +29,12 @@ public class TestXml2Json {
 
     @Test
     public void testXml2Json() throws Exception{
-        System.out.println(xml2json.xml2json("<good attr=\"y\"><x>OK</x>World</good>"));
+        System.out.println(xml2json.xml2json("<good attr=\"y\"><x>OK</x><x>OK1</x><x>OK2</x>World</good>"));
+
+        String xml = readResource("GATEANNIE.xml");
+        String target = readResource("GATEANNIE.json");
+        String result = xml2json.xml2json(xml);
+        Assert.assertEquals(target.replaceAll("\\s", ""), result.replaceAll("\\s", ""));
     }
 
     @Test

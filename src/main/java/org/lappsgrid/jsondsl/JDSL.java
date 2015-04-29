@@ -41,7 +41,6 @@ public class JDSL {
         sb.append(filter(dsl));
         sb.append(") \n");
         sb.append("__target_json__ = __json_builder__.toString()");
-
 //        System.out.println("Source:\n" + binding.getVariable("__source_json__"));
 //        System.out.println("Evaluate:\n" + sb.toString());
         shell.evaluate(sb.toString());
