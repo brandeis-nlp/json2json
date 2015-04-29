@@ -15,6 +15,11 @@
  **********************************************************************************************************************/
 package org.lappsgrid.json2json.jsonobject;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import org.lappsgrid.json2json.Json2JsonException;
+
 import java.util.Collection;
 
 /**
@@ -23,6 +28,17 @@ import java.util.Collection;
  */
 public class JsonProxy {
 
+    public static String obj2json(Object obj) throws Json2JsonException{
+        ObjectWriter ow = new ObjectMapper().writer();
+        String json = null;
+        try {
+            json = ow.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            throw new Json2JsonException(e);
+        }
+        return json;
+    }
 
     /**
      * Json util read string as Json object

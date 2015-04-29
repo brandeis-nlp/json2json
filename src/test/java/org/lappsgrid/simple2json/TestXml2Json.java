@@ -32,15 +32,15 @@ public class TestXml2Json {
         System.out.println(JSONML.toJSONArray("<good  attr=\"y\"><x>OK</x>World<x>OK</x>World</good>"));
     }
 
-//    @Test
+    @Test
     public void testPrint() throws Exception {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbf.newDocumentBuilder();
         File xmlFile = FileUtils.toFile(this.getClass().getResource("/in.xml"));
         Document doc = dBuilder.parse(xmlFile);
         doc.getDocumentElement().normalize();
-        xml2json.printNode(doc);
-        JsonProxy.JsonObject json = xml2json.node2json(doc, JsonProxy.newObject());
+//        xml2json.printNode(doc);
+        Object json = xml2json.node2json(doc, JsonProxy.newObject());
         System.out.println(json);
         System.out.println(xml2json.json2xml(json.toString()));
     }

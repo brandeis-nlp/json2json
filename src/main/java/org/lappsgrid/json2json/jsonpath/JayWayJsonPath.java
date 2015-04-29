@@ -21,6 +21,8 @@ import com.jayway.jsonpath.internal.JsonReader;
 import org.lappsgrid.json2json.Json2JsonException;
 
 import java.util.Map;
+
+import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.jsonpath.JsonPath.IPath;
 
 /**
@@ -33,10 +35,11 @@ public class JayWayJsonPath implements IPath {
 
     public String path(String json, String path) throws Json2JsonException {
         Object obj = JsonPath.read(json, path);
+//        System.out.println("json-path-ret-type:" + obj.getClass());
         if (obj == null) {
             return null;
         }
-        return obj.toString();
+        return JsonProxy.obj2json(obj);
     }
 
     // cache path.
@@ -55,9 +58,10 @@ public class JayWayJsonPath implements IPath {
         }
         JsonPath jsonpath = (JsonPath)val;
         Object obj = reader.read(jsonpath);
+//        System.out.println("json-path-ret-type:" + obj.getClass());
         if (obj == null) {
             return null;
         }
-        return obj.toString();
+        return JsonProxy.obj2json(obj);
     }
 }

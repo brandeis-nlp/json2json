@@ -5,6 +5,7 @@ import org.lappsgrid.json2json.template.TemplateUnit;
 
 /**
  * Created by lapps on 4/19/2015.
+ * @deprecated
  */
 public interface IJSLT {
 

@@ -105,12 +105,16 @@
         <!-- =============================================  -->
 
         <!-- ^^^^^^^^^^^^^^ Groovy    ^^^^^^^^^^^^^^^^^^^^^ -->
+        <!--<dependency>-->
+            <!--<groupId>org.codehaus.groovy</groupId>-->
+            <!--<artifactId>groovy-console</artifactId>-->
+            <!--<version>${groovy.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-console</artifactId>
+            <artifactId>groovy-all</artifactId>
             <version>${groovy.version}</version>
         </dependency>
-
         <!-- =============================================  -->
         <dependency>
             <groupId>junit</groupId>
@@ -123,7 +127,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
-            <scope>test</scope>
+            <!--<scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -171,6 +175,27 @@
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                         <releaseProfiles>releases</releaseProfiles>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <!-- 2.8.0-01 and later require maven-compiler-plugin 3.1 or higher -->
+                    <version>3.1</version>
+                    <configuration>
+                        <compilerId>groovy-eclipse-compiler</compilerId>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy-eclipse-compiler</artifactId>
+                            <version>2.9.1-01</version>
+                        </dependency>
+                        <!-- for 2.8.0-01 and later you must have an explicit dependency on groovy-eclipse-batch -->
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy-eclipse-batch</artifactId>
+                            <version>2.3.7-01</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -25,7 +25,7 @@ public class Xml2Json{
         DocumentBuilder dBuilder = dbf.newDocumentBuilder();
         Document doc = dBuilder.parse(new InputSource(new StringReader(xml)));
         doc.getDocumentElement().normalize();
-        JsonProxy.JsonObject json = node2json(doc, JsonProxy.newObject());
+        JsonProxy.JsonObject json = (JsonProxy.JsonObject)node2json(doc, JsonProxy.newObject());
         return json.toString();
     }
 
@@ -68,11 +68,7 @@ public class Xml2Json{
                     xmlStreamWriter.writeCharacters((String)obj);
                 }
             } else {
-                if(obj instanceof String) {
-                    xmlStreamWriter.writeStartElement(key);
-                    xmlStreamWriter.writeCharacters((String)obj);
-                    xmlStreamWriter.writeEndElement();
-                } if (obj instanceof JsonProxy.JsonObject) {
+                    if (obj instanceof JsonProxy.JsonObject) {
                     JsonProxy.JsonObject child = (JsonProxy.JsonObject) obj;
                     if(key.equals("#comment")) {
                         xmlStreamWriter.writeComment((String)child.get("__text__"));
@@ -92,14 +88,20 @@ public class Xml2Json{
                             xmlStreamWriter.writeComment((String)child.get("__text__"));
                         } else {
                             xmlStreamWriter.writeStartElement(key);
-                            JsonProxy.JsonObject child = (JsonProxy.JsonObject) arr.get(i);
-                            json2node(child, xmlStreamWriter);
-                            xmlStreamWriter.writeEndElement();
-                            if(child.get("__tail__") != null) {
-                                xmlStreamWriter.writeCharacters((String)child.get("__tail__") );
+                            if(arr.get(i) instanceof JsonProxy.JsonObject) {
+                                JsonProxy.JsonObject child = (JsonProxy.JsonObject) arr.get(i);
+                                json2node(child, xmlStreamWriter);
+                                xmlStreamWriter.writeEndElement();
+                                if (child.get("__tail__") != null) {
+                                    xmlStreamWriter.writeCharacters((String) child.get("__tail__"));
+                                }
                             }
                         }
                     }
+                } else {
+                    xmlStreamWriter.writeStartElement(key);
+                    xmlStreamWriter.writeCharacters(obj.toString());
+                    xmlStreamWriter.writeEndElement();
                 }
             }
         }
@@ -115,22 +117,13 @@ public class Xml2Json{
             if(attrs != null) {
                 for (int k = 0; k < attrs.getLength(); k++) {
                     Node arr = attrs.item(k);
-                    jsonObj.put("@"+arr.getNodeName(), arr.getNodeValue());
+                    jsonObj.put("@" + arr.getNodeName(), arr.getNodeValue());
                 }
             }
-
-            // node value
-            String val = node.getNodeValue();
-            if( val != null) {
-                val = val.trim();
-                if(val.length() > 0) {
-                    jsonObj.put("__text__", val);
-                }
-            }
-
             NodeList list = node.getChildNodes();
             int i = 0;
-            if (list != null && list.getLength() > 0) {
+            System.out.println("<"+node.getNodeName()+"> :" + list.getLength());
+            if (list.getLength() > 0) {
                 if(list.item(i).getNodeType()  == Node.TEXT_NODE) {
                     String txt = list.item(i).getNodeValue().trim();
                     if (txt.length() > 0) {
@@ -153,21 +146,30 @@ public class Xml2Json{
                     if(tail.length() > 0)
                         childObj.put("__tail__", tail);
                     node2json(child, childObj);
-                    jsonObj.put(child.getNodeName(),childObj);
+                    // simplify and replace "__text__" object.
+                    if(childObj.length() == 1 && childObj.has("__text__")) {
+                        jsonObj.put(child.getNodeName(), childObj.get("__text__"));
+                    } else {
+                        jsonObj.put(child.getNodeName(), childObj);
+                    }
                 } else {
                     JsonProxy.JsonArray arrChildObjs = null;
-                    if (jsonObj.get(childName) instanceof JsonProxy.JsonObject) {
+                    if (jsonObj.get(childName) instanceof JsonProxy.JsonArray) {
+                        arrChildObjs = (JsonProxy.JsonArray) jsonObj.get(childName);
+                    } else {
                         arrChildObjs = JsonProxy.newArray();
                         arrChildObjs.add(jsonObj.get(childName));
-                    } else {
-                        arrChildObjs = (JsonProxy.JsonArray) jsonObj.get(childName);
                     }
                     JsonProxy.JsonObject childObj = JsonProxy.newObject();
                     if(tail.length() > 0)
                         childObj.put("__tail__", tail);
                     node2json(child, childObj);
-                    System.out.println("arrChildObjs:"+childName);
-                    arrChildObjs.add(childObj);
+                    // simplify and replace "__text__" object.
+                    if(childObj.length() == 1 && childObj.has("__text__")) {
+                        arrChildObjs.add(childObj.get("__text__"));
+                    } else {
+                        arrChildObjs.add(childObj);
+                    }
                     jsonObj.put(child.getNodeName(),arrChildObjs);
                 }
             }

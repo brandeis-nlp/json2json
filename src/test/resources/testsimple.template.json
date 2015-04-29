@@ -1,0 +1,62 @@
+{
+  "template":{
+    "%template":[{"&match":"$"},
+      {"html":{"body":{"h2":"My CD Collection"},
+                "table":{"@border":"1","tr":[{"@bgcolor":"#9acd32","th":["Title","Artist"]},
+                  {"td":[".","."]}]}}}]
+  },
+  "value-of":{
+    "%template":[{"&match":"catalog.cd[0]"},
+      {"html":{"body":{"h2":"My CD Collection"},
+        "table":{"@border":"1","tr":[{"@bgcolor":"#9acd32","th":["Title","Artist"]},
+          {"td":[{"%value-of":{"&select":"title"}}
+          ,{"%value-of":{"&select":"artist"}}]}]}}}]
+  },
+  "for-each":{
+    "%template":[{"&match":"$"},
+      {"html":{"body":{"h2":"My CD Collection"},
+        "table": {
+          "@border": "1",
+          "tr": [
+            {
+              "@bgcolor": "#9acd32",
+              "th": [
+                "Title",
+                "Artist"
+              ]
+            }
+          ],
+          "tr": {"%for-each": [{"&select": "catalog.cd"},{"td":[
+        {"%value-of":{"&select":"title"}}
+      ,{"%value-of":{"&select":"artist"}}
+      ]
+      }
+      ]}
+        }}}]},
+
+  "if":{
+    "%template":[{"&match":"$"},
+      {"html":{"body":{"h2":"My CD Collection"},
+        "table": {
+          "@border": "1",
+          "tr": [
+            {
+              "@bgcolor": "#9acd32",
+              "th": [
+                "Title",
+                "Artist"
+              ]
+            }
+          ],
+          "tr": {"%for-each": [{"&select": "catalog.cd"},
+            {"%if": [{"&test":"price > 10"},
+            {"td":[
+            {"%value-of":{"&select":"title"}}
+          ,{"%value-of":{"&select":"artist"}}
+          ]}] }
+          ]}
+        }}}]}
+
+
+
+}
