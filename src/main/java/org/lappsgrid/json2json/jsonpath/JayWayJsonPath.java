@@ -18,12 +18,10 @@ package org.lappsgrid.json2json.jsonpath;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ReadContext;
 import com.jayway.jsonpath.internal.JsonReader;
+import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.lappsgrid.json2json.Json2JsonException;
 
 import java.util.Map;
-
-import org.lappsgrid.json2json.jsonobject.JsonProxy;
-import org.lappsgrid.json2json.jsonpath.JsonPath.IPath;
 
 /**
  * <p>JsonPath implementation is not popular and made standard.
@@ -31,7 +29,7 @@ import org.lappsgrid.json2json.jsonpath.JsonPath.IPath;
  * </p>
  * <a href="https://github.com/jayway/JsonPath">JayWay</a>
  */
-public class JayWayJsonPath implements IPath {
+public class JayWayJsonPath implements org.lappsgrid.json2json.jsonpath.JsonPath.IPath {
 
     public String path(String json, String path) throws Json2JsonException {
         Object obj = JsonPath.read(json, path);

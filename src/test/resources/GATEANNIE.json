@@ -1,19 +1,6 @@
 {
   "GateDocument": {
     "@version": "3",
-    "#comment": [
-      [
-        {
-
-        },
-        {
-
-        }
-      ],
-      {
-
-      }
-    ],
     "GateDocumentFeatures": {
       "Feature": {
         "Name": {
@@ -22,96 +9,66 @@
         },
         "Value": {
           "@className": "java.lang.String",
-          "__text__": "createdfromString"
+          "__text__": "created from String"
         }
       }
     },
     "TextWithNodes": {
       "Node": [
-        [
-          [
-            [
-              [
-                [
-                  [
-                    [
-                      [
-                        [
-                          [
-                            [
-                              [
-                                [
-                                  [
-                                    [
-                                      {
-                                        "__tail__": "Please",
-                                        "@id": "0"
-                                      },
-                                      {
-                                        "@id": "6"
-                                      }
-                                    ],
-                                    {
-                                      "__tail__": "input",
-                                      "@id": "7"
-                                    }
-                                  ],
-                                  {
-                                    "@id": "12"
-                                  }
-                                ],
-                                {
-                                  "__tail__": "your",
-                                  "@id": "13"
-                                }
-                              ],
-                              {
-                                "@id": "17"
-                              }
-                            ],
-                            {
-                              "__tail__": "text",
-                              "@id": "18"
-                            }
-                          ],
-                          {
-                            "@id": "22"
-                          }
-                        ],
-                        {
-                          "__tail__": "here",
-                          "@id": "23"
-                        }
-                      ],
-                      {
-                        "__tail__": ".",
-                        "@id": "27"
-                      }
-                    ],
-                    {
-                      "@id": "28"
-                    }
-                  ],
-                  {
-                    "@id": "29"
-                  }
-                ],
-                {
-                  "@id": "30"
-                }
-              ],
-              {
-                "@id": "31"
-              }
-            ],
-            {
-              "@id": "32"
-            }
-          ],
-          {
-            "@id": "33"
-          }
-        ],
+        {
+          "__tail__": "Please",
+          "@id": "0"
+        },
+        {
+          "@id": "6"
+        },
+        {
+          "__tail__": "input",
+          "@id": "7"
+        },
+        {
+          "@id": "12"
+        },
+        {
+          "__tail__": "your",
+          "@id": "13"
+        },
+        {
+          "@id": "17"
+        },
+        {
+          "__tail__": "text",
+          "@id": "18"
+        },
+        {
+          "@id": "22"
+        },
+        {
+          "__tail__": "here",
+          "@id": "23"
+        },
+        {
+          "__tail__": ".",
+          "@id": "27"
+        },
+        {
+          "@id": "28"
+        },
+        {
+          "@id": "29"
+        },
+        {
+          "@id": "30"
+        },
+        {
+          "@id": "31"
+        },
+        {
+          "@id": "32"
+        },
+        {
+          "@id": "33"
+        },
         {
           "@id": "34"
         }
@@ -119,870 +76,778 @@
     },
     "AnnotationSet": {
       "Annotation": [
-        [
-          [
-            [
-              [
-                [
-                  [
-                    [
-                      [
-                        [
-                          [
-                            [
-                              [
-                                [
-                                  [
-                                    [
-                                      [
-                                        [
-                                          [
-                                            [
-                                              {
-                                                "@EndNode": "6",
-                                                "@Id": "0",
-                                                "@StartNode": "0",
-                                                "@Type": "Token",
-                                                "Feature": [
-                                                  [
-                                                    [
-                                                      [
-                                                        {
-                                                          "Name": {
-                                                            "@className": "java.lang.String",
-                                                            "__text__": "length"
-                                                          },
-                                                          "Value": {
-                                                            "@className": "java.lang.String",
-                                                            "__text__": "6"
-                                                          }
-                                                        },
-                                                        {
-                                                          "Name": {
-                                                            "@className": "java.lang.String",
-                                                            "__text__": "category"
-                                                          },
-                                                          "Value": {
-                                                            "@className": "java.lang.String",
-                                                            "__text__": "VB"
-                                                          }
-                                                        }
-                                                      ],
-                                                      {
-                                                        "Name": {
-                                                          "@className": "java.lang.String",
-                                                          "__text__": "orth"
-                                                        },
-                                                        "Value": {
-                                                          "@className": "java.lang.String",
-                                                          "__text__": "upperInitial"
-                                                        }
-                                                      }
-                                                    ],
-                                                    {
-                                                      "Name": {
-                                                        "@className": "java.lang.String",
-                                                        "__text__": "kind"
-                                                      },
-                                                      "Value": {
-                                                        "@className": "java.lang.String",
-                                                        "__text__": "word"
-                                                      }
-                                                    }
-                                                  ],
-                                                  {
-                                                    "Name": {
-                                                      "@className": "java.lang.String",
-                                                      "__text__": "string"
-                                                    },
-                                                    "Value": {
-                                                      "@className": "java.lang.String",
-                                                      "__text__": "Please"
-                                                    }
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "@EndNode": "7",
-                                                "@Id": "1",
-                                                "@StartNode": "6",
-                                                "@Type": "SpaceToken",
-                                                "Feature": [
-                                                  [
-                                                    {
-                                                      "Name": {
-                                                        "@className": "java.lang.String",
-                                                        "__text__": "length"
-                                                      },
-                                                      "Value": {
-                                                        "@className": "java.lang.String",
-                                                        "__text__": "1"
-                                                      }
-                                                    },
-                                                    {
-                                                      "Name": {
-                                                        "@className": "java.lang.String",
-                                                        "__text__": "kind"
-                                                      },
-                                                      "Value": {
-                                                        "@className": "java.lang.String",
-                                                        "__text__": "space"
-                                                      }
-                                                    }
-                                                  ],
-                                                  {
-                                                    "Name": {
-                                                      "@className": "java.lang.String",
-                                                      "__text__": "string"
-                                                    },
-                                                    "Value": {
-                                                      "@className": "java.lang.String"
-                                                    }
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            {
-                                              "@EndNode": "12",
-                                              "@Id": "2",
-                                              "@StartNode": "7",
-                                              "@Type": "Token",
-                                              "Feature": [
-                                                [
-                                                  [
-                                                    [
-                                                      {
-                                                        "Name": {
-                                                          "@className": "java.lang.String",
-                                                          "__text__": "length"
-                                                        },
-                                                        "Value": {
-                                                          "@className": "java.lang.String",
-                                                          "__text__": "5"
-                                                        }
-                                                      },
-                                                      {
-                                                        "Name": {
-                                                          "@className": "java.lang.String",
-                                                          "__text__": "category"
-                                                        },
-                                                        "Value": {
-                                                          "@className": "java.lang.String",
-                                                          "__text__": "NN"
-                                                        }
-                                                      }
-                                                    ],
-                                                    {
-                                                      "Name": {
-                                                        "@className": "java.lang.String",
-                                                        "__text__": "orth"
-                                                      },
-                                                      "Value": {
-                                                        "@className": "java.lang.String",
-                                                        "__text__": "lowercase"
-                                                      }
-                                                    }
-                                                  ],
-                                                  {
-                                                    "Name": {
-                                                      "@className": "java.lang.String",
-                                                      "__text__": "kind"
-                                                    },
-                                                    "Value": {
-                                                      "@className": "java.lang.String",
-                                                      "__text__": "word"
-                                                    }
-                                                  }
-                                                ],
-                                                {
-                                                  "Name": {
-                                                    "@className": "java.lang.String",
-                                                    "__text__": "string"
-                                                  },
-                                                  "Value": {
-                                                    "@className": "java.lang.String",
-                                                    "__text__": "input"
-                                                  }
-                                                }
-                                              ]
-                                            }
-                                          ],
-                                          {
-                                            "@EndNode": "13",
-                                            "@Id": "3",
-                                            "@StartNode": "12",
-                                            "@Type": "SpaceToken",
-                                            "Feature": [
-                                              [
-                                                {
-                                                  "Name": {
-                                                    "@className": "java.lang.String",
-                                                    "__text__": "length"
-                                                  },
-                                                  "Value": {
-                                                    "@className": "java.lang.String",
-                                                    "__text__": "1"
-                                                  }
-                                                },
-                                                {
-                                                  "Name": {
-                                                    "@className": "java.lang.String",
-                                                    "__text__": "kind"
-                                                  },
-                                                  "Value": {
-                                                    "@className": "java.lang.String",
-                                                    "__text__": "space"
-                                                  }
-                                                }
-                                              ],
-                                              {
-                                                "Name": {
-                                                  "@className": "java.lang.String",
-                                                  "__text__": "string"
-                                                },
-                                                "Value": {
-                                                  "@className": "java.lang.String"
-                                                }
-                                              }
-                                            ]
-                                          }
-                                        ],
-                                        {
-                                          "@EndNode": "17",
-                                          "@Id": "4",
-                                          "@StartNode": "13",
-                                          "@Type": "Token",
-                                          "Feature": [
-                                            [
-                                              [
-                                                [
-                                                  {
-                                                    "Name": {
-                                                      "@className": "java.lang.String",
-                                                      "__text__": "length"
-                                                    },
-                                                    "Value": {
-                                                      "@className": "java.lang.String",
-                                                      "__text__": "4"
-                                                    }
-                                                  },
-                                                  {
-                                                    "Name": {
-                                                      "@className": "java.lang.String",
-                                                      "__text__": "category"
-                                                    },
-                                                    "Value": {
-                                                      "@className": "java.lang.String",
-                                                      "__text__": "PRP$"
-                                                    }
-                                                  }
-                                                ],
-                                                {
-                                                  "Name": {
-                                                    "@className": "java.lang.String",
-                                                    "__text__": "orth"
-                                                  },
-                                                  "Value": {
-                                                    "@className": "java.lang.String",
-                                                    "__text__": "lowercase"
-                                                  }
-                                                }
-                                              ],
-                                              {
-                                                "Name": {
-                                                  "@className": "java.lang.String",
-                                                  "__text__": "kind"
-                                                },
-                                                "Value": {
-                                                  "@className": "java.lang.String",
-                                                  "__text__": "word"
-                                                }
-                                              }
-                                            ],
-                                            {
-                                              "Name": {
-                                                "@className": "java.lang.String",
-                                                "__text__": "string"
-                                              },
-                                              "Value": {
-                                                "@className": "java.lang.String",
-                                                "__text__": "your"
-                                              }
-                                            }
-                                          ]
-                                        }
-                                      ],
-                                      {
-                                        "@EndNode": "18",
-                                        "@Id": "5",
-                                        "@StartNode": "17",
-                                        "@Type": "SpaceToken",
-                                        "Feature": [
-                                          [
-                                            {
-                                              "Name": {
-                                                "@className": "java.lang.String",
-                                                "__text__": "length"
-                                              },
-                                              "Value": {
-                                                "@className": "java.lang.String",
-                                                "__text__": "1"
-                                              }
-                                            },
-                                            {
-                                              "Name": {
-                                                "@className": "java.lang.String",
-                                                "__text__": "kind"
-                                              },
-                                              "Value": {
-                                                "@className": "java.lang.String",
-                                                "__text__": "space"
-                                              }
-                                            }
-                                          ],
-                                          {
-                                            "Name": {
-                                              "@className": "java.lang.String",
-                                              "__text__": "string"
-                                            },
-                                            "Value": {
-                                              "@className": "java.lang.String"
-                                            }
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    {
-                                      "@EndNode": "22",
-                                      "@Id": "6",
-                                      "@StartNode": "18",
-                                      "@Type": "Token",
-                                      "Feature": [
-                                        [
-                                          [
-                                            [
-                                              {
-                                                "Name": {
-                                                  "@className": "java.lang.String",
-                                                  "__text__": "length"
-                                                },
-                                                "Value": {
-                                                  "@className": "java.lang.String",
-                                                  "__text__": "4"
-                                                }
-                                              },
-                                              {
-                                                "Name": {
-                                                  "@className": "java.lang.String",
-                                                  "__text__": "category"
-                                                },
-                                                "Value": {
-                                                  "@className": "java.lang.String",
-                                                  "__text__": "NN"
-                                                }
-                                              }
-                                            ],
-                                            {
-                                              "Name": {
-                                                "@className": "java.lang.String",
-                                                "__text__": "orth"
-                                              },
-                                              "Value": {
-                                                "@className": "java.lang.String",
-                                                "__text__": "lowercase"
-                                              }
-                                            }
-                                          ],
-                                          {
-                                            "Name": {
-                                              "@className": "java.lang.String",
-                                              "__text__": "kind"
-                                            },
-                                            "Value": {
-                                              "@className": "java.lang.String",
-                                              "__text__": "word"
-                                            }
-                                          }
-                                        ],
-                                        {
-                                          "Name": {
-                                            "@className": "java.lang.String",
-                                            "__text__": "string"
-                                          },
-                                          "Value": {
-                                            "@className": "java.lang.String",
-                                            "__text__": "text"
-                                          }
-                                        }
-                                      ]
-                                    }
-                                  ],
-                                  {
-                                    "@EndNode": "23",
-                                    "@Id": "7",
-                                    "@StartNode": "22",
-                                    "@Type": "SpaceToken",
-                                    "Feature": [
-                                      [
-                                        {
-                                          "Name": {
-                                            "@className": "java.lang.String",
-                                            "__text__": "length"
-                                          },
-                                          "Value": {
-                                            "@className": "java.lang.String",
-                                            "__text__": "1"
-                                          }
-                                        },
-                                        {
-                                          "Name": {
-                                            "@className": "java.lang.String",
-                                            "__text__": "kind"
-                                          },
-                                          "Value": {
-                                            "@className": "java.lang.String",
-                                            "__text__": "space"
-                                          }
-                                        }
-                                      ],
-                                      {
-                                        "Name": {
-                                          "@className": "java.lang.String",
-                                          "__text__": "string"
-                                        },
-                                        "Value": {
-                                          "@className": "java.lang.String"
-                                        }
-                                      }
-                                    ]
-                                  }
-                                ],
-                                {
-                                  "@EndNode": "27",
-                                  "@Id": "8",
-                                  "@StartNode": "23",
-                                  "@Type": "Token",
-                                  "Feature": [
-                                    [
-                                      [
-                                        [
-                                          {
-                                            "Name": {
-                                              "@className": "java.lang.String",
-                                              "__text__": "length"
-                                            },
-                                            "Value": {
-                                              "@className": "java.lang.String",
-                                              "__text__": "4"
-                                            }
-                                          },
-                                          {
-                                            "Name": {
-                                              "@className": "java.lang.String",
-                                              "__text__": "category"
-                                            },
-                                            "Value": {
-                                              "@className": "java.lang.String",
-                                              "__text__": "RB"
-                                            }
-                                          }
-                                        ],
-                                        {
-                                          "Name": {
-                                            "@className": "java.lang.String",
-                                            "__text__": "orth"
-                                          },
-                                          "Value": {
-                                            "@className": "java.lang.String",
-                                            "__text__": "lowercase"
-                                          }
-                                        }
-                                      ],
-                                      {
-                                        "Name": {
-                                          "@className": "java.lang.String",
-                                          "__text__": "kind"
-                                        },
-                                        "Value": {
-                                          "@className": "java.lang.String",
-                                          "__text__": "word"
-                                        }
-                                      }
-                                    ],
-                                    {
-                                      "Name": {
-                                        "@className": "java.lang.String",
-                                        "__text__": "string"
-                                      },
-                                      "Value": {
-                                        "@className": "java.lang.String",
-                                        "__text__": "here"
-                                      }
-                                    }
-                                  ]
-                                }
-                              ],
-                              {
-                                "@EndNode": "28",
-                                "@Id": "9",
-                                "@StartNode": "27",
-                                "@Type": "Token",
-                                "Feature": [
-                                  [
-                                    [
-                                      {
-                                        "Name": {
-                                          "@className": "java.lang.String",
-                                          "__text__": "length"
-                                        },
-                                        "Value": {
-                                          "@className": "java.lang.String",
-                                          "__text__": "1"
-                                        }
-                                      },
-                                      {
-                                        "Name": {
-                                          "@className": "java.lang.String",
-                                          "__text__": "category"
-                                        },
-                                        "Value": {
-                                          "@className": "java.lang.String",
-                                          "__text__": "."
-                                        }
-                                      }
-                                    ],
-                                    {
-                                      "Name": {
-                                        "@className": "java.lang.String",
-                                        "__text__": "kind"
-                                      },
-                                      "Value": {
-                                        "@className": "java.lang.String",
-                                        "__text__": "punctuation"
-                                      }
-                                    }
-                                  ],
-                                  {
-                                    "Name": {
-                                      "@className": "java.lang.String",
-                                      "__text__": "string"
-                                    },
-                                    "Value": {
-                                      "@className": "java.lang.String",
-                                      "__text__": "."
-                                    }
-                                  }
-                                ]
-                              }
-                            ],
-                            {
-                              "@EndNode": "31",
-                              "@Id": "12",
-                              "@StartNode": "30",
-                              "@Type": "SpaceToken",
-                              "Feature": [
-                                [
-                                  {
-                                    "Name": {
-                                      "@className": "java.lang.String",
-                                      "__text__": "length"
-                                    },
-                                    "Value": {
-                                      "@className": "java.lang.String",
-                                      "__text__": "1"
-                                    }
-                                  },
-                                  {
-                                    "Name": {
-                                      "@className": "java.lang.String",
-                                      "__text__": "kind"
-                                    },
-                                    "Value": {
-                                      "@className": "java.lang.String",
-                                      "__text__": "space"
-                                    }
-                                  }
-                                ],
-                                {
-                                  "Name": {
-                                    "@className": "java.lang.String",
-                                    "__text__": "string"
-                                  },
-                                  "Value": {
-                                    "@className": "java.lang.String"
-                                  }
-                                }
-                              ]
-                            }
-                          ],
-                          {
-                            "@EndNode": "32",
-                            "@Id": "13",
-                            "@StartNode": "31",
-                            "@Type": "SpaceToken",
-                            "Feature": [
-                              [
-                                {
-                                  "Name": {
-                                    "@className": "java.lang.String",
-                                    "__text__": "length"
-                                  },
-                                  "Value": {
-                                    "@className": "java.lang.String",
-                                    "__text__": "1"
-                                  }
-                                },
-                                {
-                                  "Name": {
-                                    "@className": "java.lang.String",
-                                    "__text__": "kind"
-                                  },
-                                  "Value": {
-                                    "@className": "java.lang.String",
-                                    "__text__": "space"
-                                  }
-                                }
-                              ],
-                              {
-                                "Name": {
-                                  "@className": "java.lang.String",
-                                  "__text__": "string"
-                                },
-                                "Value": {
-                                  "@className": "java.lang.String"
-                                }
-                              }
-                            ]
-                          }
-                        ],
-                        {
-                          "@EndNode": "33",
-                          "@Id": "14",
-                          "@StartNode": "32",
-                          "@Type": "SpaceToken",
-                          "Feature": [
-                            [
-                              {
-                                "Name": {
-                                  "@className": "java.lang.String",
-                                  "__text__": "length"
-                                },
-                                "Value": {
-                                  "@className": "java.lang.String",
-                                  "__text__": "1"
-                                }
-                              },
-                              {
-                                "Name": {
-                                  "@className": "java.lang.String",
-                                  "__text__": "kind"
-                                },
-                                "Value": {
-                                  "@className": "java.lang.String",
-                                  "__text__": "space"
-                                }
-                              }
-                            ],
-                            {
-                              "Name": {
-                                "@className": "java.lang.String",
-                                "__text__": "string"
-                              },
-                              "Value": {
-                                "@className": "java.lang.String"
-                              }
-                            }
-                          ]
-                        }
-                      ],
-                      {
-                        "@EndNode": "34",
-                        "@Id": "15",
-                        "@StartNode": "33",
-                        "@Type": "SpaceToken",
-                        "Feature": [
-                          [
-                            {
-                              "Name": {
-                                "@className": "java.lang.String",
-                                "__text__": "length"
-                              },
-                              "Value": {
-                                "@className": "java.lang.String",
-                                "__text__": "1"
-                              }
-                            },
-                            {
-                              "Name": {
-                                "@className": "java.lang.String",
-                                "__text__": "kind"
-                              },
-                              "Value": {
-                                "@className": "java.lang.String",
-                                "__text__": "space"
-                              }
-                            }
-                          ],
-                          {
-                            "Name": {
-                              "@className": "java.lang.String",
-                              "__text__": "string"
-                            },
-                            "Value": {
-                              "@className": "java.lang.String"
-                            }
-                          }
-                        ]
-                      }
-                    ],
-                    {
-                      "@EndNode": "30",
-                      "@Id": "17",
-                      "@StartNode": "29",
-                      "@Type": "SpaceToken",
-                      "Feature": [
-                        [
-                          {
-                            "Name": {
-                              "@className": "java.lang.String",
-                              "__text__": "length"
-                            },
-                            "Value": {
-                              "@className": "java.lang.String",
-                              "__text__": "1"
-                            }
-                          },
-                          {
-                            "Name": {
-                              "@className": "java.lang.String",
-                              "__text__": "kind"
-                            },
-                            "Value": {
-                              "@className": "java.lang.String",
-                              "__text__": "control"
-                            }
-                          }
-                        ],
-                        {
-                          "Name": {
-                            "@className": "java.lang.String",
-                            "__text__": "string"
-                          },
-                          "Value": {
-                            "@className": "java.lang.String"
-                          }
-                        }
-                      ]
-                    }
-                  ],
-                  {
-                    "@EndNode": "29",
-                    "@Id": "16",
-                    "@StartNode": "28",
-                    "@Type": "SpaceToken",
-                    "Feature": [
-                      [
-                        {
-                          "Name": {
-                            "@className": "java.lang.String",
-                            "__text__": "length"
-                          },
-                          "Value": {
-                            "@className": "java.lang.String",
-                            "__text__": "1"
-                          }
-                        },
-                        {
-                          "Name": {
-                            "@className": "java.lang.String",
-                            "__text__": "kind"
-                          },
-                          "Value": {
-                            "@className": "java.lang.String",
-                            "__text__": "control"
-                          }
-                        }
-                      ],
-                      {
-                        "Name": {
-                          "@className": "java.lang.String",
-                          "__text__": "string"
-                        },
-                        "Value": {
-                          "@className": "java.lang.String"
-                        }
-                      }
-                    ]
-                  }
-                ],
-                {
-                  "@EndNode": "28",
-                  "@Id": "19",
-                  "@StartNode": "27",
-                  "@Type": "Split",
-                  "Feature": {
-                    "Name": {
-                      "@className": "java.lang.String",
-                      "__text__": "kind"
-                    },
-                    "Value": {
-                      "@className": "java.lang.String",
-                      "__text__": "internal"
-                    }
-                  }
-                }
-              ],
-              {
-                "@EndNode": "6",
-                "@Id": "18",
-                "@StartNode": "0",
-                "@Type": "Lookup",
-                "Feature": {
-                  "Name": {
-                    "@className": "java.lang.String",
-                    "__text__": "majorType"
-                  },
-                  "Value": {
-                    "@className": "java.lang.String",
-                    "__text__": "stop"
-                  }
-                }
-              }
-            ],
+        {
+          "@EndNode": "6",
+          "@Id": "0",
+          "@StartNode": "0",
+          "@Type": "Token",
+          "Feature": [
             {
-              "@EndNode": "34",
-              "@Id": "21",
-              "@StartNode": "29",
-              "@Type": "Split",
-              "Feature": {
-                "Name": {
-                  "@className": "java.lang.String",
-                  "__text__": "kind"
-                },
-                "Value": {
-                  "@className": "java.lang.String",
-                  "__text__": "external"
-                }
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "6"
               }
-            }
-          ],
-          {
-            "@EndNode": "29",
-            "@Id": "20",
-            "@StartNode": "28",
-            "@Type": "Split",
-            "Feature": {
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "category"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "VB"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "orth"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "upperInitial"
+              }
+            },
+            {
               "Name": {
                 "@className": "java.lang.String",
                 "__text__": "kind"
               },
               "Value": {
                 "@className": "java.lang.String",
-                "__text__": "external"
+                "__text__": "word"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "Please"
               }
             }
+          ]
+        },
+        {
+          "@EndNode": "7",
+          "@Id": "1",
+          "@StartNode": "6",
+          "@Type": "SpaceToken",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "space"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "12",
+          "@Id": "2",
+          "@StartNode": "7",
+          "@Type": "Token",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "5"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "category"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "NN"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "orth"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "lowercase"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "word"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "input"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "13",
+          "@Id": "3",
+          "@StartNode": "12",
+          "@Type": "SpaceToken",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "space"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "17",
+          "@Id": "4",
+          "@StartNode": "13",
+          "@Type": "Token",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "4"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "category"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "PRP$"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "orth"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "lowercase"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "word"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "your"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "18",
+          "@Id": "5",
+          "@StartNode": "17",
+          "@Type": "SpaceToken",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "space"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "22",
+          "@Id": "6",
+          "@StartNode": "18",
+          "@Type": "Token",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "4"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "category"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "NN"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "orth"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "lowercase"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "word"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "text"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "23",
+          "@Id": "7",
+          "@StartNode": "22",
+          "@Type": "SpaceToken",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "space"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "27",
+          "@Id": "8",
+          "@StartNode": "23",
+          "@Type": "Token",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "4"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "category"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "RB"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "orth"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "lowercase"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "word"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "here"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "28",
+          "@Id": "9",
+          "@StartNode": "27",
+          "@Type": "Token",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "category"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "."
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "punctuation"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "."
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "31",
+          "@Id": "12",
+          "@StartNode": "30",
+          "@Type": "SpaceToken",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "space"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "32",
+          "@Id": "13",
+          "@StartNode": "31",
+          "@Type": "SpaceToken",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "space"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "33",
+          "@Id": "14",
+          "@StartNode": "32",
+          "@Type": "SpaceToken",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "space"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "34",
+          "@Id": "15",
+          "@StartNode": "33",
+          "@Type": "SpaceToken",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "space"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "30",
+          "@Id": "17",
+          "@StartNode": "29",
+          "@Type": "SpaceToken",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "control"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "29",
+          "@Id": "16",
+          "@StartNode": "28",
+          "@Type": "SpaceToken",
+          "Feature": [
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "length"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "1"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "kind"
+              },
+              "Value": {
+                "@className": "java.lang.String",
+                "__text__": "control"
+              }
+            },
+            {
+              "Name": {
+                "@className": "java.lang.String",
+                "__text__": "string"
+              },
+              "Value": {
+                "@className": "java.lang.String"
+              }
+            }
+          ]
+        },
+        {
+          "@EndNode": "28",
+          "@Id": "19",
+          "@StartNode": "27",
+          "@Type": "Split",
+          "Feature": {
+            "Name": {
+              "@className": "java.lang.String",
+              "__text__": "kind"
+            },
+            "Value": {
+              "@className": "java.lang.String",
+              "__text__": "internal"
+            }
           }
-        ],
+        },
+        {
+          "@EndNode": "6",
+          "@Id": "18",
+          "@StartNode": "0",
+          "@Type": "Lookup",
+          "Feature": {
+            "Name": {
+              "@className": "java.lang.String",
+              "__text__": "majorType"
+            },
+            "Value": {
+              "@className": "java.lang.String",
+              "__text__": "stop"
+            }
+          }
+        },
+        {
+          "@EndNode": "34",
+          "@Id": "21",
+          "@StartNode": "29",
+          "@Type": "Split",
+          "Feature": {
+            "Name": {
+              "@className": "java.lang.String",
+              "__text__": "kind"
+            },
+            "Value": {
+              "@className": "java.lang.String",
+              "__text__": "external"
+            }
+          }
+        },
+        {
+          "@EndNode": "29",
+          "@Id": "20",
+          "@StartNode": "28",
+          "@Type": "Split",
+          "Feature": {
+            "Name": {
+              "@className": "java.lang.String",
+              "__text__": "kind"
+            },
+            "Value": {
+              "@className": "java.lang.String",
+              "__text__": "external"
+            }
+          }
+        },
         {
           "@EndNode": "28",
           "@Id": "22",

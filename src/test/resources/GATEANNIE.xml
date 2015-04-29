@@ -1,6 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0'?>
 <GateDocument version="3">
-    <!-- The document's features-->
 
     <GateDocumentFeatures>
         <Feature>
@@ -8,14 +7,12 @@
             <Value className="java.lang.String">created from String</Value>
         </Feature>
     </GateDocumentFeatures>
-    <!-- The document content area with serialized nodes -->
 
     <TextWithNodes>
         <Node id="0"/>Please<Node id="6"/> <Node id="7"/>input<Node id="12"/> <Node id="13"/>your<Node id="17"/> <Node id="18"/>text<Node id="22"/> <Node id="23"/>here<Node id="27"/>.<Node id="28"/>
         <Node id="29"/>
         <Node id="30"/> <Node id="31"/> <Node id="32"/> <Node id="33"/> <Node id="34"/>
     </TextWithNodes>
-    <!-- The default annotation set -->
 
     <AnnotationSet>
         <Annotation Id="0" Type="Token" StartNode="0" EndNode="6">

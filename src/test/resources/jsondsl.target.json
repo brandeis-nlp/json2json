@@ -1,4 +1,3 @@
-
 {
   "html": {
     "@xmlns:bar": "http://www.bar.org",
@@ -6,7 +5,7 @@
     "body": {
       "h2": {
         "@style": "font:12pt",
-        "__text__": "My CD Collection"
+        "__text__": "MyCDCollection"
       },
       "table": {
         "@border": "1",
@@ -24,32 +23,52 @@
           },
           {
             "td": [
-              "Empire Burlesque",
-              "Bob Dylan",
-              "USA",
-              "Columbia",
-              "10.90",
-              "1985"
-            ]
-          },
-          {
-            "td": [
-              "Hide your heart",
-              "Bonnie Tyler",
+              "Hideyourheart",
+              "BonnieTyler",
+              "CBSRecords",
               "UK",
-              "CBS Records",
               "9.90",
               "1988"
             ]
           },
           {
             "td": [
-              "Greatest Hits",
-              "Dolly Parton",
-              "USA",
+              "GreatestHits",
+              "DollyParton",
               "RCA",
+              "USA",
               "9.90",
               "1982"
+            ]
+          },
+          {
+            "td": [
+              "Eros",
+              "ErosRamazzotti",
+              "BMG",
+              "EU",
+              "9.90",
+              "1997"
+            ]
+          },
+          {
+            "td": [
+              "BigWilliestyle",
+              "WillSmith",
+              "Columbia",
+              "USA",
+              "9.90",
+              "1997"
+            ]
+          },
+          {
+            "td": [
+              "PavarottiGalaConcert",
+              "LucianoPavarotti",
+              "DECCA",
+              "UK",
+              "9.90",
+              "1991"
             ]
           }
         ]
