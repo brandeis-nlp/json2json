@@ -48,17 +48,17 @@ public class JacksonJsonProxy implements JsonProxy.NewProxy {
     }
 
 
-    public JsonProxy.JsonArray newArray() {
+    public JsonArray newArray() {
         return new JacksonJsonArray();
     }
 
     
-    public JsonProxy.JsonObject newObject() {
+    public JsonObject newObject() {
         return new JacksonJsonObject();
     }
 
 
-    public static class JacksonJsonObject implements JsonProxy.JsonObject {
+    public static class JacksonJsonObject implements JsonObject {
 
         Map<String, Object> map = null;
 
@@ -71,7 +71,7 @@ public class JacksonJsonProxy implements JsonProxy.NewProxy {
         }
 
         
-        public JsonProxy.JsonObject read(String s) {
+        public JsonObject read(String s) {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 map = (Map)mapper.readValue(s, LinkedHashMap.class);
@@ -92,13 +92,13 @@ public class JacksonJsonProxy implements JsonProxy.NewProxy {
         }
 
         
-        public JsonProxy.JsonObject put(String key, Object val) {
+        public JsonObject put(String key, Object val) {
             map.put(key, valueOf(val));
             return this;
         }
 
         
-        public JsonProxy.JsonObject remove(String key) {
+        public JsonObject remove(String key) {
             map.remove(key);
             return this;
         }
@@ -136,7 +136,7 @@ public class JacksonJsonProxy implements JsonProxy.NewProxy {
     }
 
 
-    public static class JacksonJsonArray implements JsonProxy.JsonArray {
+    public static class JacksonJsonArray implements JsonArray {
 
         List<Object> list = null;
 
@@ -148,7 +148,7 @@ public class JacksonJsonProxy implements JsonProxy.NewProxy {
             list = new ArrayList<Object>();
         }
         
-        public JsonProxy.JsonArray read(String s) {
+        public JsonArray read(String s) {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 list = (List<Object>) mapper.readValue(s, List.class);
@@ -169,25 +169,25 @@ public class JacksonJsonProxy implements JsonProxy.NewProxy {
         }
 
         
-        public JsonProxy.JsonArray add(Object s) {
+        public JsonArray add(Object s) {
             list.add(valueOf(s));
             return this;
         }
 
         
-        public JsonProxy.JsonArray remove(int i) {
+        public JsonArray remove(int i) {
             list.remove(i);
             return this;
         }
 
         
-        public JsonProxy.JsonArray set(int i, Object obj) {
+        public JsonArray set(int i, Object obj) {
             list.set(i, obj);
             return this;
         }
 
         
-        public JsonProxy.JsonArray convert(String[] arr) {
+        public JsonArray convert(String[] arr) {
             for(String s: arr) {
                 list.add(s);
             }
@@ -195,7 +195,7 @@ public class JacksonJsonProxy implements JsonProxy.NewProxy {
         }
 
         
-        public JsonProxy.JsonArray convert(Collection<String> arr) {
+        public JsonArray convert(Collection<String> arr) {
             for(String s: arr) {
                 list.add(s);
             }

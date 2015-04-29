@@ -4,6 +4,8 @@ import groovy.json.JsonBuilder;
 import groovy.json.JsonSlurper;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
+import org.lappsgrid.json2json.jsonobject.JsonArray;
+import org.lappsgrid.json2json.jsonobject.JsonObject;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -82,7 +84,7 @@ public class Json2Json {
         DocumentBuilder dBuilder = dbf.newDocumentBuilder();
         Document doc = dBuilder.parse(new InputSource(new StringReader(xml)));
         doc.getDocumentElement().normalize();
-        JsonProxy.JsonObject json = (JsonProxy.JsonObject)node2json(doc, JsonProxy.newObject());
+        JsonObject json = (JsonObject)node2json(doc, JsonProxy.newObject());
         return json.toString();
     }
 
@@ -112,18 +114,18 @@ public class Json2Json {
 //        System.out.println(json);
 //        System.out.println(json2xml(json.toString()));
 //    }
-    public static void json2node(JsonProxy.JsonObject jsonObj, XMLStreamWriter xmlStreamWriter) throws Exception {
+    public static void json2node(JsonObject jsonObj, XMLStreamWriter xmlStreamWriter) throws Exception {
         for (String key : jsonObj.keys()){
             Object obj = jsonObj.get(key);
             if(key.equals("#comment")) {
-                if(obj instanceof JsonProxy.JsonObject) {
-                    JsonProxy.JsonObject child = (JsonProxy.JsonObject) obj;
+                if(obj instanceof JsonObject) {
+                    JsonObject child = (JsonObject) obj;
                     xmlStreamWriter.writeComment((String) child.get("__text__"));
-                } else if(obj instanceof JsonProxy.JsonArray) {
-                    JsonProxy.JsonArray arr = (JsonProxy.JsonArray)obj;
+                } else if(obj instanceof JsonArray) {
+                    JsonArray arr = (JsonArray)obj;
                     for (int i = 0; i < arr.length(); i++) {
-                        if (arr.get(i) instanceof JsonProxy.JsonObject) {
-                            JsonProxy.JsonObject child = (JsonProxy.JsonObject) arr.get(i);
+                        if (arr.get(i) instanceof JsonObject) {
+                            JsonObject child = (JsonObject) arr.get(i);
                             xmlStreamWriter.writeComment((String) child.get("__text__"));
                         } else{
                             xmlStreamWriter.writeComment((String) arr.get(i));
@@ -136,8 +138,8 @@ public class Json2Json {
                 xmlStreamWriter.writeAttribute(key.substring(1), (String) obj);
             } else if(key.matches("__.*__")) {
                 if(key.equals("__text__")) {
-                    if(obj instanceof JsonProxy.JsonArray){
-                        JsonProxy.JsonArray arr = (JsonProxy.JsonArray)obj;
+                    if(obj instanceof JsonArray){
+                        JsonArray arr = (JsonArray)obj;
                         for(int t = 0; t < arr.length(); t++) {
                             xmlStreamWriter.writeCharacters((String)arr.get(t));
                         }
@@ -146,19 +148,19 @@ public class Json2Json {
                     }
                 }
             } else {
-                if (obj instanceof JsonProxy.JsonObject) {
-                    JsonProxy.JsonObject child = (JsonProxy.JsonObject) obj;
+                if (obj instanceof JsonObject) {
+                    JsonObject child = (JsonObject) obj;
                     xmlStreamWriter.writeStartElement(key);
                     json2node(child, xmlStreamWriter);
                     xmlStreamWriter.writeEndElement();
                     if (child.get("__tail__") != null) {
                         xmlStreamWriter.writeCharacters((String) child.get("__tail__"));
                     }
-                } else if (obj instanceof JsonProxy.JsonArray) {
-                    JsonProxy.JsonArray arr = (JsonProxy.JsonArray)obj;
+                } else if (obj instanceof JsonArray) {
+                    JsonArray arr = (JsonArray)obj;
                     for (int i = 0; i < arr.length(); i++) {
-                        if(arr.get(i) instanceof JsonProxy.JsonObject) {
-                            JsonProxy.JsonObject child = (JsonProxy.JsonObject) arr.get(i);
+                        if(arr.get(i) instanceof JsonObject) {
+                            JsonObject child = (JsonObject) arr.get(i);
                             xmlStreamWriter.writeStartElement(key);
                             json2node(child, xmlStreamWriter);
                             xmlStreamWriter.writeEndElement();
@@ -180,7 +182,7 @@ public class Json2Json {
         }
     }
 
-    public static JsonProxy.JsonObject node2json(Node node, JsonProxy.JsonObject jsonObj) {
+    public static JsonObject node2json(Node node, JsonObject jsonObj) {
         if(node.getNodeType() == Node.ELEMENT_NODE
                 || node.getNodeType() == Node.DOCUMENT_NODE
                 || node.getNodeType() == Node.COMMENT_NODE) {
@@ -200,10 +202,10 @@ public class Json2Json {
                     if(jsonObj.get("#comment") == null) {
                         jsonObj.put("#comment", list.item(i).getNodeValue());
                     } else {
-                        if(jsonObj.get("#comment") instanceof JsonProxy.JsonArray) {
-                            ((JsonProxy.JsonArray) jsonObj.get("#comment")).add(list.item(i).getNodeValue());
+                        if(jsonObj.get("#comment") instanceof JsonArray) {
+                            ((JsonArray) jsonObj.get("#comment")).add(list.item(i).getNodeValue());
                         } else {
-                            JsonProxy.JsonArray comms = JsonProxy.newArray();
+                            JsonArray comms = JsonProxy.newArray();
                             comms.add(jsonObj.get("#comment"));
                             comms.add(list.item(i).getNodeValue());
                             jsonObj.put("#comment", comms);
@@ -232,10 +234,10 @@ public class Json2Json {
                             if(jsonObj.get("__text__") == null) {
                                 jsonObj.put("__text__", txt);
                             } else {
-                                if(jsonObj.get("__text__") instanceof JsonProxy.JsonArray) {
-                                    ((JsonProxy.JsonArray) jsonObj.get("__text__")).add(txt);
+                                if(jsonObj.get("__text__") instanceof JsonArray) {
+                                    ((JsonArray) jsonObj.get("__text__")).add(txt);
                                 } else {
-                                    JsonProxy.JsonArray comms = JsonProxy.newArray();
+                                    JsonArray comms = JsonProxy.newArray();
                                     comms.add(jsonObj.get("__text__"));
                                     comms.add(txt);
                                     jsonObj.put("__text__", comms);
@@ -256,7 +258,7 @@ public class Json2Json {
                     i ++;
                 }
                 if (jsonObj.get(childName) == null) {
-                    JsonProxy.JsonObject childObj = JsonProxy.newObject();
+                    JsonObject childObj = JsonProxy.newObject();
                     if(tail.length() > 0)
                         childObj.put("__tail__", tail);
                     node2json(child, childObj);
@@ -267,14 +269,14 @@ public class Json2Json {
                         jsonObj.put(child.getNodeName(), childObj);
                     }
                 } else {
-                    JsonProxy.JsonArray arrChildObjs = null;
-                    if (jsonObj.get(childName) instanceof JsonProxy.JsonArray) {
-                        arrChildObjs = (JsonProxy.JsonArray) jsonObj.get(childName);
+                    JsonArray arrChildObjs = null;
+                    if (jsonObj.get(childName) instanceof JsonArray) {
+                        arrChildObjs = (JsonArray) jsonObj.get(childName);
                     } else {
                         arrChildObjs = JsonProxy.newArray();
                         arrChildObjs.add(jsonObj.get(childName));
                     }
-                    JsonProxy.JsonObject childObj = JsonProxy.newObject();
+                    JsonObject childObj = JsonProxy.newObject();
                     if(tail.length() > 0)
                         childObj.put("__tail__", tail);
                     node2json(child, childObj);
