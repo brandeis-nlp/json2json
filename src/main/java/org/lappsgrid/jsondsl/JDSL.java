@@ -15,6 +15,8 @@
  **********************************************************************************************************************/
 package org.lappsgrid.jsondsl;
 
+import groovy.json.JsonBuilder;
+import groovy.json.JsonSlurper;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import org.apache.commons.io.FileUtils;
@@ -26,16 +28,49 @@ import java.io.File;
  * Created by lapps on 4/24/2015.
  */
 public class JDSL {
-
-
     public static String transform(String source, String dsl) {
         Binding binding = new Binding();
         GroovyShell shell = new GroovyShell(binding);
+        JsonSlurper js = new JsonSlurper();
+        Object json = js.parseText(source);
+        binding.setVariable("__source_json__", json);
+        binding.setVariable("__target_json__", null);
+        JsonBuilder jb = new JsonBuilder();
+        binding.setVariable("__json_builder__", jb);
+        StringBuffer sb = new StringBuffer("__json_builder__.call(");
+        sb.append(filter(dsl));
+        sb.append(") \n");
+        sb.append("__target_json__ = __json_builder__.toString()");
 
-        shell.evaluate(dsl);
-        return null;
+//        System.out.println("Source:\n" + binding.getVariable("__source_json__"));
+//        System.out.println("Evaluate:\n" + sb.toString());
+        shell.evaluate(sb.toString());
+        return (String) binding.getVariable("__target_json__");
     }
 
+    public static String[] OperatorIts = new String[]{
+            "collect",
+            "findAll",
+            "find",
+            "sort",
+            "removeAll",
+            "unique",
+            "each"
+    };
+
+    public static String filter(String dsl) {
+        dsl = dsl.trim();
+        if(!dsl.startsWith("{")) {
+            dsl = "{" + dsl + "}";
+        }
+        // replace global json
+        dsl = dsl.replaceAll("\\.foreach\\s*\\{",".collect{");
+        dsl = dsl.replaceAll("\\.select\\s*\\{",".findAll{");
+        dsl = dsl.replaceAll("\\&\\$","__source_json__.");
+        // replace local json
+        dsl = dsl.replaceAll("\\&\\.","it.");
+        return dsl;
+    }
 
     public static String readResource(String filename) throws Exception {
         File objFile = new File(JDSL.class.getResource("/" + filename).toURI());
@@ -43,7 +78,7 @@ public class JDSL {
     }
 
     public static void main(String [] args) throws Exception {
-        String res = transform(readResource("source.json"), "");
+        String res = transform(readResource("jsondsl.source.json"), readResource("jsondsl.template.dsl"));
         System.out.println(res);
     }
 }

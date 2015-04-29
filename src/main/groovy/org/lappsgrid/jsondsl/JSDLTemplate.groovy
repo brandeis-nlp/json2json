@@ -24,11 +24,7 @@ import groovy.json.JsonSlurper
  */
 
 class JSDLTemplate{
-    def call(Closure cl) {
-
-    }
-
-    def template() {
+    static def call() {
         def json = new JsonBuilder()
         def root = json {
             userId userId
@@ -42,25 +38,24 @@ class JSDLTemplate{
         def __json__ = new JsonSlurper().parseText(jsonString)
 
         def builder = new groovy.json.JsonBuilder()
-        def root = builder.html{
+        def root = builder.call { html{
             "@xmlns:bar""http://www.bar.org"
             "@xmlns:foo""http://www.foo.org/"
             body {
                 "@border" "1"
-                h2 {
-
-                }
+                h2  {}
                 table {
-                    tr ({
+                    tr ([({
                         "@bgcolor" "#9acd32"
                         th "Title", "Artist", "Country", "Company", "Price", "Year"
-                    },
-                    __json__.catalog.cd.collect{
-                        td it.artist, it.company, it.country, it.price, it.title, it.year
-                    })
+                    })] +
+                    __json__.catalog.cd.collect {
+                        [td : [it.artist, it.company, it.country, it.price, it.title, it.year]]
+                        }
+                    )
                 }
             }
-        }
+        }}
 
         println builder.toString()
 
