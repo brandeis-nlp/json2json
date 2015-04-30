@@ -78,6 +78,13 @@ public class TestJson2Json {
         String target = readResource("jsondsl.target.json");
         String result = Json2Json.json2json(json, dsl);
         Assert.assertEquals(target.replaceAll("\\s", ""), result.replaceAll("\\s", ""));
+
+
+        json = readResource("attribute.source.json");
+        dsl = readResource("attribute.template.dsl");
+        target = readResource("attribute.target.json");
+        result = Json2Json.json2json(json, dsl);
+        Assert.assertEquals(target.replaceAll("\\s", ""), result.replaceAll("\\s", ""));
     }
 
 }
