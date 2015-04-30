@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="CoreNLP-to-HTML.xsl" type="text/xsl"?>
+<root>
+    <document>
+        <sentences>
+            <sentence id="1">
+                <tokens>
+                    <token id="1">
+                        <word>Where</word>
+                        <lemma>where</lemma>
+                        <CharacterOffsetBegin>0</CharacterOffsetBegin>
+                        <CharacterOffsetEnd>5</CharacterOffsetEnd>
+                        <POS>WRB</POS>
+                        <NER>O</NER>
+                    </token>
+                    <token id="2">
+                        <word>are</word>
+                        <lemma>be</lemma>
+                        <CharacterOffsetBegin>6</CharacterOffsetBegin>
+                        <CharacterOffsetEnd>9</CharacterOffsetEnd>
+                        <POS>VBP</POS>
+                        <NER>O</NER>
+                    </token>
+                    <token id="3">
+                        <word>from</word>
+                        <lemma>from</lemma>
+                        <CharacterOffsetBegin>10</CharacterOffsetBegin>
+                        <CharacterOffsetEnd>14</CharacterOffsetEnd>
+                        <POS>IN</POS>
+                        <NER>O</NER>
+                    </token>
+                    <token id="4">
+                        <word>Mike</word>
+                        <lemma>Mike</lemma>
+                        <CharacterOffsetBegin>15</CharacterOffsetBegin>
+                        <CharacterOffsetEnd>19</CharacterOffsetEnd>
+                        <POS>NNP</POS>
+                        <NER>PERSON</NER>
+                    </token>
+                    <token id="5">
+                        <word>?</word>
+                        <lemma>?</lemma>
+                        <CharacterOffsetBegin>19</CharacterOffsetBegin>
+                        <CharacterOffsetEnd>20</CharacterOffsetEnd>
+                        <POS>.</POS>
+                        <NER>O</NER>
+                    </token>
+                </tokens>
+            </sentence>
+        </sentences>
+    </document>
+</root>

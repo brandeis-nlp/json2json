@@ -195,10 +195,10 @@ public class Json2Json {
                 }
             }
             NodeList list = node.getChildNodes();
-            List<Node> commentNodes = new ArrayList<Node>();
+            List<Node> toDelNodes = new ArrayList<Node>();
             for(int i = 0; i < list.getLength(); i ++) {
                 if(list.item(i).getNodeType() == Node.COMMENT_NODE) {
-                    commentNodes.add(list.item(i));
+                    toDelNodes.add(list.item(i));
                     if(jsonObj.get("#comment") == null) {
                         jsonObj.put("#comment", list.item(i).getNodeValue());
                     } else {
@@ -211,16 +211,18 @@ public class Json2Json {
                             jsonObj.put("#comment", comms);
                         }
                     }
+                }else if(list.item(i).getNodeType() == Node.PROCESSING_INSTRUCTION_NODE) {
+                    toDelNodes.add(list.item(i));
                 }
             }
             // remove all comment nodes
-            for(Node commNode: commentNodes) {
+            for(Node commNode: toDelNodes) {
                 node.removeChild(commNode);
             }
             // reget all the child nodes.
             list = node.getChildNodes();
             int i = 0;
-//            System.out.println("<"+node.getNodeName()+"> :" + list.getLength() +" " + node.getNodeValue());
+            System.out.println("<"+node.getNodeName()+"> :" + list.getLength() +" " + node.getNodeValue());
 
             if(node.getNodeValue() != null) {
                 String txt = node.getNodeValue().trim();

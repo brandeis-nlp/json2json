@@ -44,6 +44,11 @@ public class TestJson2Json {
         String target = readResource("GATEANNIE.json");
         String result = Json2Json.xml2json(xml);
         Assert.assertEquals(target.replaceAll("\\s", ""), result.replaceAll("\\s", ""));
+
+        xml = readResource("stanfordannotation.xml");
+        target = readResource("stanfordannotation.json");
+        result = Json2Json.xml2json(xml);
+        Assert.assertEquals(target.replaceAll("\\s", ""), result.replaceAll("\\s", ""));
     }
 
     @Test
@@ -55,6 +60,14 @@ public class TestJson2Json {
         String result = Json2Json.json2xml(json);
 //        System.out.println(target);
 //        System.out.println(result);
+        assertXMLEquals(target, result);
+
+
+        json = readResource("stanfordannotation.json");
+        target = readResource("stanfordannotation.xml");
+        result = Json2Json.json2xml(json);
+        System.out.println("target:" + target);
+        System.out.println("result:" + result);
         assertXMLEquals(target, result);
     }
 
