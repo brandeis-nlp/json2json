@@ -253,16 +253,26 @@ public class Json2Json {
             for (; i < list.getLength(); i++) {
                 Node child = list.item(i);
                 String childName = child.getNodeName();
-                String tail = "";
-                if(child.getNextSibling() != null &&
-                        child.getNextSibling().getNodeType() == Node.TEXT_NODE) {
-                    tail = child.getNextSibling().getNodeValue().trim();
+//                String tail = "";
+                List<String> tails = new ArrayList<String>();
+                Node sibling = child.getNextSibling();
+                while(sibling != null && sibling.getNodeType() == Node.TEXT_NODE) {
+                    String tail = sibling.getNodeValue().trim();
+                    if(tail.length() > 0) {
+                        tails.add(tail);
+                    }
                     i ++;
+                    sibling = sibling.getNextSibling();
                 }
                 if (jsonObj.get(childName) == null) {
                     JsonObject childObj = JsonProxy.newObject();
-                    if(tail.length() > 0)
-                        childObj.put("__tail__", tail);
+                    if(tails.size() > 0) {
+                        if(tails.size() == 1)
+                            childObj.put("__tail__", tails.get(0));
+                        else {
+                            childObj.put("__tail__", JsonProxy.newArray().convert(tails));
+                        }
+                    }
                     node2json(child, childObj);
                     // simplify and replace "__text__" object.
                     if(childObj.length() == 1 && childObj.has("__text__")) {
@@ -279,8 +289,13 @@ public class Json2Json {
                         arrChildObjs.add(jsonObj.get(childName));
                     }
                     JsonObject childObj = JsonProxy.newObject();
-                    if(tail.length() > 0)
-                        childObj.put("__tail__", tail);
+                    if(tails.size() > 0) {
+                        if(tails.size() == 1)
+                            childObj.put("__tail__", tails.get(0));
+                        else {
+                            childObj.put("__tail__", JsonProxy.newArray().convert(tails));
+                        }
+                    }
                     node2json(child, childObj);
                     // simplify and replace "__text__" object.
                     if(childObj.length() == 1 && childObj.has("__text__")) {
