@@ -19,11 +19,13 @@ package org.lappsgrid.jsondsl
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 
+import java.beans.XMLDecoder
+
 /**
  * Created by lapps on 4/24/2015.
  */
 
-class JSDLTemplate{
+class XSDLTemplate {
     static def call() {
         def json = new JsonBuilder()
         def root = json {
@@ -33,36 +35,39 @@ class JSDLTemplate{
     }
 
     def static main(String[]args) {
-        String jsonString = this.getClass().getResource( '/jsondsl.source.json' ).text
-        println jsonString
-        def __json__ = new JsonSlurper().parseText(jsonString)
+        String xmlString = this.getClass().getResource( '/cdcatalog.xml' ).text
+//        println xmlString
+        def __source_xml__ = new XmlSlurper().parseText(xmlString)
+//        println __source_xml__.cd.collect {
+//            [td : [ it.artist, it.company, it.country, it.price, it.title, it.year]]
+//        }
+
+
 
         def builder = new groovy.json.JsonBuilder()
-
-        def root = builder.call {
+        def root = builder.call{
             html{
                 "@xmlns:bar""http://www.bar.org"
                 "@xmlns:foo""http://www.foo.org/"
                 body {
-                    "@border" "1"
                     h2  {
                         "@style" "font:12pt"
                         "__text__" "My CD Collection"
                     }
                     table {
+                        "@border" "1"
                         tr (
                                 [{
                                      "@bgcolor" "#9acd32"
                                      th "Title", "Artist", "Country", "Company", "Price", "Year"
                                  }] +
-                                        __json__.catalog.cd.collect {
-                                    [td : [ it.artist, it.company, it.country, it.price, it.title, it.year]]
+                                __source_xml__.cd.collect {
+                                    [td : [it.title.text(), it.artist.text(), it.company.text(), it.country.text(), it.price.text(),  it.year.text()]]
                                 }
                         )
                     }
                 }
-            }
-        }
+            }}
 
         println builder.toString()
 
