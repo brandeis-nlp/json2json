@@ -4,6 +4,8 @@ import groovy.json.JsonBuilder;
 import groovy.json.JsonSlurper;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
+import groovy.util.XmlSlurper;
+import groovy.util.slurpersupport.GPathResult;
 import org.lappsgrid.json2json.jsonobject.JsonArray;
 import org.lappsgrid.json2json.jsonobject.JsonObject;
 import org.lappsgrid.json2json.jsonobject.JsonProxy;
@@ -23,8 +25,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 //import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
 
@@ -34,7 +35,96 @@ import java.util.List;
 public class Json2Json {
     static DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-    public static String json2json(String sourceJson, String templateDsl) {
+
+    private static int findMatchEnd(String s, int fromIdx, char left, char right) {
+        return findMatch(s, fromIdx, left, right)[1];
+    }
+
+    private static int[] findMatch(String s, int fromIdx, char left, char right) {
+        int begin = s.indexOf(left, fromIdx);
+        if(begin < 0)
+            return new int[]{-1, -1};
+        int end = begin + 1;
+        int leftCount = 1;
+        while(end < s.length()){
+            if(s.charAt(end) == left) {
+                leftCount ++;
+            } else if(s.charAt(end) == right){
+                leftCount --;
+            }
+            if(leftCount == 0)
+                return new int []{begin, end};
+            end ++;
+        }
+        return new int[]{begin, -1};
+    }
+
+    private static Set<String> leaves (GPathResult xml) {
+        return leaves((groovy.util.slurpersupport.Node)xml.getAt(0));
+    }
+
+    private static Set<String> leaves (groovy.util.slurpersupport.Node node) {
+        Set<String> names = new HashSet<String>();
+        for(Object child: node.children()) {
+            if(child instanceof groovy.util.slurpersupport.Node) {
+                names.addAll(leaves((groovy.util.slurpersupport.Node) child));
+            } else {
+                names.add(node.name());
+            }
+        }
+        return names;
+    }
+//    private static int nextNonWhiteSpace(String s, int fromIdx) {
+//        while(fromIdx < s.length() && Character.isWhitespace(s.charAt(fromIdx)))
+//            fromIdx ++;
+//        return fromIdx;
+//    }
+
+//     private static List<String> xmlEntities (String templateDsl) {
+//        List<String> entities = new ArrayList<String>();
+//        int start = templateDsl.indexOf("__source_xml__", 0);
+//        int end = start + 2;
+//        while( start >= 0) {
+//            while(end < templateDsl.length()) {
+//                if (templateDsl.charAt(end) == '{')
+//                    end = findMatch(templateDsl, end, '{', '}')[1];
+//                if (Character.isWhitespace(templateDsl.charAt(end))) {
+//                    int next = nextNonWhiteSpace(templateDsl, end + 1);
+//                    if(next == templateDsl.length() || templateDsl.charAt(next) != '{')
+//                        break;
+//                }
+//                end ++;
+//            }
+//            entities.add(templateDsl.substring(start, end));
+//            start = templateDsl.indexOf("__source_xml__",end);
+//            end = start + 2;
+//        }
+//        return entities;
+//    }
+
+
+
+    public static String xml2jsondsl(String sourceXml, String templateDsl) throws Exception{
+        Binding binding = new Binding();
+        GroovyShell shell = new GroovyShell(binding);
+        XmlSlurper xs = new XmlSlurper();
+        GPathResult xml = xs.parseText(sourceXml);
+        System.out.println(leaves(xml));
+        binding.setVariable("__source_xml__", xml);
+        templateDsl = filterXml(templateDsl, leaves(xml));
+        binding.setVariable("__target_json__", null);
+        JsonBuilder jb = new JsonBuilder();
+        binding.setVariable("__json_builder__", jb);
+        StringBuffer sb = new StringBuffer("__json_builder__.call(");
+        sb.append(templateDsl);
+        sb.append(") \n");
+        sb.append("__target_json__ = __json_builder__.toString()");
+//        System.out.println("Evaluate:\n" + sb.toString());
+        shell.evaluate(sb.toString());
+        return (String) binding.getVariable("__target_json__");
+    }
+
+    public static String json2jsondsl(String sourceJson, String templateDsl) throws Exception {
         Binding binding = new Binding();
         GroovyShell shell = new GroovyShell(binding);
         JsonSlurper js = new JsonSlurper();
@@ -44,10 +134,9 @@ public class Json2Json {
         JsonBuilder jb = new JsonBuilder();
         binding.setVariable("__json_builder__", jb);
         StringBuffer sb = new StringBuffer("__json_builder__.call(");
-        sb.append(filter(templateDsl));
+        sb.append(filterJson(templateDsl));
         sb.append(") \n");
         sb.append("__target_json__ = __json_builder__.toString()");
-//        System.out.println("Source:\n" + binding.getVariable("__source_json__"));
 //        System.out.println("Evaluate:\n" + sb.toString());
         shell.evaluate(sb.toString());
         return (String) binding.getVariable("__target_json__");
@@ -64,7 +153,36 @@ public class Json2Json {
             "each"
     };
 
-    private static String filter(String dsl) {
+    private static String filterXml(String dsl, Collection<String> leaves) {
+        dsl = dsl.trim();
+        if(!dsl.startsWith("{")) {
+            dsl = "{" + dsl + "}";
+        }
+        // replace global json
+        dsl = dsl.replaceAll("\\.foreach\\s*\\{",".collect{");
+        dsl = dsl.replaceAll("\\.select\\s*\\{",".findAll{");
+        dsl = dsl.replaceAll("\\&\\$","__source_xml__.");
+        dsl = dsl.replaceAll("%\\$","__source_xml__.");
+        // replace local json
+        dsl = dsl.replaceAll("\\&\\.","it.");
+        dsl = dsl.replaceAll("\\&\\.","it.");
+        dsl = dsl.replaceAll("%\\.","it.");
+
+        for(String leaf : leaves) {
+            dsl = dsl.replaceAll("it\\.[\"]?"+leaf+"[\"]?", "it.\""+leaf+"\".text()");
+        }
+        // replace Node functions
+        dsl = dsl.replaceAll("#text",".text()");
+        dsl = dsl.replaceAll("#name",".name()");
+        dsl = dsl.replaceAll("#parent",".parent()");
+        dsl = dsl.replaceAll("#children",".children()");
+        dsl = dsl.replaceAll("#localText",".localText()");
+        dsl = dsl.replaceAll("#localtext",".localText()");
+        dsl = dsl.replaceAll("\\.text\\(\\)\\.text\\(\\)",".text()");
+        return dsl;
+    }
+
+    private static String filterJson(String dsl) {
         dsl = dsl.trim();
         if(!dsl.startsWith("{")) {
             dsl = "{" + dsl + "}";
@@ -185,7 +303,9 @@ public class Json2Json {
     public static JsonObject node2json(Node node, JsonObject jsonObj) {
         if(node.getNodeType() == Node.ELEMENT_NODE
                 || node.getNodeType() == Node.DOCUMENT_NODE
-                || node.getNodeType() == Node.COMMENT_NODE) {
+                || node.getNodeType() == Node.COMMENT_NODE
+                || node.getNodeType() == Node.TEXT_NODE
+                || node.getNodeType() == Node.PROCESSING_INSTRUCTION_NODE) {
             // node attributes
             NamedNodeMap attrs = node.getAttributes();
             if(attrs != null) {
@@ -195,10 +315,10 @@ public class Json2Json {
                 }
             }
             NodeList list = node.getChildNodes();
-            List<Node> toDelNodes = new ArrayList<Node>();
+            List<Node> commentNodes = new ArrayList<Node>();
             for(int i = 0; i < list.getLength(); i ++) {
                 if(list.item(i).getNodeType() == Node.COMMENT_NODE) {
-                    toDelNodes.add(list.item(i));
+                    commentNodes.add(list.item(i));
                     if(jsonObj.get("#comment") == null) {
                         jsonObj.put("#comment", list.item(i).getNodeValue());
                     } else {
@@ -212,17 +332,17 @@ public class Json2Json {
                         }
                     }
                 }else if(list.item(i).getNodeType() == Node.PROCESSING_INSTRUCTION_NODE) {
-                    toDelNodes.add(list.item(i));
+                    commentNodes.add(list.item(i));
                 }
             }
             // remove all comment nodes
-            for(Node commNode: toDelNodes) {
+            for(Node commNode: commentNodes) {
                 node.removeChild(commNode);
             }
             // reget all the child nodes.
             list = node.getChildNodes();
             int i = 0;
-            System.out.println("<"+node.getNodeName()+"> :" + list.getLength() +" " + node.getNodeValue());
+//            System.out.println("<"+node.getNodeName()+"> :" + list.getLength() +" " + node.getNodeValue());
 
             if(node.getNodeValue() != null) {
                 String txt = node.getNodeValue().trim();
@@ -250,7 +370,7 @@ public class Json2Json {
                     i ++;
                 }
             }
-            for (; i < list.getLength(); i++) {
+            for (; i < list.getLength(); i++){
                 Node child = list.item(i);
                 String childName = child.getNodeName();
 //                String tail = "";
@@ -315,7 +435,7 @@ public class Json2Json {
 
 
 
-    public static String xml2xml(String sourceXml, String templateXsl) throws Exception {
+    public static String xml2xmlxsl(String sourceXml, String templateXsl) throws Exception {
         StreamSource stylesource = new StreamSource(new StringReader(templateXsl.trim()));
         Transformer transformer = TransformerFactory.newInstance().newTransformer(stylesource);
         StringWriter writer = new StringWriter();
