@@ -37,7 +37,7 @@ public class TestJDSL {
     @After
     public void tear() {}
 
-    @Test
+//    @Test
     public void test() throws Exception{
         for(String name : templates.keys()) {
             JsonProxy.JsonObject template = (JsonProxy.JsonObject)templates.get(name);
