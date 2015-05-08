@@ -119,7 +119,7 @@ public class Json2Json {
         sb.append(templateDsl);
         sb.append(") \n");
         sb.append("__target_json__ = __json_builder__.toString()");
-//        System.out.println("Evaluate:\n" + sb.toString());
+        System.out.println("Evaluate:\n" + sb.toString());
         shell.evaluate(sb.toString());
         return (String) binding.getVariable("__target_json__");
     }
