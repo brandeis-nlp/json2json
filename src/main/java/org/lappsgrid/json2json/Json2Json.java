@@ -63,6 +63,10 @@ public class Json2Json {
         return leaves((groovy.util.slurpersupport.Node)xml.getAt(0));
     }
 
+    private static String root (GPathResult xml) {
+        return ((groovy.util.slurpersupport.Node)xml.getAt(0)).name();
+    }
+
     private static Set<String> leaves (groovy.util.slurpersupport.Node node) {
         Set<String> names = new HashSet<String>();
         for(Object child: node.children()) {
@@ -74,34 +78,6 @@ public class Json2Json {
         }
         return names;
     }
-//    private static int nextNonWhiteSpace(String s, int fromIdx) {
-//        while(fromIdx < s.length() && Character.isWhitespace(s.charAt(fromIdx)))
-//            fromIdx ++;
-//        return fromIdx;
-//    }
-
-//     private static List<String> xmlEntities (String templateDsl) {
-//        List<String> entities = new ArrayList<String>();
-//        int start = templateDsl.indexOf("__source_xml__", 0);
-//        int end = start + 2;
-//        while( start >= 0) {
-//            while(end < templateDsl.length()) {
-//                if (templateDsl.charAt(end) == '{')
-//                    end = findMatch(templateDsl, end, '{', '}')[1];
-//                if (Character.isWhitespace(templateDsl.charAt(end))) {
-//                    int next = nextNonWhiteSpace(templateDsl, end + 1);
-//                    if(next == templateDsl.length() || templateDsl.charAt(next) != '{')
-//                        break;
-//                }
-//                end ++;
-//            }
-//            entities.add(templateDsl.substring(start, end));
-//            start = templateDsl.indexOf("__source_xml__",end);
-//            end = start + 2;
-//        }
-//        return entities;
-//    }
-
 
 
     public static String xml2jsondsl(String sourceXml, String templateDsl) throws Exception{
@@ -109,9 +85,8 @@ public class Json2Json {
         GroovyShell shell = new GroovyShell(binding);
         XmlSlurper xs = new XmlSlurper();
         GPathResult xml = xs.parseText(sourceXml);
-        System.out.println(leaves(xml));
         binding.setVariable("__source_xml__", xml);
-        templateDsl = filterXml(templateDsl, leaves(xml));
+        templateDsl = filterXml(templateDsl, root(xml), leaves(xml));
         binding.setVariable("__target_json__", null);
         JsonBuilder jb = new JsonBuilder();
         binding.setVariable("__json_builder__", jb);
@@ -119,7 +94,6 @@ public class Json2Json {
         sb.append(templateDsl);
         sb.append(") \n");
         sb.append("__target_json__ = __json_builder__.toString()");
-        System.out.println("Evaluate:\n" + sb.toString());
         shell.evaluate(sb.toString());
         return (String) binding.getVariable("__target_json__");
     }
@@ -137,7 +111,6 @@ public class Json2Json {
         sb.append(filterJson(templateDsl));
         sb.append(") \n");
         sb.append("__target_json__ = __json_builder__.toString()");
-//        System.out.println("Evaluate:\n" + sb.toString());
         shell.evaluate(sb.toString());
         return (String) binding.getVariable("__target_json__");
     }
@@ -153,7 +126,7 @@ public class Json2Json {
             "each"
     };
 
-    private static String filterXml(String dsl, Collection<String> leaves) {
+    private static String filterXml(String dsl, String root, Collection<String> leaves) {
         dsl = dsl.trim();
         if(!dsl.startsWith("{")) {
             dsl = "{" + dsl + "}";
@@ -168,9 +141,12 @@ public class Json2Json {
         dsl = dsl.replaceAll("\\&\\.","it.");
         dsl = dsl.replaceAll("%\\.","it.");
 
+        dsl = dsl.replaceAll("__source_xml__\\.\"?"+root+"\"?\\.", "__source_xml__.");
+
         for(String leaf : leaves) {
             dsl = dsl.replaceAll("it\\.[\"]?"+leaf+"[\"]?", "it.\""+leaf+"\".text()");
         }
+
         // replace Node functions
         dsl = dsl.replaceAll("#text",".text()");
         dsl = dsl.replaceAll("#name",".name()");
@@ -222,16 +198,6 @@ public class Json2Json {
         return sw.toString();
     }
 
-
-    //    public static void main(String[] args) throws Exception {
-//        DocumentBuilder dBuilder = dbf.newDocumentBuilder();
-//        Document doc = dBuilder.parse(new File("in.xml"));
-//        doc.getDocumentElement().normalize();
-//        printNode(doc);
-//        JsonObj json = node2json(doc, new JsonObj());
-//        System.out.println(json);
-//        System.out.println(json2xml(json.toString()));
-//    }
     public static void json2node(JsonObject jsonObj, XMLStreamWriter xmlStreamWriter) throws Exception {
         for (String key : jsonObj.keys()){
             Object obj = jsonObj.get(key);
