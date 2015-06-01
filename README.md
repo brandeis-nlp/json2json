@@ -19,11 +19,20 @@ Maven dependency is like this.
 <dependency> 
 <groupId>org.lappsgrid</groupId> 
 <artifactId>json2json</artifactId> 
-<version>0.2.0</version>
+<version>0.3.2</version>
 </dependency> 
 <dependencies>
 ```
 
+under repository
+
+
+```
+<repository>
+    <id>anc-releases</id>
+    <url>http://www.anc.org:8080/nexus/content/repositories/releases/</url>
+</repository>
+```
 
 
 
