@@ -10,6 +10,7 @@ import java.util.List;
 /**
  * Created by 310201833 on 2015/10/26.
  */
+@Deprecated
 public class JacksonJsonArr extends JacksonJsonProxy  implements IJsonArr {
 
     List<Object> list = null;

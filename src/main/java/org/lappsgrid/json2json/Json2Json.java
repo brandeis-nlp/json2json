@@ -6,9 +6,7 @@ import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.util.XmlSlurper;
 import groovy.util.slurpersupport.GPathResult;
-import org.lappsgrid.json2json.jsonobject.IJsonArr;
-import org.lappsgrid.json2json.jsonobject.IJsonObj;
-import org.lappsgrid.json2json.jsonobject.JsonProxy;
+import org.lappsgrid.json2json.jsonobject.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -178,7 +176,7 @@ public class Json2Json {
         DocumentBuilder dBuilder = dbf.newDocumentBuilder();
         Document doc = dBuilder.parse(new InputSource(new StringReader(xml)));
         doc.getDocumentElement().normalize();
-        IJsonObj json = (IJsonObj)node2json(doc, JsonProxy.newObject());
+        IJsonObj json = (IJsonObj)node2json(doc, new JsonObj());
         return json.toString();
     }
 
@@ -191,7 +189,7 @@ public class Json2Json {
         xmlStreamWriter.writeStartDocument();
         // support #text and #tail
         json = json.replaceAll("#text", "__text__").replaceAll("#tail", "__tail__");
-        json2node(JsonProxy.newObject().read(json), xmlStreamWriter);
+        json2node(new JsonObj().read(json), xmlStreamWriter);
         xmlStreamWriter.writeEndDocument();
         xmlStreamWriter.flush();
         xmlStreamWriter.close();
@@ -291,7 +289,7 @@ public class Json2Json {
                         if(jsonObj.get("#comment") instanceof IJsonArr) {
                             ((IJsonArr) jsonObj.get("#comment")).add(list.item(i).getNodeValue());
                         } else {
-                            IJsonArr comms = JsonProxy.newArray();
+                            IJsonArr comms = new JsonArr();
                             comms.add(jsonObj.get("#comment"));
                             comms.add(list.item(i).getNodeValue());
                             jsonObj.put("#comment", comms);
@@ -325,7 +323,7 @@ public class Json2Json {
                                 if(jsonObj.get("__text__") instanceof IJsonArr) {
                                     ((IJsonArr) jsonObj.get("__text__")).add(txt);
                                 } else {
-                                    IJsonArr comms = JsonProxy.newArray();
+                                    IJsonArr comms = new JsonArr();
                                     comms.add(jsonObj.get("__text__"));
                                     comms.add(txt);
                                     jsonObj.put("__text__", comms);
@@ -351,12 +349,12 @@ public class Json2Json {
                     sibling = sibling.getNextSibling();
                 }
                 if (jsonObj.get(childName) == null) {
-                    IJsonObj childObj = JsonProxy.newObject();
+                    IJsonObj childObj = new JsonObj();
                     if(tails.size() > 0) {
                         if(tails.size() == 1)
                             childObj.put("__tail__", tails.get(0));
                         else {
-                            childObj.put("__tail__", JsonProxy.newArray().convert(tails));
+                            childObj.put("__tail__", new JsonArr().convert(tails));
                         }
                     }
                     node2json(child, childObj);
@@ -371,15 +369,15 @@ public class Json2Json {
                     if (jsonObj.get(childName) instanceof IJsonArr) {
                         arrChildObjs = (IJsonArr) jsonObj.get(childName);
                     } else {
-                        arrChildObjs = JsonProxy.newArray();
+                        arrChildObjs = new JsonArr();
                         arrChildObjs.add(jsonObj.get(childName));
                     }
-                    IJsonObj childObj = JsonProxy.newObject();
+                    IJsonObj childObj = new JsonObj();
                     if(tails.size() > 0) {
                         if(tails.size() == 1)
                             childObj.put("__tail__", tails.get(0));
                         else {
-                            childObj.put("__tail__", JsonProxy.newArray().convert(tails));
+                            childObj.put("__tail__", new JsonArr().convert(tails));
                         }
                     }
                     node2json(child, childObj);

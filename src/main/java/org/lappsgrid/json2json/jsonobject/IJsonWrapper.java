@@ -8,4 +8,6 @@ public interface IJsonWrapper {
     public Object original();
     /** write jsonObject int string **/
     public String toString();
+
+    public IJsonWrapper read(String s);
 }

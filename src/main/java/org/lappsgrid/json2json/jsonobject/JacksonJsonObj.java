@@ -10,6 +10,7 @@ import java.util.Map;
 /**
  * Created by 310201833 on 2015/10/26.
  */
+@Deprecated
 public class JacksonJsonObj extends JacksonJsonProxy implements IJsonObj {
 
     Map<String, Object> map = null;
