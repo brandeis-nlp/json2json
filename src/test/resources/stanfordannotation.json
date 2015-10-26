@@ -1,0 +1,60 @@
+{
+  "root": {
+    "document": {
+      "sentences": {
+        "sentence": {
+          "@id": "1",
+          "tokens": {
+            "token": [
+              {
+                "@id": "1",
+                "word": "Where",
+                "lemma": "where",
+                "CharacterOffsetBegin": "0",
+                "CharacterOffsetEnd": "5",
+                "POS": "WRB",
+                "NER": "O"
+              },
+              {
+                "@id": "2",
+                "word": "are",
+                "lemma": "be",
+                "CharacterOffsetBegin": "6",
+                "CharacterOffsetEnd": "9",
+                "POS": "VBP",
+                "NER": "O"
+              },
+              {
+                "@id": "3",
+                "word": "from",
+                "lemma": "from",
+                "CharacterOffsetBegin": "10",
+                "CharacterOffsetEnd": "14",
+                "POS": "IN",
+                "NER": "O"
+              },
+              {
+                "@id": "4",
+                "word": "Mike",
+                "lemma": "Mike",
+                "CharacterOffsetBegin": "15",
+                "CharacterOffsetEnd": "19",
+                "POS": "NNP",
+                "NER": "PERSON"
+              },
+              {
+                "@id": "5",
+                "word": "?",
+                "lemma": "?",
+                "CharacterOffsetBegin": "19",
+                "CharacterOffsetEnd": "20",
+                "POS": ".",
+                "NER": "O"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

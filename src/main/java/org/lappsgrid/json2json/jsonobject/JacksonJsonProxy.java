@@ -18,8 +18,6 @@ package org.lappsgrid.json2json.jsonobject;
 import java.io.IOException;
 import java.util.*;
 
-import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
-import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -138,7 +136,7 @@ public class JacksonJsonProxy implements JsonProxy.NewProxy {
     }
 
 
-    public static class JacksonJsonArray implements JsonArray{
+    public static class JacksonJsonArray implements JsonArray {
 
         List<Object> list = null;
 

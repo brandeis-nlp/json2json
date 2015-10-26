@@ -1,25 +1,22 @@
 html{
-    "@xmlns:bar" "http://www.bar.org"
-    "@xmlns:foo" "http://www.foo.org/"
+    "@xmlns:bar""http://www.bar.org"
+    "@xmlns:foo""http://www.foo.org/"
     body {
-       "@border" "1"
-        h2 {
-
-        }
-        table {
-            tr {
-                "@bgcolor" "#9acd32"
-                th "Title", "Artist", "Country", "Company", "Price", "Year"
-
-            } , {
-                    td
-              "Empire Burlesque",
-              "Bob Dylan",
-              "USA",
-              "Columbia",
-              "10.90",
-              "1985"
+        h2  {
+                "@style" "font:12pt"
+                "__text__" "My CD Collection"
             }
+        table {
+            "@border" "1"
+            tr (
+                [{
+                    "@bgcolor" "#9acd32"
+                    th "Title", "Artist", "Country", "Company", "Price", "Year"
+                }] +
+                &$catalog.cd.select{&.price > "9"}.foreach {
+                    [td : [&.title, &.artist, &.company, &.country, &.price,  &.year]]
+                }
+            )
         }
     }
 }

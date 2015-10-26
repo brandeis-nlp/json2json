@@ -38,24 +38,31 @@ class JSDLTemplate{
         def __json__ = new JsonSlurper().parseText(jsonString)
 
         def builder = new groovy.json.JsonBuilder()
-        def root = builder.call { html{
-            "@xmlns:bar""http://www.bar.org"
-            "@xmlns:foo""http://www.foo.org/"
-            body {
-                "@border" "1"
-                h2  {}
-                table {
-                    tr ([({
-                        "@bgcolor" "#9acd32"
-                        th "Title", "Artist", "Country", "Company", "Price", "Year"
-                    })] +
-                    __json__.catalog.cd.collect {
-                        [td : [it.artist, it.company, it.country, it.price, it.title, it.year]]
-                        }
-                    )
+
+        def root = builder.call {
+            html{
+                "@xmlns:bar""http://www.bar.org"
+                "@xmlns:foo""http://www.foo.org/"
+                body {
+                    "@border" "1"
+                    h2  {
+                        "@style" "font:12pt"
+                        "__text__" "My CD Collection"
+                    }
+                    table {
+                        tr (
+                                [{
+                                     "@bgcolor" "#9acd32"
+                                     th "Title", "Artist", "Country", "Company", "Price", "Year"
+                                 }] +
+                                        __json__.catalog.cd.collect {
+                                    [td : [ it.artist, it.company, it.country, it.price, it.title, it.year]]
+                                }
+                        )
+                    }
                 }
             }
-        }}
+        }
 
         println builder.toString()
 

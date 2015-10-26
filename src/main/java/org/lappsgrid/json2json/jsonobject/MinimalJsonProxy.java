@@ -17,8 +17,6 @@ package org.lappsgrid.json2json.jsonobject;
 
 import java.util.Collection;
 import java.util.List;
-import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonArray;
-import org.lappsgrid.json2json.jsonobject.JsonProxy.JsonObject;
 
 /**
  * <p> Minimal Json provides very good implementation of Json functions</p>
@@ -39,7 +37,7 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
     public static class MinimalJsonObject implements JsonObject {
         com.eclipsesource.json.JsonObject jsonObject = null;
 
-        public JsonProxy.JsonObject read(String s) {
+        public JsonObject read(String s) {
             jsonObject = com.eclipsesource.json.JsonObject.readFrom(s);
             return this;
         }
@@ -153,7 +151,7 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
         }
     }
 
-    public static class MinimalJsonArray implements JsonArray{
+    public static class MinimalJsonArray implements JsonArray {
         com.eclipsesource.json.JsonArray jsonArray = null;
 
         public com.eclipsesource.json.JsonArray original() {

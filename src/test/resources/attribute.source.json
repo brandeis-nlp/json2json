@@ -1,0 +1,329 @@
+{
+  "xmi:XMI": {
+    "@xmi:version": "2.0",
+    "@xmlns:cas": "http:///uima/cas.ecore",
+    "@xmlns:chunk": "http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type/chunk.ecore",
+    "@xmlns:constituent": "http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type/constituent.ecore",
+    "@xmlns:dependency": "http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type/dependency.ecore",
+    "@xmlns:morph": "http:///de/tudarmstadt/ukp/dkpro/core/api/lexmorph/type/morph.ecore",
+    "@xmlns:pos": "http:///de/tudarmstadt/ukp/dkpro/core/api/lexmorph/type/pos.ecore",
+    "@xmlns:tcas": "http:///uima/tcas.ecore",
+    "@xmlns:tweet": "http:///de/tudarmstadt/ukp/dkpro/core/api/lexmorph/type/pos/tweet.ecore",
+    "@xmlns:type": "http:///de/tudarmstadt/ukp/dkpro/core/api/coref/type.ecore",
+    "@xmlns:type2": "http:///de/tudarmstadt/ukp/dkpro/core/api/metadata/type.ecore",
+    "@xmlns:type3": "http:///de/tudarmstadt/ukp/dkpro/core/api/ner/type.ecore",
+    "@xmlns:type4": "http:///de/tudarmstadt/ukp/dkpro/core/api/segmentation/type.ecore",
+    "@xmlns:type5": "http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type.ecore",
+    "@xmlns:xmi": "http://www.omg.org/XMI",
+    "cas:NULL": {
+      "@xmi:id": "0"
+    },
+    "cas:Sofa": {
+      "@mimeType": "text",
+      "@sofaID": "_InitialView",
+      "@sofaNum": "1",
+      "@sofaString": "OK, you are right.\n    ",
+      "@xmi:id": "1"
+    },
+    "tcas:DocumentAnnotation": {
+      "@begin": "0",
+      "@end": "23",
+      "@language": "en",
+      "@sofa": "1",
+      "@xmi:id": "8"
+    },
+    "type4:Token": [
+      {
+        "@begin": "0",
+        "@end": "2",
+        "@pos": "218",
+        "@sofa": "1",
+        "@xmi:id": "13"
+      },
+      {
+        "@begin": "2",
+        "@end": "3",
+        "@pos": "223",
+        "@sofa": "1",
+        "@xmi:id": "22"
+      },
+      {
+        "@begin": "4",
+        "@end": "7",
+        "@pos": "228",
+        "@sofa": "1",
+        "@xmi:id": "31"
+      },
+      {
+        "@begin": "8",
+        "@end": "11",
+        "@pos": "233",
+        "@sofa": "1",
+        "@xmi:id": "40"
+      },
+      {
+        "@begin": "12",
+        "@end": "17",
+        "@pos": "238",
+        "@sofa": "1",
+        "@xmi:id": "49"
+      },
+      {
+        "@begin": "17",
+        "@end": "18",
+        "@pos": "243",
+        "@sofa": "1",
+        "@xmi:id": "58"
+      }
+    ],
+    "type4:Sentence": {
+      "@begin": "0",
+      "@end": "18",
+      "@sofa": "1",
+      "@xmi:id": "67"
+    },
+    "type2:TagsetDescription": {
+      "@begin": "0",
+      "@end": "23",
+      "@layer": "de.tudarmstadt.ukp.dkpro.core.api.lexmorph.type.pos.POS",
+      "@name": "ptb",
+      "@sofa": "1",
+      "@tags": "78 80 82 84 86 88 90 92 94 96 98 100 102 104 106 108 110 112 114 116 118 120 122 124 126 128 130 132 134 136 138 140 142 144 146 148 150 152 154 156 158 160 162 164 166 168",
+      "@xmi:id": "71"
+    },
+    "pos:O": {
+      "@PosValue": "UH",
+      "@begin": "0",
+      "@end": "2",
+      "@sofa": "1",
+      "@xmi:id": "218"
+    },
+    "pos:PUNC": [
+      {
+        "@PosValue": ",",
+        "@begin": "2",
+        "@end": "3",
+        "@sofa": "1",
+        "@xmi:id": "223"
+      },
+      {
+        "@PosValue": ".",
+        "@begin": "17",
+        "@end": "18",
+        "@sofa": "1",
+        "@xmi:id": "243"
+      }
+    ],
+    "pos:PR": {
+      "@PosValue": "PRP",
+      "@begin": "4",
+      "@end": "7",
+      "@sofa": "1",
+      "@xmi:id": "228"
+    },
+    "pos:V": {
+      "@PosValue": "VBP",
+      "@begin": "8",
+      "@end": "11",
+      "@sofa": "1",
+      "@xmi:id": "233"
+    },
+    "pos:ADJ": {
+      "@PosValue": "JJ",
+      "@begin": "12",
+      "@end": "17",
+      "@sofa": "1",
+      "@xmi:id": "238"
+    },
+    "type2:TagDescription": [
+      {
+        "@name": "``",
+        "@xmi:id": "168"
+      },
+      {
+        "@name": "WRB",
+        "@xmi:id": "166"
+      },
+      {
+        "@name": "WP$",
+        "@xmi:id": "164"
+      },
+      {
+        "@name": "WP",
+        "@xmi:id": "162"
+      },
+      {
+        "@name": "WDT",
+        "@xmi:id": "160"
+      },
+      {
+        "@name": "VBZ",
+        "@xmi:id": "158"
+      },
+      {
+        "@name": "VBP",
+        "@xmi:id": "156"
+      },
+      {
+        "@name": "VBN",
+        "@xmi:id": "154"
+      },
+      {
+        "@name": "VBG",
+        "@xmi:id": "152"
+      },
+      {
+        "@name": "VBD",
+        "@xmi:id": "150"
+      },
+      {
+        "@name": "VB",
+        "@xmi:id": "148"
+      },
+      {
+        "@name": "UH",
+        "@xmi:id": "146"
+      },
+      {
+        "@name": "TO",
+        "@xmi:id": "144"
+      },
+      {
+        "@name": "SYM",
+        "@xmi:id": "142"
+      },
+      {
+        "@name": "RP",
+        "@xmi:id": "140"
+      },
+      {
+        "@name": "RBS",
+        "@xmi:id": "138"
+      },
+      {
+        "@name": "RBR",
+        "@xmi:id": "136"
+      },
+      {
+        "@name": "RB",
+        "@xmi:id": "134"
+      },
+      {
+        "@name": "PRP$",
+        "@xmi:id": "132"
+      },
+      {
+        "@name": "PRP",
+        "@xmi:id": "130"
+      },
+      {
+        "@name": "POS",
+        "@xmi:id": "128"
+      },
+      {
+        "@name": "PDT",
+        "@xmi:id": "126"
+      },
+      {
+        "@name": "NNS",
+        "@xmi:id": "124"
+      },
+      {
+        "@name": "NNPS",
+        "@xmi:id": "122"
+      },
+      {
+        "@name": "NNP",
+        "@xmi:id": "120"
+      },
+      {
+        "@name": "NN",
+        "@xmi:id": "118"
+      },
+      {
+        "@name": "MD",
+        "@xmi:id": "116"
+      },
+      {
+        "@name": "LS",
+        "@xmi:id": "114"
+      },
+      {
+        "@name": "JJS",
+        "@xmi:id": "112"
+      },
+      {
+        "@name": "JJR",
+        "@xmi:id": "110"
+      },
+      {
+        "@name": "JJ",
+        "@xmi:id": "108"
+      },
+      {
+        "@name": "IN",
+        "@xmi:id": "106"
+      },
+      {
+        "@name": "FW",
+        "@xmi:id": "104"
+      },
+      {
+        "@name": "EX",
+        "@xmi:id": "102"
+      },
+      {
+        "@name": "DT",
+        "@xmi:id": "100"
+      },
+      {
+        "@name": "CD",
+        "@xmi:id": "98"
+      },
+      {
+        "@name": "CC",
+        "@xmi:id": "96"
+      },
+      {
+        "@name": ":",
+        "@xmi:id": "94"
+      },
+      {
+        "@name": ".$$.",
+        "@xmi:id": "92"
+      },
+      {
+        "@name": ".",
+        "@xmi:id": "90"
+      },
+      {
+        "@name": "-RRB-",
+        "@xmi:id": "88"
+      },
+      {
+        "@name": "-LRB-",
+        "@xmi:id": "86"
+      },
+      {
+        "@name": ",",
+        "@xmi:id": "84"
+      },
+      {
+        "@name": "''",
+        "@xmi:id": "82"
+      },
+      {
+        "@name": "$",
+        "@xmi:id": "80"
+      },
+      {
+        "@name": "#",
+        "@xmi:id": "78"
+      }
+    ],
+    "cas:View": {
+      "@members": "8 13 22 31 40 49 58 67 71 218 223 243 228 233 238",
+      "@sofa": "1"
+    }
+  }
+}

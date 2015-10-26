@@ -4,7 +4,7 @@
 
     <groupId>org.lappsgrid</groupId>
     <artifactId>json2json</artifactId>
-    <version>0.2.3-SNAPSHOT</version>
+    <version>0.3.3-SNAPSHOT</version>
 
     <name>Json2Json: JsonPath Based Json Transform</name>
     <description>
@@ -25,23 +25,35 @@
         <url>https://github.com/chunqishi/json2json/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
+
     <scm>
         <url>https://github.com/chunqishi/json2json</url>
         <connection>scm:git:https://github.com/chunqishi/json2json.git</connection>
         <developerConnection>scm:git:https://github.com/chunqishi/json2json.git</developerConnection>
-        <tag>v0.2.1</tag>
+        <tag>v0.3.2-SNAPSHOT</tag>
     </scm>
+
 
     <distributionManagement>
         <repository>
-            <id>sonatype-nexus-staging</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>anc-releases</id>
+            <url>http://www.anc.org:8080/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <id>anc-snapshots</id>
+            <url>http://www.anc.org:8080/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+    <!--<distributionManagement>-->
+        <!--<repository>-->
+            <!--<id>sonatype-nexus-staging</id>-->
+            <!--<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>sonatype-nexus-snapshots</id>-->
+            <!--<url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
+        <!--</snapshotRepository>-->
+    <!--</distributionManagement>-->
 
     <developers>
         <developer>
@@ -60,15 +72,6 @@
     </properties>
 
     <dependencies>
-
-        <!-- ^^^^^^^^^^^^^^ JSON Object ^^^^^^^^^^^^^^^^^^^^^ -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20140107</version>
-        </dependency>
-
-
         <!-- ^^^^^^^^^^^^^^ JSON Path ^^^^^^^^^^^^^^^^^^^^^ -->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
@@ -84,11 +87,6 @@
             <version>${minimal-json.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
-            <!--<artifactId>jackson-core</artifactId>-->
-            <!--<version>${jackson2.version}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -105,17 +103,25 @@
         <!-- =============================================  -->
 
         <!-- ^^^^^^^^^^^^^^ Groovy    ^^^^^^^^^^^^^^^^^^^^^ -->
-        <!--<dependency>-->
-            <!--<groupId>org.codehaus.groovy</groupId>-->
-            <!--<artifactId>groovy-console</artifactId>-->
-            <!--<version>${groovy.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy-console</artifactId>
+        <version>${groovy.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
+            <artifactId>groovy-json</artifactId>
             <version>${groovy.version}</version>
         </dependency>
         <!-- =============================================  -->
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -124,34 +130,14 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>1.3.2</version>
-            <!--<scope>test</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.3.3</version>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <version>1.6</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
-		<plugins>
-		  <!--plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-gpg-plugin</artifactId>
-			<executions>
-			  <execution>
-				<id>sign-artifacts</id>
-				<phase>verify</phase>
-				<goals>
-				  <goal>sign</goal>
-				</goals>
-			  </execution>
-			</executions>
-		  </plugin-->
-		</plugins>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
