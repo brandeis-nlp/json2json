@@ -37,7 +37,7 @@ public class JayWayJsonPath implements org.lappsgrid.json2json.jsonpath.JsonPath
         if (obj == null) {
             return null;
         }
-        return JsonProxy.obj2json(obj);
+        return JsonProxy.toJsonString(obj);
     }
 
     // cache path.
@@ -60,6 +60,6 @@ public class JayWayJsonPath implements org.lappsgrid.json2json.jsonpath.JsonPath
         if (obj == null) {
             return null;
         }
-        return JsonProxy.obj2json(obj);
+        return JsonProxy.toJsonString(obj);
     }
 }

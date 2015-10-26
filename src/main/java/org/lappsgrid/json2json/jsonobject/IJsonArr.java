@@ -5,11 +5,9 @@ import java.util.Collection;
 /**
  * Created by lapps on 4/29/2015.
  */
-public interface IJsonArr {
+public interface IJsonArr extends IJsonWrapper{
     /** read string into IJsonArr **/
     public IJsonArr read(String s);
-    /** write IJsonArr int string **/
-    public String toString();
 
     /** length / get / add / insert / remove **/
     public int length();
@@ -24,7 +22,4 @@ public interface IJsonArr {
 
     /** clone a Json array **/
 //        public IJsonArr clone();
-
-    /** if has original mapping **/
-    public Object original();
 }

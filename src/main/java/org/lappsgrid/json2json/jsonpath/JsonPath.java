@@ -46,7 +46,7 @@ public class JsonPath {
     }
 
     public static Object path(JsonObject json, String path)  throws Json2JsonException {
-        return JsonProxy.str2json(path(json.toString(), path));
+        return JsonProxy.fromJsonString(path(json.toString(), path));
     }
 
     public static String path(String json, String path) throws Json2JsonException {

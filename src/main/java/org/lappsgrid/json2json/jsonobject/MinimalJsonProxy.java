@@ -23,15 +23,24 @@ import java.util.List;
  * <a href="https://github.com/ralfstx/minimal-json">Minimal Json</a>.
  *
  */
-public class MinimalJsonProxy implements JsonProxy.NewProxy{
+@Deprecated
+public class MinimalJsonProxy implements IJsonProxy{
     
-    public IJsonArr newArray() {
+    public IJsonArr newArr() {
         return new MinimalJsonArray();
     }
 
     
-    public IJsonObj newObject() {
+    public IJsonObj newObj() {
         return new MinimalJsonObject();
+    }
+
+    public Object wrap(Object obj) {
+        return null;
+    }
+
+    public Object unwrap(Object obj) {
+        return null;
     }
 
     public static class MinimalJsonObject implements IJsonObj {

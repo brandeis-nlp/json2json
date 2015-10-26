@@ -103,7 +103,7 @@ class XSDLTemplate {
                 "                    ]\n" +
                 "            ]\n" +
                 "        })})\n" +
-                "__target_json__ = __json_builder__.toString()"
+                "__target_json__ = __json_builder__.toJsonString()"
         )
         println binding.getVariable("__target_json__");
 

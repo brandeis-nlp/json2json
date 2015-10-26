@@ -1,18 +1,3 @@
-/**********************************************************************************************************************
- Copyright [2014] [Chunqi SHI (chunqi.shi@hotmail.com)]
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- **********************************************************************************************************************/
 package org.lappsgrid.json2json.jsonobject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,12 +8,11 @@ import org.lappsgrid.json2json.Json2JsonException;
 import java.util.Collection;
 
 /**
- * <p>This define Proxy class of Json object ( e.g. {key_1:value_1, key_2:value_2, ..., key_m:value_m} )
- * and Json Array (e.g. [obj_1, obj_2, ..., obj_n])</p>
+ * Created by 310201833 on 2015/10/26.
  */
-public class JsonProxy {
+public class JsonProxy{
 
-    public static String obj2json(Object obj) throws Json2JsonException{
+    public static String toJsonString(Object obj) throws Json2JsonException {
         ObjectWriter ow = new ObjectMapper().writer();
         String json = null;
         try {
@@ -45,7 +29,7 @@ public class JsonProxy {
      * @param json
      * @return
      */
-    public static Object str2json(String json) {
+    public static Object fromJsonString(String json) {
         if (json == null)
             return null;
         json = json.trim();
@@ -96,19 +80,13 @@ public class JsonProxy {
 
 
     public static IJsonArr newArray(){
-        return newProxy().newArray();
+        return newProxy().newArr();
     }
     public static IJsonObj newObject(){
-        return newProxy().newObject();
+        return newProxy().newObj();
     }
 
-
-//    public static NewProxy newProxy() {
-//        // FIXME: exchange other proxy
-//        return new MinimalJsonProxy();
-//    }
-
-    public static NewProxy newProxy() {
+    public static IJsonProxy newProxy() {
         // FIXME: exchange other proxy
         return new JacksonJsonProxy();
     }

@@ -5,11 +5,9 @@ import java.util.Collection;
 /**
  * Created by lapps on 4/29/2015.
  */
-public interface IJsonObj {
+public interface IJsonObj extends IJsonWrapper {
     /** read string into jsonObject **/
     public IJsonObj read(String s);
-    /** write jsonObject int string **/
-    public String toString();
 
     /** has / get / put / remove **/
     public boolean has(String key);
@@ -21,8 +19,6 @@ public interface IJsonObj {
     public int length();
     public Collection<String> keys();
 
-    /** if has original mapping **/
-    public Object original();
 
     /** clone a Json Object **/
 //        public IJsonObj clone();
