@@ -25,19 +25,19 @@ import java.util.List;
  */
 public class MinimalJsonProxy implements JsonProxy.NewProxy{
     
-    public JsonArray newArray() {
+    public IJsonArr newArray() {
         return new MinimalJsonArray();
     }
 
     
-    public JsonObject newObject() {
+    public IJsonObj newObject() {
         return new MinimalJsonObject();
     }
 
-    public static class MinimalJsonObject implements JsonObject {
+    public static class MinimalJsonObject implements IJsonObj {
         com.eclipsesource.json.JsonObject jsonObject = null;
 
-        public JsonObject read(String s) {
+        public IJsonObj read(String s) {
             jsonObject = com.eclipsesource.json.JsonObject.readFrom(s);
             return this;
         }
@@ -47,8 +47,8 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
         }
 
 //        
-//        public JsonObject clone() {
-//            return new MinimalJsonObject(new com.eclipsesource.json.JsonObject(jsonObject));
+//        public IJsonObj clone() {
+//            return new MinimalJsonObject(new com.eclipsesource.json.IJsonObj(jsonObject));
 //        }
 
         protected MinimalJsonObject() {
@@ -65,14 +65,14 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             return value2object(obj);
         }
 
-        public JsonObject put(String key, Object obj) {
+        public IJsonObj put(String key, Object obj) {
             if(obj != null) {
                 jsonObject.add(key, valueOf(obj));
             }
             return this;
         }
 
-        public JsonObject remove(String key) {
+        public IJsonObj remove(String key) {
             jsonObject.remove(key);
             return this;
         }
@@ -115,10 +115,10 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             value = com.eclipsesource.json.JsonValue.valueOf((String)obj);
         } else if (obj instanceof com.eclipsesource.json.JsonValue) {
             value = (com.eclipsesource.json.JsonValue)obj;
-        } else if (obj instanceof JsonArray) {
-            value = (com.eclipsesource.json.JsonValue)((JsonArray)obj).original();
-        } else if (obj instanceof JsonObject) {
-            value = (com.eclipsesource.json.JsonValue)((JsonObject)obj).original();
+        } else if (obj instanceof IJsonArr) {
+            value = (com.eclipsesource.json.JsonValue)((IJsonArr)obj).original();
+        } else if (obj instanceof IJsonObj) {
+            value = (com.eclipsesource.json.JsonValue)((IJsonObj)obj).original();
         } else {
             throw new RuntimeException("Unknown object type: " + obj.getClass());
         }
@@ -151,7 +151,7 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
         }
     }
 
-    public static class MinimalJsonArray implements JsonArray {
+    public static class MinimalJsonArray implements IJsonArr {
         com.eclipsesource.json.JsonArray jsonArray = null;
 
         public com.eclipsesource.json.JsonArray original() {
@@ -162,7 +162,7 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             return jsonArray.toString();
         }
 
-        public JsonArray read(String s) {
+        public IJsonArr read(String s) {
             jsonArray = com.eclipsesource.json.JsonArray.readFrom(s);
             return this;
         }
@@ -181,7 +181,7 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
         }
 
         
-        public JsonArray add(Object obj) {
+        public IJsonArr add(Object obj) {
             if(obj != null) {
                 jsonArray.add(valueOf(obj));
             }
@@ -189,13 +189,13 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
         }
 
         
-        public JsonArray remove(int i) {
+        public IJsonArr remove(int i) {
             jsonArray.remove(i);
             return this;
         }
 
         
-        public JsonArray set(int i, Object s) {
+        public IJsonArr set(int i, Object s) {
             jsonArray.set(i, valueOf(s));
             return this;
         }
@@ -205,14 +205,14 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
             return jsonArray.size();
         }
 
-        public JsonArray convert(String[] arr) {
+        public IJsonArr convert(String[] arr) {
             jsonArray = new com.eclipsesource.json.JsonArray();
             for(String s: arr) {
                 jsonArray.add(s);
             }
             return this;
         }
-        public JsonArray convert(Collection<String> arr) {
+        public IJsonArr convert(Collection<String> arr) {
             jsonArray = new com.eclipsesource.json.JsonArray();
             for(String s: arr) {
                 jsonArray.add(s);
@@ -221,8 +221,8 @@ public class MinimalJsonProxy implements JsonProxy.NewProxy{
         }
 
 //        
-//        public JsonArray clone() {
-//            return new MinimalJsonArray(new com.eclipsesource.json.JsonArray(jsonArray));
+//        public IJsonArr clone() {
+//            return new MinimalJsonArray(new com.eclipsesource.json.IJsonArr(jsonArray));
 //        }
 
         public Object add(String s) {

@@ -59,34 +59,34 @@ public class JsonProxy {
     }
 
     public static interface NewProxy {
-        public JsonArray newArray();
-        public JsonObject newObject();
+        public IJsonArr newArray();
+        public IJsonObj newObject();
     }
     /** static methods for read / is / convert **/
 
-    public static JsonArray convertArray(String [] arr) {
+    public static IJsonArr convertArray(String [] arr) {
         return newArray().convert(arr);
     }
-    public static JsonArray convertArray(Collection<String> arr) {
+    public static IJsonArr convertArray(Collection<String> arr) {
         return newArray().convert(arr);
     }
 
-    public static JsonArray readArray(String s) {
+    public static IJsonArr readArray(String s) {
         return newArray().read(s);
     }
 
-    public static JsonObject readObject(String s) {
+    public static IJsonObj readObject(String s) {
         return newObject().read(s);
     }
 
     public static boolean isArray (Object obj) {
-        if (obj instanceof JsonArray) {
+        if (obj instanceof IJsonArr) {
             return true;
         }
         return false;
     }
     public static boolean isObject (Object obj) {
-        if (obj instanceof JsonObject) {
+        if (obj instanceof IJsonObj) {
             return true;
         }
         return false;
@@ -95,10 +95,10 @@ public class JsonProxy {
     /** fill in the proxy **/
 
 
-    public static JsonArray newArray(){
+    public static IJsonArr newArray(){
         return newProxy().newArray();
     }
-    public static JsonObject newObject(){
+    public static IJsonObj newObject(){
         return newProxy().newObject();
     }
 

@@ -5,17 +5,17 @@ import java.util.Collection;
 /**
  * Created by lapps on 4/29/2015.
  */
-public interface JsonObject {
+public interface IJsonObj {
     /** read string into jsonObject **/
-    public JsonObject read(String s);
+    public IJsonObj read(String s);
     /** write jsonObject int string **/
     public String toString();
 
     /** has / get / put / remove **/
     public boolean has(String key);
     public Object get(String key);
-    public JsonObject put(String key, Object val);
-    public JsonObject remove(String key);
+    public IJsonObj put(String key, Object obj);
+    public IJsonObj remove(String key);
 
     /**  length / keys **/
     public int length();
@@ -25,5 +25,5 @@ public interface JsonObject {
     public Object original();
 
     /** clone a Json Object **/
-//        public JsonObject clone();
+//        public IJsonObj clone();
 }
