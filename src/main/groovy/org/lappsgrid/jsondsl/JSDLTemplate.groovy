@@ -40,6 +40,8 @@ class JSDLTemplate{
         def builder = new groovy.json.JsonBuilder()
 
         def root = builder.call {
+            def x = true
+            if (x) {
             html{
                 "@xmlns:bar""http://www.bar.org"
                 "@xmlns:foo""http://www.foo.org/"
@@ -61,6 +63,7 @@ class JSDLTemplate{
                         )
                     }
                 }
+            }
             }
         }
 

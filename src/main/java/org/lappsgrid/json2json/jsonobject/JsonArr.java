@@ -1,5 +1,7 @@
 package org.lappsgrid.json2json.jsonobject;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -21,6 +23,7 @@ public class JsonArr implements IJsonArr {
 
     public JsonArr(String json){
         ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         try {
             this.list  = (List) mapper.readValue(json, List.class);
         } catch (IOException e) {

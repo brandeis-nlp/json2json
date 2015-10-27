@@ -65,27 +65,27 @@
     </developers>
 
     <properties>
-        <jayway.version>2.0.0</jayway.version>
-        <minimal-json.version>0.9.1</minimal-json.version>
-        <jackson2.version>2.3.3</jackson2.version>
-        <groovy.version>2.4.3</groovy.version>
+        <!--<jayway.version>2.0.0</jayway.version>-->
+        <!--<minimal-json.version>0.9.1</minimal-json.version>-->
+        <jackson2.version>2.6.3</jackson2.version>
+        <groovy.version>2.4.5</groovy.version>
     </properties>
 
     <dependencies>
-        <!-- ^^^^^^^^^^^^^^ JSON Path ^^^^^^^^^^^^^^^^^^^^^ -->
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>${jayway.version}</version>
-        </dependency>
+        <!--&lt;!&ndash; ^^^^^^^^^^^^^^ JSON Path ^^^^^^^^^^^^^^^^^^^^^ &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.jayway.jsonpath</groupId>-->
+            <!--<artifactId>json-path</artifactId>-->
+            <!--<version>${jayway.version}</version>-->
+        <!--</dependency>-->
 
         <!-- =============================================  -->
         <!-- ^^^^^^^^^^^^^^ JSON      ^^^^^^^^^^^^^^^^^^^^^ -->
-        <dependency>
-            <groupId>com.eclipsesource.minimal-json</groupId>
-            <artifactId>minimal-json</artifactId>
-            <version>${minimal-json.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.eclipsesource.minimal-json</groupId>-->
+            <!--<artifactId>minimal-json</artifactId>-->
+            <!--<version>${minimal-json.version}</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
